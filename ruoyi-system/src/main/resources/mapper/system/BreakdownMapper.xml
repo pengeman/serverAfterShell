@@ -27,19 +27,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertBreakdown" parameterType="Breakdown">
+        <selectKey resultType="Long" keyProperty="id" order="BEFORE">
+            SELECT LAST_INSERT_ID();
+        </selectKey>
         insert into breakdown
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="code != null">code,</if>
             <if test="type != null">type,</if>
             <if test="description != null">description,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="code != null">#{code},</if>
             <if test="type != null">#{type},</if>
             <if test="description != null">#{description},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateBreakdown" parameterType="Breakdown">
