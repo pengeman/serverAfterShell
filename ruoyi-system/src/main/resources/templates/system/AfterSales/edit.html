@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('修改【请填写功能名称】')" />
+    <th:block th:include="include :: header('修改AfterSales')" />
     <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body class="white-bg">
@@ -9,7 +9,7 @@
         <form class="form-horizontal m" id="form-AfterSales-edit" th:object="${afterSales}">
             <input name="id" th:field="*{id}" type="hidden">
             <div class="form-group">    
-                <label class="col-sm-3 control-label">${comment}：</label>
+                <label class="col-sm-3 control-label">：</label>
                 <div class="col-sm-8">
                     <input name="deviceid" th:field="*{deviceid}" class="form-control" type="text">
                 </div>
@@ -33,8 +33,7 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">客户地址
-：</label>
+                <label class="col-sm-3 control-label">客户地址：</label>
                 <div class="col-sm-8">
                     <input name="customerAddr" th:field="*{customerAddr}" class="form-control" type="text">
                 </div>
@@ -88,15 +87,13 @@
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">面积
-：</label>
+                <label class="col-sm-3 control-label">面积：</label>
                 <div class="col-sm-8">
                     <input name="area" th:field="*{area}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
-                <label class="col-sm-3 control-label">数量
-：</label>
+                <label class="col-sm-3 control-label">数量：</label>
                 <div class="col-sm-8">
                     <input name="amount" th:field="*{amount}" class="form-control" type="text">
                 </div>

@@ -4,58 +4,63 @@ import java.util.List;
 import com.ruoyi.system.domain.AfterSales;
 
 /**
- * 【请填写功能名称】Service接口
+ * AfterSalesService接口
  * 
  * @author ruoyi
- * @date 2024-04-20
+ * @date 2024-05-11
  */
 public interface IAfterSalesService 
 {
     /**
-     * 查询【请填写功能名称】
+     * 查询AfterSales
      * 
-     * @param id 【请填写功能名称】主键
-     * @return 【请填写功能名称】
+     * @param id AfterSales主键
+     * @return AfterSales
      */
     public AfterSales selectAfterSalesById(Long id);
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询AfterSales列表
      * 
-     * @param afterSales 【请填写功能名称】
-     * @return 【请填写功能名称】集合
+     * @param afterSales AfterSales
+     * @return AfterSales集合
      */
     public List<AfterSales> selectAfterSalesList(AfterSales afterSales);
 
     /**
-     * 新增【请填写功能名称】
+     * 新增AfterSales
      * 
-     * @param afterSales 【请填写功能名称】
+     * @param afterSales AfterSales
      * @return 结果
      */
     public int insertAfterSales(AfterSales afterSales);
 
     /**
-     * 修改【请填写功能名称】
+     * 修改AfterSales
      * 
-     * @param afterSales 【请填写功能名称】
+     * @param afterSales AfterSales
      * @return 结果
      */
     public int updateAfterSales(AfterSales afterSales);
 
     /**
-     * 批量删除【请填写功能名称】
+     * 批量删除AfterSales
      * 
-     * @param ids 需要删除的【请填写功能名称】主键集合
+     * @param ids 需要删除的AfterSales主键集合
      * @return 结果
      */
     public int deleteAfterSalesByIds(String ids);
 
     /**
-     * 删除【请填写功能名称】信息
+     * 删除AfterSales信息
      * 
-     * @param id 【请填写功能名称】主键
+     * @param id AfterSales主键
      * @return 结果
      */
     public int deleteAfterSalesById(Long id);
+
+    /**
+     * 导入售后单，from json
+     */
+    public int importAfterSalesFromJson(String afterSalesJson);
 }

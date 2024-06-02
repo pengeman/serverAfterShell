@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('【请填写功能名称】列表')" />
+    <th:block th:include="include :: header('AfterSales列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,14 +11,6 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>${comment}：</label>
-                                <input type="text" name="deviceid"/>
-                            </li>
-                            <li>
-                                <label>下单日期：</label>
-                                <input type="text" name="formDate"/>
-                            </li>
-                            <li>
                                 <label>业务员：</label>
                                 <input type="text" name="salesman"/>
                             </li>
@@ -27,55 +19,12 @@
                                 <input type="text" name="customer"/>
                             </li>
                             <li>
-                                <label>客户地址
-：</label>
+                                <label>客户地址：</label>
                                 <input type="text" name="customerAddr"/>
-                            </li>
-                            <li>
-                                <label>质保内外0内1外：</label>
-                                <input type="text" name="quality"/>
-                            </li>
-                            <li>
-                                <label>客户联系人：</label>
-                                <input type="text" name="connection"/>
-                            </li>
-                            <li>
-                                <label>客户联系电话：</label>
-                                <input type="text" name="tel"/>
                             </li>
                             <li>
                                 <label>问题描述：</label>
                                 <input type="text" name="quetion"/>
-                            </li>
-                            <li>
-                                <label>出厂日期：</label>
-                                <input type="text" name="productionDate"/>
-                            </li>
-                            <li>
-                                <label>出厂编号：</label>
-                                <input type="text" name="productionID"/>
-                            </li>
-                            <li>
-                                <label>工作情况：</label>
-                                <input type="text" name="condition"/>
-                            </li>
-                            <li>
-                                <label>材质：</label>
-                                <input type="text" name="texture"/>
-                            </li>
-                            <li>
-                                <label>面积
-：</label>
-                                <input type="text" name="area"/>
-                            </li>
-                            <li>
-                                <label>数量
-：</label>
-                                <input type="text" name="amount"/>
-                            </li>
-                            <li>
-                                <label>修改时间：</label>
-                                <input type="text" class="time-input" placeholder="请选择修改时间" name="modifyTime"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -99,6 +48,9 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:AfterSales:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
+                <a class="btn btn-warning" onclick="importJson()" shiro:hasPermission="system:AfterSales:export">
+                    <i class="fa fa-upload"></i> 导入
+                </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -118,18 +70,18 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "【请填写功能名称】",
+                modalName: "AfterSales",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field: 'id',
-                    title: '${comment}',
+                    title: '',
                     visible: false
                 },
                 {
                     field: 'deviceid',
-                    title: '${comment}'
+                    title: ''
                 },
                 {
                     field: 'formDate',
@@ -145,8 +97,7 @@
                 },
                 {
                     field: 'customerAddr',
-                    title: '客户地址
-'
+                    title: '客户地址'
                 },
                 {
                     field: 'quality',
@@ -165,14 +116,6 @@
                     title: '问题描述'
                 },
                 {
-                    field: 'productionDate',
-                    title: '出厂日期'
-                },
-                {
-                    field: 'productionID',
-                    title: '出厂编号'
-                },
-                {
                     field: 'condition',
                     title: '工作情况'
                 },
@@ -186,21 +129,11 @@
                 },
                 {
                     field: 'area',
-                    title: '面积
-'
+                    title: '面积'
                 },
                 {
                     field: 'amount',
-                    title: '数量
-'
-                },
-                {
-                    field: 'formType',
-                    title: '单据类型，1返厂，2外派'
-                },
-                {
-                    field: 'modifyTime',
-                    title: '修改时间'
+                    title: '数量'
                 },
                 {
                     title: '操作',
@@ -216,5 +149,15 @@
             $.table.init(options);
         });
     </script>
+<script type="application/javascript">
+    var importJson = function(){
+        prefix = ctx + "system/AfterSales";
+        width = 500;
+        height = 500;
+        url = prefix + "/importJson";
+
+        $.modal.open("导入售后单数据", url, width, height);
+    }
+</script>
 </body>
 </html>

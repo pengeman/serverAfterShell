@@ -28,30 +28,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAfterSalesVo">
-        select id, deviceid, formDate, salesman, customer, customerAddr, quality, connection, tel, quetion, productionDate, productionID, condition, deviceType, texture, area, amount, formType, create_time, modify_time from AfterSales
+        select id, deviceid, formDate, salesman, customer, customerAddr, quality, `connection`, tel, quetion, productionDate, productionID, `condition`, deviceType, texture, area, amount, formType, create_time, modify_time from AfterSales
     </sql>
 
     <select id="selectAfterSalesList" parameterType="AfterSales" resultMap="AfterSalesResult">
         <include refid="selectAfterSalesVo"/>
         <where>  
-            <if test="deviceid != null "> and deviceid = #{deviceid}</if>
-            <if test="formDate != null  and formDate != ''"> and formDate = #{formDate}</if>
-            <if test="salesman != null  and salesman != ''"> and salesman = #{salesman}</if>
-            <if test="customer != null  and customer != ''"> and customer = #{customer}</if>
-            <if test="customerAddr != null  and customerAddr != ''"> and customerAddr = #{customerAddr}</if>
-            <if test="quality != null  and quality != ''"> and quality = #{quality}</if>
-            <if test="connection != null  and connection != ''"> and connection = #{connection}</if>
-            <if test="tel != null  and tel != ''"> and tel = #{tel}</if>
-            <if test="quetion != null  and quetion != ''"> and quetion = #{quetion}</if>
-            <if test="productionDate != null  and productionDate != ''"> and productionDate = #{productionDate}</if>
-            <if test="productionID != null  and productionID != ''"> and productionID = #{productionID}</if>
-            <if test="condition != null  and condition != ''"> and condition = #{condition}</if>
-            <if test="deviceType != null  and deviceType != ''"> and deviceType = #{deviceType}</if>
-            <if test="texture != null  and texture != ''"> and texture = #{texture}</if>
-            <if test="area != null  and area != ''"> and area = #{area}</if>
-            <if test="amount != null  and amount != ''"> and amount = #{amount}</if>
-            <if test="formType != null  and formType != ''"> and formType = #{formType}</if>
-            <if test="modifyTime != null "> and modify_time = #{modifyTime}</if>
+            <if test="salesman != null  and salesman != ''"> and salesman like concat('%', #{salesman}, '%')</if>
+            <if test="customer != null  and customer != ''"> and customer like concat('%', #{customer}, '%')</if>
+            <if test="customerAddr != null  and customerAddr != ''"> and customerAddr like concat('%', #{customerAddr}, '%')</if>
+            <if test="quetion != null  and quetion != ''"> and quetion like concat('%', #{quetion}, '%')</if>
         </where>
     </select>
     
@@ -69,12 +55,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customer != null">customer,</if>
             <if test="customerAddr != null">customerAddr,</if>
             <if test="quality != null">quality,</if>
-            <if test="connection != null">connection,</if>
+            <if test="connection != null">`connection`,</if>
             <if test="tel != null">tel,</if>
             <if test="quetion != null">quetion,</if>
             <if test="productionDate != null">productionDate,</if>
             <if test="productionID != null">productionID,</if>
-            <if test="condition != null">condition,</if>
+            <if test="condition != null">`condition`,</if>
             <if test="deviceType != null">deviceType,</if>
             <if test="texture != null">texture,</if>
             <if test="area != null">area,</if>
@@ -115,12 +101,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="customer != null">customer = #{customer},</if>
             <if test="customerAddr != null">customerAddr = #{customerAddr},</if>
             <if test="quality != null">quality = #{quality},</if>
-            <if test="connection != null">connection = #{connection},</if>
+            <if test="connection != null">`connection` = #{connection},</if>
             <if test="tel != null">tel = #{tel},</if>
             <if test="quetion != null">quetion = #{quetion},</if>
             <if test="productionDate != null">productionDate = #{productionDate},</if>
             <if test="productionID != null">productionID = #{productionID},</if>
-            <if test="condition != null">condition = #{condition},</if>
+            <if test="condition != null">`condition` = #{condition},</if>
             <if test="deviceType != null">deviceType = #{deviceType},</if>
             <if test="texture != null">texture = #{texture},</if>
             <if test="area != null">area = #{area},</if>

@@ -8,20 +8,20 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 【请填写功能名称】对象 AfterSales
+ * AfterSales对象 ,售后申请单，数据来自红圈
  * 
  * @author ruoyi
- * @date 2024-04-20
+ * @date 2024-05-11
  */
 public class AfterSales extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** $column.columnComment */
+    /**  */
     private Long id;
 
-    /** $column.columnComment */
-    @Excel(name = "${comment}", readConverterExp = "$column.readConverterExp()")
+    /**  */
+    @Excel(name = "")
     private Long deviceid;
 
     /** 下单日期 */
@@ -36,10 +36,8 @@ public class AfterSales extends BaseEntity
     @Excel(name = "客户名称")
     private String customer;
 
-    /** 客户地址
- */
-    @Excel(name = "客户地址
-")
+    /** 客户地址 */
+    @Excel(name = "客户地址")
     private String customerAddr;
 
     /** 质保内外0内1外 */
@@ -59,11 +57,9 @@ public class AfterSales extends BaseEntity
     private String quetion;
 
     /** 出厂日期 */
-    @Excel(name = "出厂日期")
     private String productionDate;
 
     /** 出厂编号 */
-    @Excel(name = "出厂编号")
     private String productionID;
 
     /** 工作情况 */
@@ -78,25 +74,18 @@ public class AfterSales extends BaseEntity
     @Excel(name = "材质")
     private String texture;
 
-    /** 面积
- */
-    @Excel(name = "面积
-")
+    /** 面积 */
+    @Excel(name = "面积")
     private String area;
 
-    /** 数量
- */
-    @Excel(name = "数量
-")
+    /** 数量 */
+    @Excel(name = "数量")
     private String amount;
 
     /** 单据类型，1返厂，2外派 */
-    @Excel(name = "单据类型，1返厂，2外派")
     private String formType;
 
     /** 修改时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "修改时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date modifyTime;
 
     public void setId(Long id) 
