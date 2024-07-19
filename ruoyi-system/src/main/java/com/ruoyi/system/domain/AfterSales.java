@@ -8,10 +8,10 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * AfterSales对象 ,售后申请单，数据来自红圈
+ * afterSales对象 AfterSales
  * 
- * @author ruoyi
- * @date 2024-05-11
+ * @author peng
+ * @date 2024-07-04
  */
 public class AfterSales extends BaseEntity
 {
@@ -21,7 +21,6 @@ public class AfterSales extends BaseEntity
     private Long id;
 
     /**  */
-    @Excel(name = "")
     private Long deviceid;
 
     /** 下单日期 */
@@ -41,15 +40,12 @@ public class AfterSales extends BaseEntity
     private String customerAddr;
 
     /** 质保内外0内1外 */
-    @Excel(name = "质保内外0内1外")
     private String quality;
 
     /** 客户联系人 */
-    @Excel(name = "客户联系人")
     private String connection;
 
     /** 客户联系电话 */
-    @Excel(name = "客户联系电话")
     private String tel;
 
     /** 问题描述 */
@@ -63,7 +59,6 @@ public class AfterSales extends BaseEntity
     private String productionID;
 
     /** 工作情况 */
-    @Excel(name = "工作情况")
     private String condition;
 
     /** 设备型号 */
@@ -71,21 +66,20 @@ public class AfterSales extends BaseEntity
     private String deviceType;
 
     /** 材质 */
-    @Excel(name = "材质")
     private String texture;
 
     /** 面积 */
-    @Excel(name = "面积")
     private String area;
 
     /** 数量 */
-    @Excel(name = "数量")
     private String amount;
 
     /** 单据类型，1返厂，2外派 */
     private String formType;
 
     /** 修改时间 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "修改时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date modifyTime;
 
     public void setId(Long id) 
@@ -97,6 +91,7 @@ public class AfterSales extends BaseEntity
     {
         return id;
     }
+
     public void setDeviceid(Long deviceid) 
     {
         this.deviceid = deviceid;
@@ -106,6 +101,7 @@ public class AfterSales extends BaseEntity
     {
         return deviceid;
     }
+
     public void setFormDate(String formDate) 
     {
         this.formDate = formDate;
@@ -115,6 +111,7 @@ public class AfterSales extends BaseEntity
     {
         return formDate;
     }
+
     public void setSalesman(String salesman) 
     {
         this.salesman = salesman;
@@ -124,6 +121,7 @@ public class AfterSales extends BaseEntity
     {
         return salesman;
     }
+
     public void setCustomer(String customer) 
     {
         this.customer = customer;
@@ -133,6 +131,7 @@ public class AfterSales extends BaseEntity
     {
         return customer;
     }
+
     public void setCustomerAddr(String customerAddr) 
     {
         this.customerAddr = customerAddr;
@@ -142,6 +141,7 @@ public class AfterSales extends BaseEntity
     {
         return customerAddr;
     }
+
     public void setQuality(String quality) 
     {
         this.quality = quality;
@@ -151,6 +151,7 @@ public class AfterSales extends BaseEntity
     {
         return quality;
     }
+
     public void setConnection(String connection) 
     {
         this.connection = connection;
@@ -160,6 +161,7 @@ public class AfterSales extends BaseEntity
     {
         return connection;
     }
+
     public void setTel(String tel) 
     {
         this.tel = tel;
@@ -169,6 +171,7 @@ public class AfterSales extends BaseEntity
     {
         return tel;
     }
+
     public void setQuetion(String quetion) 
     {
         this.quetion = quetion;
@@ -178,6 +181,7 @@ public class AfterSales extends BaseEntity
     {
         return quetion;
     }
+
     public void setProductionDate(String productionDate) 
     {
         this.productionDate = productionDate;
@@ -187,6 +191,7 @@ public class AfterSales extends BaseEntity
     {
         return productionDate;
     }
+
     public void setProductionID(String productionID) 
     {
         this.productionID = productionID;
@@ -196,6 +201,7 @@ public class AfterSales extends BaseEntity
     {
         return productionID;
     }
+
     public void setCondition(String condition) 
     {
         this.condition = condition;
@@ -205,6 +211,7 @@ public class AfterSales extends BaseEntity
     {
         return condition;
     }
+
     public void setDeviceType(String deviceType) 
     {
         this.deviceType = deviceType;
@@ -214,6 +221,7 @@ public class AfterSales extends BaseEntity
     {
         return deviceType;
     }
+
     public void setTexture(String texture) 
     {
         this.texture = texture;
@@ -223,6 +231,7 @@ public class AfterSales extends BaseEntity
     {
         return texture;
     }
+
     public void setArea(String area) 
     {
         this.area = area;
@@ -232,6 +241,7 @@ public class AfterSales extends BaseEntity
     {
         return area;
     }
+
     public void setAmount(String amount) 
     {
         this.amount = amount;
@@ -241,6 +251,7 @@ public class AfterSales extends BaseEntity
     {
         return amount;
     }
+
     public void setFormType(String formType) 
     {
         this.formType = formType;
@@ -250,6 +261,7 @@ public class AfterSales extends BaseEntity
     {
         return formType;
     }
+
     public void setModifyTime(Date modifyTime) 
     {
         this.modifyTime = modifyTime;

@@ -36,8 +36,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="salesman != null  and salesman != ''"> and salesman like concat('%', #{salesman}, '%')</if>
             <if test="customer != null  and customer != ''"> and customer like concat('%', #{customer}, '%')</if>
-            <if test="customerAddr != null  and customerAddr != ''"> and customerAddr like concat('%', #{customerAddr}, '%')</if>
-            <if test="quetion != null  and quetion != ''"> and quetion like concat('%', #{quetion}, '%')</if>
         </where>
     </select>
     
@@ -45,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectAfterSalesVo"/>
         where id = #{id}
     </select>
-        
+
     <insert id="insertAfterSales" parameterType="AfterSales" useGeneratedKeys="true" keyProperty="id">
         insert into AfterSales
         <trim prefix="(" suffix=")" suffixOverrides=",">

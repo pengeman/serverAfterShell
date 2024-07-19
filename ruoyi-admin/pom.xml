@@ -5,7 +5,7 @@
     <parent>
         <artifactId>ruoyi</artifactId>
         <groupId>com.ruoyi</groupId>
-        <version>4.7.8</version>
+        <version>4.7.9</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
@@ -66,11 +66,6 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-generator</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>5.3.27</version>
-        </dependency>
 
     </dependencies>
 
@@ -91,15 +86,15 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.0.0</version>
+            <plugin>   
+                <groupId>org.apache.maven.plugins</groupId>   
+                <artifactId>maven-war-plugin</artifactId>   
+                <version>3.0.0</version>   
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <warName>${project.artifactId}</warName>
-                </configuration>
-            </plugin>
+                </configuration>   
+            </plugin>   
             <!-- YUI Compressor (CSS/JS压缩) 
             <plugin>
                 <groupId>net.alchim31.maven</groupId>
@@ -128,6 +123,7 @@
                         <exclude>**/*.min.js</exclude>
                         <exclude>**/*.min.css</exclude>
                         <exclude>**/fileinput.js</exclude>
+                        <exclude>**/validate/**</exclude>
                         <exclude>**/bootstrap-table/**</exclude>
                     </excludes>
                 </configuration>

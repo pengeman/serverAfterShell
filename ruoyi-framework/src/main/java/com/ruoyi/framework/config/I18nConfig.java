@@ -11,13 +11,13 @@ import com.ruoyi.common.constant.Constants;
 
 /**
  * 资源文件配置加载
- *
+ * 
  * @author ruoyi
  */
 @Configuration
 public class I18nConfig implements WebMvcConfigurer
 {
-    @Bean(name = "I18nConfigLocaleResolver")
+    @Bean
     public LocaleResolver localeResolver()
     {
         SessionLocaleResolver slr = new SessionLocaleResolver();

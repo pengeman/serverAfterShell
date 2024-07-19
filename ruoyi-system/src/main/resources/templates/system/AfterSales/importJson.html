@@ -3,6 +3,7 @@
 <head>
     <th:block th:include="include :: header('导入售后单数据')" />
     <th:block th:include="include :: datetimepicker-css" />
+    <description dict="/home/peng/IdeaProjects/serverAfterShell/ruoyi-system/src/main/resources/templates/system/AfterSales/importJson.html">
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -29,6 +30,7 @@
                     <textarea name="jsonAfterSales" rows="10" cols="50"></textarea>
                 </div>
             </div>
+
         </form>
     </div>
     <th:block th:include="include :: footer" />
@@ -40,10 +42,21 @@
         });
 
         function submitHandler() {
-            console.log("submitHandler : " + $('#form-AfterSales-add').serialize());
-            alert("submithandle");
+           // console.log("submitHandler : " + $('#form-AfterSales-add').serialize());
+            //alert("submithandle");
             if ($.validate.form()) {
+                //console.log($.form.valueOf('#form-AfterSales-add'));
+                //console.log($("#jsonAfterSales").serialize())
+                data = $("#idht").serialize();
+
+                let jsonAfterSales = data[0].value;
+                console.log("---------------------------------------")
+                console.log(jsonAfterSales);
+                $("dispatchFile")[0].value()
+
+                console.log($('#dispatchFile').serialize());
                 $.operate.save(prefix + "/importJson", $('#form-AfterSales-add').serialize());
+
             }
         }
 
