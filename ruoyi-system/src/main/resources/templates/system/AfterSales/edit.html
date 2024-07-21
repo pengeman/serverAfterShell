@@ -6,7 +6,7 @@
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-AfterSales-edit" th:object="${afterSales}">
+    <form class="form-horizontal m" id="form-AfterSales-edit" th:object="${afterSales}" method="post" enctype="multipart/form-data">
         <input name="id" th:field="*{id}" type="hidden">
         <div class="col-xs-6">
             <div class="form-group">
@@ -140,7 +140,8 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="form-label col-xs-4 col-sm-4">上传派工单:</label><input type="file" class="form-control" onchange="gome(this)" id="front">
+                <label class="form-label col-xs-4 col-sm-4">上传派工单:</label>
+                <input type="file" class="form-control" onchange="gome(this)" id="front" name="front">
                 <div class="formControls col-xs-5 col-sm-4">
                     <span class="fileinput-button">
 				    <span>+</span>
@@ -168,7 +169,21 @@
 
     function submitHandler() {
         if ($.validate.form()) {
-            $.operate.save(prefix + "/edit", $('#form-AfterSales-edit').serialize());
+            //$.operate.save(prefix + "/edit", $('#form-AfterSales-edit').serialize());
+            var formData = new FormData($("#form-AfterSales-edit")[0]);
+
+            $.ajax({
+                url: prefix + "/edit",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    console.log(data)
+                    alert(data)
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
         }
     }
 

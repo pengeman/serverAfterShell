@@ -153,7 +153,10 @@ public class AfterSalesController extends BaseController {
     @Log(title = "afterSales", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(AfterSales afterSales, HttpServletRequest request) throws ServletException, IOException {
+    public AjaxResult editSave(
+            AfterSales afterSales,
+                               @RequestPart("front") MultipartFile front,
+                               HttpServletRequest request) throws ServletException, IOException {
         System.out.println("editSave+++++++++++++++++++++++++++++++++++++++");
         System.out.println(request.getPart("front").getSubmittedFileName());
         return toAjax(afterSalesService.updateAfterSales(afterSales));
