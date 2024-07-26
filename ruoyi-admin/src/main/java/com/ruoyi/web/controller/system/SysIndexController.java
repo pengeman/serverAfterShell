@@ -156,7 +156,8 @@ public class SysIndexController extends BaseController
     public boolean initPasswordIsModify(Date pwdUpdateDate)
     {
         Integer initPasswordModify = Convert.toInt(configService.selectConfigByKey("sys.account.initPasswordModify"));
-        return initPasswordModify != null && initPasswordModify == 1 && pwdUpdateDate == null;
+        //return initPasswordModify != null && initPasswordModify == 1 && pwdUpdateDate == null;
+        return false;  // 取消检验 20240722
     }
 
     // 检查密码是否过期

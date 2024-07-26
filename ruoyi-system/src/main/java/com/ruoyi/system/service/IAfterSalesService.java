@@ -60,6 +60,10 @@ public interface IAfterSalesService
     public int deleteAfterSalesById(Long id);
 
     /**
+     * 通过售后单，售后完成
+     */
+    public int gopassSales(AfterSales afterSales, String gopassFileName);
+    /**
      * by peng
      * 导入售后单，from json
      */

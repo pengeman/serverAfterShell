@@ -82,6 +82,8 @@ public class AfterSales extends BaseEntity
     @Excel(name = "修改时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date modifyTime;
 
+
+    /////////////////////////////////////////////////
     public void setId(Long id) 
     {
         this.id = id;

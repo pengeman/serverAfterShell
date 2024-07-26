@@ -102,7 +102,16 @@ public class AfterSalesServiceImpl implements IAfterSalesService
         return afterSalesMapper.deleteAfterSalesById(id);
     }
 
+    /**
+     * 将售后单数据(afterSales)复制到售后单完成(gopassAfterSales)表中
+     * 接受的参数：afterSales实体，通过单文件名
+     * @param afterSales
+     * @return
+     */
+    public int gopassSales(AfterSales afterSales, String gopassFileName){
 
+        return 0;
+    }
     @Override
     public int importAfterSalesFromJson(String afterSalesJson) {
         //System.out.println("importAfterSalesFromJson  : " + afterSalesJson);

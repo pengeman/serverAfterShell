@@ -37,6 +37,9 @@
                 <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:AfterSales:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
+                <a class="btn btn-danger multiple disabled" onclick="gopass()" shiro:hasPermission="system:AfterSales:gopass">
+                    <i class="fa fa-remove"></i> 通过
+                </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:AfterSales:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
@@ -116,11 +119,23 @@
      <script type="application/javascript">
          var importJson = function(){
              prefix = ctx + "system/AfterSales";
-             width = 500;
-             height = 500;
+             width = 800;
+             height = 600;
              url = prefix + "/importJson";
 
              $.modal.open("导入售后单数据", url, width, height);
+         }
+         var gopass = function (id){
+             // 派工单验收通过，售后完成
+             table.set();
+             var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+             console.log("gopass",id)
+                 prefix = ctx + "system/AfterSales";
+                 width = 800;
+                 height = 600;
+                 url = prefix + "/gopass/"+id;
+console.log(url);
+                 $.modal.open("通过售后单", url, width, height);
          }
      </script>
 

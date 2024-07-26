@@ -1161,8 +1161,10 @@ var table = {
             },
             // 修改信息
             edit: function(id) {
+                console.log("edit",id)
                 table.set();
                 if ($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
+                    console.log("edit",table.options.id)
                     var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
                     if ($.common.isEmpty(row)) {
                         $.modal.alertWarning("请至少选择一条记录");

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>若依系统首页</title>
+    <title>售后服务系统首页</title>
     <!-- 避免IE使用兼容模式 -->
  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link th:href="@{favicon.ico}" rel="shortcut icon"/>
@@ -27,15 +27,19 @@
         </div>
         <a th:href="@{/index}">
             <li class="logo hidden-xs">
-                <span class="logo-lg">RuoYi</span>
+                <span class="logo-lg">AfterSales</span>
             </li>
          </a>
         <div class="sidebar-collapse tab-content" id="side-menu">
 			<div class="user-panel">
 				<a class="menuItem noactive" title="个人中心" th:href="@{/system/user/profile}">
 					<div class="hide" th:text="个人中心"></div>
+					<div>$(#strings)</div>-------------
+					<div>@{/img/loli1.jpeg}</div>==
+					<div>@{${user.avatar}</div>-==-=-=-
 					<div class="pull-left image">
-						<img th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="this.src='img/profile.jpg'" class="img-circle" alt="User Image">
+
+						<img th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/loli1.jpeg} : @{${user.avatar}}" th:onerror="this.src='img/girl1.jpeg'" class="img-circle" alt="User Image">
 					</div>
 				</a>
 				<div class="pull-left info">

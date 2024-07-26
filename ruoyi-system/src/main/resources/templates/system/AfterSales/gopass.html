@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('通过售后单')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <description dict="/home/peng/IdeaProjects/serverAfterShell/ruoyi-system/src/main/resources/templates/system/AfterSales/gopass.html">
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-AfterSales-pass">
+            <input name="id" id="id" class="form-control" type="hidden">
+            <input name="deviceid" id="deviceid" class="form-control" type="hidden">
+            <input name="formDate" id="formDate" class="form-control" type="hidden">
+            <input name="salesman" id="salesman" class="form-control" type="hidden">
+            <input name="customer" id="customer" class="form-control" type="hidden">
+            <input name="customerAddr" class="form-control" type="hidden">
+            <input name="quality" class="form-control" type="hidden">
+            <input name="connection" class="form-control" type="hidden">
+            <input name="tel" class="form-control" type="hidden">
+            <input name="quetion" class="form-control" type="hidden">
+            <input name="productionDate" class="form-control" type="hidden">
+            <input name="productionID" class="form-control" type="hidden">
+            <input name="condition" class="form-control" type="hidden">
+            <input name="texture" class="form-control" type="hidden">
+            <input name="area" class="form-control" type="hidden">
+            <input name="amount" class="form-control" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">批准意见</label>
+                <div class="col-sm-8">
+                     <textarea name="permission" rows="10" cols="50"></textarea> <!--批准-->
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label col-xs-4 col-sm-4">上传分析单:</label>
+                <input type="file" class="form-control" onchange="goanalyze(this)" id="front" name="front">
+                <div class="formControls col-xs-5 col-sm-4">
+                    <span class="fileinput-button">
+				    <span>+</span>
+                    </span>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/AfterSales"
+        $("#form-AfterSales-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+           // console.log("submitHandler : " + $('#form-AfterSales-add').serialize());
+            //alert("submithandle");
+            if ($.validate.form()) {
+                //console.log($.form.valueOf('#form-AfterSales-add'));
+                //console.log($("#jsonAfterSales").serialize())
+                data = $("#idht").serialize();
+
+                let jsonAfterSales = data[0].value;
+
+                $("dispatchFile")[0].value()
+
+                $.operate.save(prefix + "/gopass", $('#form-AfterSales-pass').serialize());
+
+            }
+        }
+
+        $("input[name='modifyTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>
+
+<script type="text/javascript">
+    //建立一可存取到file的url
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+
+    function goanalyze(obj) {
+       // console.log("gome : " + obj)
+        var objUrl = getObjectURL(obj.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+        if (objUrl) {
+            $(obj).parent().find('span').html("<img src='" + objUrl + "' width='100%'>"); //将图片路径存入src中，显示出图片
+        }
+    }
+
+</script>

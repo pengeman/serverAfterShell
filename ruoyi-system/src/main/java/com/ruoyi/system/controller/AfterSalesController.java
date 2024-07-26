@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/system/AfterSales")
 public class AfterSalesController extends BaseController {
     private String prefix = "system/AfterSales";
+    @Value("${server.servlet.upload-path}")
+    public  String path;
 
     @Autowired
     private IAfterSalesService afterSalesService;
@@ -157,10 +160,50 @@ public class AfterSalesController extends BaseController {
             AfterSales afterSales,
                                @RequestPart("front") MultipartFile front,
                                HttpServletRequest request) throws ServletException, IOException {
-        System.out.println("editSave+++++++++++++++++++++++++++++++++++++++");
-        System.out.println(request.getPart("front").getSubmittedFileName());
+
+        //System.out.println("editSave+++++++++++++++++++++++++++++++++++++++");
+
+        String filename = request.getPart("front").getSubmittedFileName();
+        System.out.println(" path : " + path);
+        File uploadfile = new File(path);
+        if (uploadfile.exists()){
+        }else{
+            uploadfile.mkdir();
+        }
+        filename = path + filename;
+        System.out.println("filename : " + filename);
+        request.getPart("front").write(filename);
         return toAjax(afterSalesService.updateAfterSales(afterSales));
     }
+
+
+    /**
+     * 通过afterSales
+     */
+    @RequiresPermissions("system:AfterSales:edit")
+    @Log(title = "afterSales", businessType = BusinessType.UPDATE)
+    @PostMapping("/gopass")
+    @ResponseBody
+    public AjaxResult gopasssave(
+            AfterSales afterSales,
+            @RequestPart("front") MultipartFile front,
+            HttpServletRequest request) throws ServletException, IOException {
+
+        //System.out.println("editSave+++++++++++++++++++++++++++++++++++++++");
+
+        String filename = request.getPart("front").getSubmittedFileName();
+        System.out.println(" path : " + path);
+        File uploadfile = new File(path);
+        if (uploadfile.exists()){
+        }else{
+            uploadfile.mkdir();
+        }
+        filename = path + filename;
+        System.out.println("filename : " + filename);
+        request.getPart("front").write(filename);
+        return toAjax(afterSalesService.updateAfterSales(afterSales));
+    }
+
 
     /**
      * 删除afterSales

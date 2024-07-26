@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('修改afterSales')"/>
+    <th:block th:include="include :: header('编辑派工单')"/>
     <th:block th:include="include :: datetimepicker-css"/>
 </head>
 <body class="white-bg">
@@ -148,8 +148,6 @@
                     </span>
                 </div>
 
-
-                <label class="col-sm-4 control-label"><a href="kkkk">关单</a> </label>
             </div>
 
         </div>
@@ -177,8 +175,17 @@
                 type: 'POST',
                 data: formData,
                 success: function (data) {
-                    console.log(data)
-                    alert(data)
+                    // alert(data['msg']);
+                    if (data["code"] == 0){
+                        alert("保存成功");
+                    }
+                    $.each(data, function (haha, info) {
+                        console.log( "haha" + haha);
+                        console.log("info" + info);
+                        console.log(data["msg"] + " : " + data["code"]);
+
+                    });
+
                 },
                 cache: false,
                 contentType: false,
