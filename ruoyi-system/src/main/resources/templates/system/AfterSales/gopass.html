@@ -7,23 +7,28 @@
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-AfterSales-pass">
-            <input name="id" id="id" class="form-control" type="hidden">
-            <input name="deviceid" id="deviceid" class="form-control" type="hidden">
-            <input name="formDate" id="formDate" class="form-control" type="hidden">
-            <input name="salesman" id="salesman" class="form-control" type="hidden">
-            <input name="customer" id="customer" class="form-control" type="hidden">
-            <input name="customerAddr" class="form-control" type="hidden">
-            <input name="quality" class="form-control" type="hidden">
-            <input name="connection" class="form-control" type="hidden">
-            <input name="tel" class="form-control" type="hidden">
-            <input name="quetion" class="form-control" type="hidden">
-            <input name="productionDate" class="form-control" type="hidden">
-            <input name="productionID" class="form-control" type="hidden">
-            <input name="condition" class="form-control" type="hidden">
-            <input name="texture" class="form-control" type="hidden">
-            <input name="area" class="form-control" type="hidden">
-            <input name="amount" class="form-control" type="hidden">
+
+            ---------------
+            <form class="form-horizontal m" id="form-AfterSales-gopass" th:object="${afterSales}" method="post" enctype="multipart/form-data">
+                <input name="id" th:field="*{id}" type="text">
+                 <input name="formDate" th:field="*{formDate}" class="form-control" type="text">
+                      <input name="salesman" th:field="*{salesman}" class="form-control" type="text">
+                         <input name="customer" th:field="*{customer}" class="form-control" type="text">
+                        <input name="customerAddr" th:field="*{customerAddr}" class="form-control" type="text">
+                        <input name="quality" th:field="*{quality}" class="form-control" type="text">
+                        <input name="connection" th:field="*{connection}" class="form-control" type="text">
+                          <input name="tel" th:field="*{tel}" class="form-control" type="text">
+                          <input name="quetion" th:field="*{quetion}" class="form-control" type="text">
+                         <input name="productionDate" th:field="*{productionDate}" class="form-control" type="text">
+                         <input name="productionID" th:field="*{productionID}" class="form-control" type="text">
+                          <input name="condition" th:field="*{condition}" class="form-control" type="text">
+                        <input name="deviceType" th:field="*{deviceType}" class="form-control" type="text">
+                          <input name="texture" th:field="*{texture}" class="form-control" type="text">
+                         <input name="area" th:field="*{area}" class="form-control" type="text">
+                         <input name="amount" th:field="*{amount}" class="form-control" type="text">
+                          <input name="modifyTime" th:value="${#dates.format(afterSales.modifyTime, 'yyyy-MM-dd')}"
+
+            ----------------
             <div class="form-group">    
                 <label class="col-sm-3 control-label">批准意见</label>
                 <div class="col-sm-8">

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.domain.AftersalesBack;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -162,5 +163,28 @@ public class AfterSalesServiceImpl implements IAfterSalesService
             e.printStackTrace();
         }
         return 1;
+    }
+
+    @Override
+    public int gopassAfterSales(Long afterSalesID, AftersalesBack aftersalesBack) {
+        // 复制afterSales数据到aftersalesBack
+        AfterSales afterSales = this.selectAfterSalesById(afterSalesID);
+        this.backAfterSales(afterSales);
+        this.deleAfterSales(afterSales);
+        return 0;
+    }
+
+
+    @Override
+    public int backAfterSales(AfterSales afterSales) {
+
+        return 0;
+    }
+
+    @Override
+    public int deleAfterSales(AfterSales afterSales) {
+        Long id = afterSales.getId();
+        this.deleteAfterSalesById(id);
+        return 0;
     }
 }

@@ -47,14 +47,14 @@
             if ($.validate.form()) {
                 //console.log($.form.valueOf('#form-AfterSales-add'));
                 //console.log($("#jsonAfterSales").serialize())
-                data = $("#idht").serialize();
+                //data = $("#idht").serialize();
 
-                let jsonAfterSales = data[0].value;
-                console.log("---------------------------------------")
-                console.log(jsonAfterSales);
-                $("dispatchFile")[0].value()
+                //let jsonAfterSales = data[0].value;
+                //console.log("---------------------------------------")
+                //console.log(jsonAfterSales);
+                //$("dispatchFile")[0].value()
 
-                console.log($('#dispatchFile').serialize());
+                //console.log($('#dispatchFile').serialize());
                 $.operate.save(prefix + "/importJson", $('#form-AfterSales-add').serialize());
 
             }

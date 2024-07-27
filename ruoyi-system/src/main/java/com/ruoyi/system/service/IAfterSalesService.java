@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.AfterSales;
+import com.ruoyi.system.domain.AftersalesBack;
 
 /**
  * afterSalesService接口
@@ -68,4 +69,27 @@ public interface IAfterSalesService
      * 导入售后单，from json
      */
     public int importAfterSalesFromJson(String afterSalesJson);
+
+    /**
+     * 批准通过售后单<br>
+     * 将派工单的数据复制到他的备份表中，将
+     * @param afterSalesID,aftersalesBack
+     * @return
+     */
+    public int gopassAfterSales(Long afterSalesID, AftersalesBack aftersalesBack);
+
+    /**
+     * 将售后派工单备份
+     * @param afterSales
+     * @return
+     */
+    public int backAfterSales(AfterSales afterSales);
+
+    /**
+     * 删除售后派工单
+     * @param afterSales
+     * @return
+     */
+    public int deleAfterSales(AfterSales afterSales);
+
 }

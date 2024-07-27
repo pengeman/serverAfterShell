@@ -3,6 +3,8 @@ package com.ruoyi.system.controller;
 import java.io.*;
 import java.util.List;
 
+import com.ruoyi.system.domain.AftersalesBack;
+import com.ruoyi.system.service.IAftersalesBackService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,10 +39,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class AfterSalesController extends BaseController {
     private String prefix = "system/AfterSales";
     @Value("${server.servlet.upload-path}")
-    public  String path;
+    public String path;
 
     @Autowired
     private IAfterSalesService afterSalesService;
+    @Autowired
+    private IAftersalesBackService aftersalesBackService;
 
     @RequiresPermissions("system:AfterSales:view")
     @GetMapping()
@@ -117,7 +121,7 @@ public class AfterSalesController extends BaseController {
             String afterSalesJson = request.getParameter("jsonAfterSales");
             //System.out.println(afterSalesJson);
 
-            Part file =  request.getPart("dispatchfile");
+            Part file = request.getPart("dispatchfile");
             System.out.println("file: " + file);
             String filename = file.getSubmittedFileName();
             System.out.println("filename : " + filename);
@@ -158,16 +162,16 @@ public class AfterSalesController extends BaseController {
     @ResponseBody
     public AjaxResult editSave(
             AfterSales afterSales,
-                               @RequestPart("front") MultipartFile front,
-                               HttpServletRequest request) throws ServletException, IOException {
+            @RequestPart("front") MultipartFile front,
+            HttpServletRequest request) throws ServletException, IOException {
 
         //System.out.println("editSave+++++++++++++++++++++++++++++++++++++++");
 
         String filename = request.getPart("front").getSubmittedFileName();
         System.out.println(" path : " + path);
         File uploadfile = new File(path);
-        if (uploadfile.exists()){
-        }else{
+        if (uploadfile.exists()) {
+        } else {
             uploadfile.mkdir();
         }
         filename = path + filename;
@@ -178,30 +182,45 @@ public class AfterSalesController extends BaseController {
 
 
     /**
-     * 通过afterSales
+     * 通过afterSales，显示通过售后单页面
+     */
+    @RequiresPermissions("system:AfterSales:edit")
+    @GetMapping("/gopass/{id}")
+    public String gopass(@PathVariable("id") Long id, ModelMap mmap) {
+        System.out.println("gopass++++++++++++++++++++++++++++++++" + id);
+        AfterSales afterSales = afterSalesService.selectAfterSalesById(id);
+        mmap.put("afterSales", afterSales);
+        return prefix + "/gopass";
+    }
+
+    /**
+     * 通过售后单，保存售后分析单
      */
     @RequiresPermissions("system:AfterSales:edit")
     @Log(title = "afterSales", businessType = BusinessType.UPDATE)
     @PostMapping("/gopass")
     @ResponseBody
     public AjaxResult gopasssave(
-            AfterSales afterSales,
-            @RequestPart("front") MultipartFile front,
+            int afterSalesID,
+            AftersalesBack afterSalesBack,
+            //@RequestPart("front") MultipartFile front,
             HttpServletRequest request) throws ServletException, IOException {
 
         //System.out.println("editSave+++++++++++++++++++++++++++++++++++++++");
 
         String filename = request.getPart("front").getSubmittedFileName();
-        System.out.println(" path : " + path);
+        //System.out.println(" path : " + path);
         File uploadfile = new File(path);
-        if (uploadfile.exists()){
-        }else{
+        if (uploadfile.exists()) {
+        } else {
             uploadfile.mkdir();
         }
         filename = path + filename;
         System.out.println("filename : " + filename);
         request.getPart("front").write(filename);
-        return toAjax(afterSalesService.updateAfterSales(afterSales));
+
+       // return toAjax(afterSalesService.updateAfterSales(afterSales));
+        afterSalesService.go
     }
 
 
