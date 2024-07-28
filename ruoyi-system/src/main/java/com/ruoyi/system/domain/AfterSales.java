@@ -82,6 +82,12 @@ public class AfterSales extends BaseEntity
     @Excel(name = "修改时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date modifyTime;
 
+    /**
+     * 附件，派工单文件
+     */
+    private String attachment;
+    private String remark;
+
 
     /////////////////////////////////////////////////
     public void setId(Long id) 
@@ -274,6 +280,24 @@ public class AfterSales extends BaseEntity
         return modifyTime;
     }
 
+
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
+    }
+
+    @Override
+    public String getRemark() {
+        return remark;
+    }
+
+    @Override
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)

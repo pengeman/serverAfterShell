@@ -93,4 +93,9 @@ public class AftersalesBackServiceImpl implements IAftersalesBackService
     {
         return aftersalesBackMapper.deleteAftersalesBackById(id);
     }
+
+    @Override
+    public int gopassAfterSales(Long id) {
+        return 0;
+    }
 }

@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.List;
 
 import com.ruoyi.system.domain.AftersalesBack;
+import com.ruoyi.system.domain.Fixreport;
 import com.ruoyi.system.service.IAftersalesBackService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,6 +178,7 @@ public class AfterSalesController extends BaseController {
         filename = path + filename;
         System.out.println("filename : " + filename);
         request.getPart("front").write(filename);
+        afterSales.setAttachment(filename);
         return toAjax(afterSalesService.updateAfterSales(afterSales));
     }
 
@@ -189,7 +191,18 @@ public class AfterSalesController extends BaseController {
     public String gopass(@PathVariable("id") Long id, ModelMap mmap) {
         System.out.println("gopass++++++++++++++++++++++++++++++++" + id);
         AfterSales afterSales = afterSalesService.selectAfterSalesById(id);
-        mmap.put("afterSales", afterSales);
+        Fixreport fixreport = new Fixreport();
+        fixreport.setAfterSalesID(id);
+        fixreport.setCustomer(afterSales.getCustomer());
+        fixreport.setCustomerAddr(afterSales.getCustomerAddr());
+        fixreport.setDeviceType(afterSales.getDeviceType());
+        fixreport.setPerson("");
+        fixreport.setProductionID(afterSales.getProductionID());
+        fixreport.setQuetion(afterSales.getQuetion());
+        fixreport.setWorkcase(afterSales.getCondition());
+        fixreport.setDispatchfile(afterSales.getAttachment());
+
+        mmap.put("fixreport", fixreport);
         return prefix + "/gopass";
     }
 
@@ -201,8 +214,9 @@ public class AfterSalesController extends BaseController {
     @PostMapping("/gopass")
     @ResponseBody
     public AjaxResult gopasssave(
-            int afterSalesID,
-            AftersalesBack afterSalesBack,
+            Long afterSalesID,
+            //AftersalesBack afterSalesBack,
+
             //@RequestPart("front") MultipartFile front,
             HttpServletRequest request) throws ServletException, IOException {
 
@@ -218,9 +232,10 @@ public class AfterSalesController extends BaseController {
         filename = path + filename;
         System.out.println("filename : " + filename);
         request.getPart("front").write(filename);
+        AfterSales afterSales = afterSalesService.selectAfterSalesById(afterSalesID);
+        int r = afterSalesService.gopassSales(afterSales, filename);
+        return toAjax(r);
 
-       // return toAjax(afterSalesService.updateAfterSales(afterSales));
-        afterSalesService.go
     }
 
 

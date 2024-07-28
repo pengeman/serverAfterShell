@@ -66,6 +66,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="formType != null">formType,</if>
             <if test="createTime != null">create_time,</if>
             <if test="modifyTime != null">modify_time,</if>
+            <if test="attachment != null">attachment,</if>
+            <if test="remark != null">remark,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="deviceid != null">#{deviceid},</if>
@@ -87,6 +89,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="formType != null">#{formType},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="attachment != null">#{attachment},</if>
+            <if test="remark != null">#{remark},</if>
          </trim>
     </insert>
 

@@ -3,8 +3,10 @@ package com.ruoyi.system.service.impl;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.system.domain.AftersalesBack;
+import com.ruoyi.system.mapper.AftersalesBackMapper;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,55 +15,54 @@ import com.ruoyi.system.domain.AfterSales;
 import com.ruoyi.system.service.IAfterSalesService;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.system.biz.AfterSalesBiz;
+
 /**
  * afterSalesService业务层处理
- * 
+ *
  * @author peng
  * @date 2024-07-04
  */
 @Service
-public class AfterSalesServiceImpl implements IAfterSalesService 
-{
+public class AfterSalesServiceImpl implements IAfterSalesService {
     @Autowired
     private AfterSalesMapper afterSalesMapper;
+    @Autowired
+    private AftersalesBackMapper aftersalesBackMapper;
 
     /**
      * 查询afterSales
-     * 
+     *
      * @param id afterSales主键
      * @return afterSales
      */
     @Override
-    public AfterSales selectAfterSalesById(Long id)
-    {
+    public AfterSales selectAfterSalesById(Long id) {
         return afterSalesMapper.selectAfterSalesById(id);
     }
 
     /**
      * 查询afterSales列表
-     * 
+     *
      * @param afterSales afterSales
      * @return afterSales
      */
     @Override
-    public List<AfterSales> selectAfterSalesList(AfterSales afterSales)
-    {
+    public List<AfterSales> selectAfterSalesList(AfterSales afterSales) {
         return afterSalesMapper.selectAfterSalesList(afterSales);
     }
 
     /**
      * 新增afterSales
-     * 
+     *
      * @param afterSales afterSales
      * @return 结果
      */
     @Override
-    public int insertAfterSales(AfterSales afterSales)
-    {
+    public int insertAfterSales(AfterSales afterSales) {
         AfterSalesBiz afterSalesBiz = new AfterSalesBiz();
         afterSales.setCreateTime(DateUtils.getNowDate());
         /* 根据出厂编号，找到设备的id */
-        String productionID  = afterSales.getProductionID();
+        String productionID = afterSales.getProductionID();
         long devicdId = afterSalesBiz.findTheDeviceId(productionID);
         afterSales.setDeviceid(devicdId);
         return afterSalesMapper.insertAfterSales(afterSales);
@@ -69,50 +70,51 @@ public class AfterSalesServiceImpl implements IAfterSalesService
 
     /**
      * 修改afterSales
-     * 
+     *
      * @param afterSales afterSales
      * @return 结果
      */
     @Override
-    public int updateAfterSales(AfterSales afterSales)
-    {
+    public int updateAfterSales(AfterSales afterSales) {
         return afterSalesMapper.updateAfterSales(afterSales);
     }
 
     /**
      * 批量删除afterSales
-     * 
+     *
      * @param ids 需要删除的afterSales主键
      * @return 结果
      */
     @Override
-    public int deleteAfterSalesByIds(String ids)
-    {
+    public int deleteAfterSalesByIds(String ids) {
         return afterSalesMapper.deleteAfterSalesByIds(Convert.toStrArray(ids));
     }
 
     /**
      * 删除afterSales信息
-     * 
+     *
      * @param id afterSales主键
      * @return 结果
      */
     @Override
-    public int deleteAfterSalesById(Long id)
-    {
+    public int deleteAfterSalesById(Long id) {
         return afterSalesMapper.deleteAfterSalesById(id);
     }
 
     /**
      * 将售后单数据(afterSales)复制到售后单完成(gopassAfterSales)表中
      * 接受的参数：afterSales实体，通过单文件名
+     *
      * @param afterSales
      * @return
      */
-    public int gopassSales(AfterSales afterSales, String gopassFileName){
-
+    public int gopassSales(AfterSales afterSales, String gopassFileName) {
+        //System.out.println("gopassSales++++++++++++++++++++++++++++++++" + afterSales.getId());
+        this.backAfterSales(afterSales);
+        this.deleAfterSales(afterSales);
         return 0;
     }
+
     @Override
     public int importAfterSalesFromJson(String afterSalesJson) {
         //System.out.println("importAfterSalesFromJson  : " + afterSalesJson);
@@ -158,33 +160,63 @@ public class AfterSalesServiceImpl implements IAfterSalesService
                 afterSales.setModifyTime(new Date());
                 this.insertAfterSales(afterSales);
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
             e.printStackTrace();
         }
         return 1;
     }
 
+    @Deprecated
     @Override
     public int gopassAfterSales(Long afterSalesID, AftersalesBack aftersalesBack) {
         // 复制afterSales数据到aftersalesBack
         AfterSales afterSales = this.selectAfterSalesById(afterSalesID);
-        this.backAfterSales(afterSales);
-        this.deleAfterSales(afterSales);
-        return 0;
+        int r1 = this.backAfterSales(afterSales);
+        int r2 = this.deleAfterSales(afterSales);
+        return r1 & r2;
     }
 
 
     @Override
     public int backAfterSales(AfterSales afterSales) {
+        AftersalesBack a2 = new AftersalesBack();
 
-        return 0;
+        a2.setAmount(afterSales.getAmount());
+        a2.setArea(afterSales.getArea());
+        a2.setCondition(afterSales.getCondition());
+        a2.setCustomer(afterSales.getCustomer());
+        a2.setCustomerAddr(afterSales.getCustomerAddr());
+        a2.setConnection(afterSales.getConnection());
+        a2.setDeviceType(afterSales.getDeviceType());
+        a2.setDeviceid(afterSales.getDeviceid());
+        a2.setFormDate(afterSales.getFormDate());
+        a2.setFormType(afterSales.getFormType());
+        a2.setProductionDate(afterSales.getProductionDate());
+        a2.setProductionID(afterSales.getProductionID());
+        a2.setQuality(afterSales.getQuality());
+        a2.setQuetion(afterSales.getQuetion());
+        a2.setSalesman(afterSales.getSalesman());
+        a2.setTel(afterSales.getTel());
+        a2.setTexture(afterSales.getTexture());
+        a2.setModifyTime(afterSales.getModifyTime());
+        a2.setCreateBy(afterSales.getCreateBy());
+        a2.setParams(afterSales.getParams());
+        a2.setRemark(afterSales.getRemark());
+        a2.setSearchValue(afterSales.getSearchValue());
+        a2.setUpdateTime(afterSales.getUpdateTime());
+        a2.setUpdateBy(afterSales.getUpdateBy());
+        a2.setAttachment(afterSales.getAttachment());
+        a2.setRemark(afterSales.getRemark());
+        int r = aftersalesBackMapper.insertAftersalesBack(a2);
+
+        return r;
     }
 
     @Override
     public int deleAfterSales(AfterSales afterSales) {
         Long id = afterSales.getId();
-        this.deleteAfterSalesById(id);
-        return 0;
+        int r = this.deleteAfterSalesById(id);
+        return r;
     }
 }

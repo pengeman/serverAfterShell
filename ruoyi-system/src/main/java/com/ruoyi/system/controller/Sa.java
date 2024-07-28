@@ -14,5 +14,9 @@ public class Sa {
 
         System.out.println("Name: " + name);
         System.out.println("Age: " + age);
+        int r1 = 0 ;
+        int r2 = 0;
+        System.out.println(" r1 & r2 : ");
+        System.out.println(r1 & r2);
     }
 }
