@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="include :: header('编辑派工单')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+</head>
+<body class="white-bg">
+<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+    <label th:text="${afterSales.id}" display="block"></label>
+    <table>
+        <tr>
+            <td>下单日期</td>
+            <td th:text="${afterSales.formDate}"></td>
+        </tr>
+        <tr>
+            <td>业务员</td>
+            <td th:text="${afterSales.salesman}"></td>
+        </tr>
+        <tr>
+            <td>客户名称</td>
+            <td th:text="${afterSales.customer}"></td>
+        </tr>
+        <tr>
+            <td>客户地址</td>
+            <td th:text="${afterSales.customerAddr}"></td>
+        </tr>
+        <tr>
+            <td>质保期</td>
+            <td th:text="${afterSales.quality}"></td>
+        </tr>
+        <tr>
+            <td>质保期</td>
+            <td th:if="${afterSales.quality} eq '0'">保内</td>
+            <td th:if="${afterSales.quality} eq '1'">保外</td>
+        </tr>
+        <tr>
+            <td>联系人</td>
+            <td th:text="${afterSales.connection}"></td>
+        </tr>
+        <tr>
+            <td>联系电话</td>
+            <td th:text="${afterSales.tel}"></td>
+        </tr>
+        <tr>
+            <td>问题描述</td>
+            <td th:text="${afterSales.quetion}"></td>
+        </tr>
+        <tr>
+            <td>出厂日期</td>
+            <td th:text="${afterSales.productionDate}"></td>
+        </tr>
+        <tr>
+            <td>出厂编号</td>
+            <td th:text="${afterSales.productionID}"></td>
+        </tr>
+        <tr>
+            <td>工作情况</td>
+            <td th:text="${afterSales.condition}"></td>
+        </tr>
+        <tr>
+            <td>设备型号</td>
+            <td th:text="${afterSales.deviceType}"></td>
+        </tr>
+        <tr>
+            <td>材质</td>
+            <td th:text="${afterSales.texture}"></td>
+        </tr>
+        <tr>
+            <td>面积</td>
+            <td th:text="${afterSales.area}"></td>
+        </tr>
+        <tr>
+            <td>数量</td>
+            <td th:text="${afterSales.amount}"></td>
+        </tr>
+        <tr>
+            <td>修改时间</td>
+            <td th:text="${#dates.format(afterSales.modifyTime, 'yyyy-MM-dd')}"></td>
+        </tr>
+    </table>
+
+</div>
+<th:block th:include="include :: footer"/>
+<th:block th:include="include :: datetimepicker-js"/>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        // 在这里写你的代码，它会在页面加载完成后自动执行
+        console.log('edit.html 页面加载完成！');
+    });
+    var prefix = ctx + "system/AfterSales";
+    $("#form-AfterSales-edit").validate({
+        focusCleanup: true
+    });
+
+    function submitHandler() {
+        if ($.validate.form()) {
+            //$.operate.save(prefix + "/edit", $('#form-AfterSales-edit').serialize());
+            var formData = new FormData($("#form-AfterSales-edit")[0]);
+
+            $.ajax({
+                url: prefix + "/edit",
+                type: 'POST',
+                data: formData,
+                success: function (data) {
+                    // alert(data['msg']);
+                    if (data["code"] == 0){
+                        alert("保存成功");
+                    }
+                    $.each(data, function (haha, info) {
+                        console.log( "haha" + haha);
+                        console.log("info" + info);
+                        console.log(data["msg"] + " : " + data["code"]);
+
+                    });
+
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        }
+    }
+
+    function handleFileSelect() {
+        // 选择了一个文件
+        console.log("handleFileSelect: 上传文件")
+
+    }
+
+    $("input[name='modifyTime']").datetimepicker({
+        format: "yyyy-mm-dd",
+        minView: "month",
+        autoclose: true
+    });
+
+    //建立一可存取到file的url
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+
+    function gome(obj) {
+        console.log("gome : " + obj)
+        var objUrl = getObjectURL(obj.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+        if (objUrl) {
+            $(obj).parent().find('span').html("<img src='" + objUrl + "' width='100%'>"); //将图片路径存入src中，显示出图片
+        }
+    }
+
+    // 上传图片 获取图片的宽高 文件大小
+    var _URL = window.URL || window.webkitURL;
+    $("#front").change(function (e) {
+        var file, img;
+        if ((file = this.files[0])) {
+            img = new Image();
+            img.onload = function () {
+                alert('图片宽：' + this.width + " 图片高：" + this.height + " 图片大小：" + file.size);
+            };
+            img.src = _URL.createObjectURL(file);
+        }
+    });
+
+
+</script>
+</body>
+</html>

@@ -251,6 +251,21 @@ public class AfterSalesController extends BaseController {
     }
 
 
+
+    /**
+     * 查看售后派工单备份
+     */
+    @RequiresPermissions("system:afterSalesBack:edit")
+    @GetMapping("/view/{id}")
+    public String view(@PathVariable("id") Long id, ModelMap mmap)
+    {
+        System.out.println("view++++++++++++++++++++++++++++++++");
+        AfterSales afterSales = afterSalesService.selectAfterSalesById(id);
+        mmap.put("afterSales", afterSales);
+
+        return prefix + "/view";
+    }
+
     @RequestMapping(value = "/dispatchSheet", method = RequestMethod.GET)
     public ModelAndView upDrugImg(@RequestParam(value = "imgFile", required = false) MultipartFile file, HttpServletRequest request) {
         //file是imgFile的别名，只能上传一张图

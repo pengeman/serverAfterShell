@@ -70,7 +70,18 @@
             updateUrl: prefix + "/edit/{id}",
             removeUrl: prefix + "/remove",
             exportUrl: prefix + "/export",
+            viewUrl: prefix + "/view",
             modalName: "afterSales",
+            onCheck: onCheck,
+            onUncheck: onUncheck,
+            onCheckAll: onCheckAll,
+            onUncheckAll: onUncheckAll,
+            onClickRow: onClickRow,
+            onDblClickRow: onDblClickRow,
+            onClickCell: onClickCell,
+            onDblClickCell: onDblClickCell,
+            responseHandler: responseHandler,
+            onLoadSuccess: onLoadSuccess,
             columns: [{
                 checkbox: true
             },
@@ -119,7 +130,58 @@
                 }]
         };
         $.table.init(options);
+
     });
+    function onClickRow(row, $element){
+        //alert("单击行：" + row.id + " row：" + row);
+        width =800;
+        height = 600;
+        id = row.id;
+        url = prefix+"/view" + "/" + id;
+        $.modal.open("派工单", url, width, height);  // 弹出窗口，指定窗口中显示的url，窗口width，height
+    }
+
+    function onDblClickRow(row, $element){
+        //alert("双击行userId：" + row.userId + " userName：" + row.userName);
+    }
+
+    function onClickCell(field, value, row, $element){
+        //alert("单击格name：" + field + " value：" + value);
+    }
+
+    function onDblClickCell(field, value, row, $element){
+       // alert("双击格name：" + field + " value：" + value);
+    }
+
+    function onCheck(row, $element){
+        //alert("选中行userId：" + row.userId + " userName：" + row.userName);
+    }
+
+    function onUncheck(row, $element){
+        //alert("取消行userId：" + row.userId + " userName：" + row.userName);
+    }
+
+    function onCheckAll(rowsAfter, rowsBefore){
+        var rows = $.map(rowsAfter, function(row) {
+            return $.common.getItemField(row, "userId");
+        });
+       // alert("全选行：" + rows);
+    }
+
+    function onUncheckAll(rowsAfter, rowsBefore){
+        var rows = $.map(rowsBefore, function(row) {
+            return $.common.getItemField(row, "userId");
+        });
+        //alert("取消行：" + rows);
+    }
+
+    function responseHandler(res){
+        //alert("请求获取数据后处理回调函数");
+    }
+
+    function onLoadSuccess(data){
+       // alert("当所有数据被加载时触发");
+    }
 </script>
 <script type="application/javascript">
     var importJson = function () {
@@ -128,7 +190,7 @@
         height = 600;
         url = prefix + "/importJson";
 
-        $.modal.open("导入售后单数据", url, width, height);
+        $.modal.open("导入售后单数据", url, width, height);  // 弹出窗口，指定窗口中显示的url，窗口width，height
     }
     var gopass = function (id) {
         // 派工单验收通过，售后完成

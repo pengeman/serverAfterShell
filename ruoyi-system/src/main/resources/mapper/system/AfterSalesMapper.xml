@@ -116,6 +116,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="formType != null">formType = #{formType},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="attachment != null">attacment = #{attachment},</if>
+            <if test="remark != null">remark = #{remark},</if>
         </trim>
         where id = #{id}
     </update>
