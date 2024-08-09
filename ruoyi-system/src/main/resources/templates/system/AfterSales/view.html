@@ -74,8 +74,13 @@
             <td th:text="${afterSales.amount}"></td>
         </tr>
         <tr>
+            <td>派工单</td>
+            <td><a th:onclick="showsheet([[${afterSales.attachment}]]);" >派工单...</a> </td>
+        </tr>
+        <tr>
             <td>修改时间</td>
             <td th:text="${#dates.format(afterSales.modifyTime, 'yyyy-MM-dd')}"></td>
+
         </tr>
     </table>
 
@@ -166,7 +171,13 @@
             img.src = _URL.createObjectURL(file);
         }
     });
-
+function showsheet(attachment){
+    console.log(attachment);
+    url = prefix + "\/" + attachment;
+    width = 800;
+    height = 600;
+    $.modal.open("派工单", url, width, height);  // 弹出窗口，指定窗口中显示的url，窗口width，height
+}
 
 </script>
 </body>

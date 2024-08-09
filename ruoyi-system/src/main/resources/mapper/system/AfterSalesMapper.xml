@@ -25,10 +25,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="formType"    column="formType"    />
         <result property="createTime"    column="create_time"    />
         <result property="modifyTime"    column="modify_time"    />
+        <result property="attachment" column="attachment"/>
     </resultMap>
 
     <sql id="selectAfterSalesVo">
-        select id, deviceid, formDate, salesman, customer, customerAddr, quality, `connection`, tel, quetion, productionDate, productionID, `condition`, deviceType, texture, area, amount, formType, create_time, modify_time from AfterSales
+        select id, deviceid, formDate, salesman, customer, customerAddr, quality, `connection`, tel, quetion, productionDate, productionID, `condition`, deviceType, texture, area, amount, formType, create_time, modify_time,attachment from AfterSales
     </sql>
 
     <select id="selectAfterSalesList" parameterType="AfterSales" resultMap="AfterSalesResult">
@@ -116,7 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="formType != null">formType = #{formType},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="modifyTime != null">modify_time = #{modifyTime},</if>
-            <if test="attachment != null">attacment = #{attachment},</if>
+            <if test="attachment != null">attachment = #{attachment},</if>
             <if test="remark != null">remark = #{remark},</if>
         </trim>
         where id = #{id}

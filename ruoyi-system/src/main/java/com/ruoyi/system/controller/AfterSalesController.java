@@ -3,6 +3,8 @@ package com.ruoyi.system.controller;
 import java.io.*;
 import java.util.List;
 
+import com.ruoyi.common.config.RuoYiConfig;
+import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.system.domain.AftersalesBack;
 import com.ruoyi.system.domain.Fixreport;
 import com.ruoyi.system.service.IAftersalesBackService;
@@ -157,10 +159,6 @@ public class AfterSalesController extends BaseController {
     /**
      * 修改保存afterSales
      */
-    @RequiresPermissions("system:AfterSales:edit")
-    @Log(title = "afterSales", businessType = BusinessType.UPDATE)
-    @PostMapping("/edit")
-    @ResponseBody
     public AjaxResult editSave(
             AfterSales afterSales,
             @RequestPart("front") MultipartFile front,
@@ -259,6 +257,12 @@ public class AfterSalesController extends BaseController {
     @GetMapping("/view/{id}")
     public String view(@PathVariable("id") Long id, ModelMap mmap)
     {
+        String url = "";
+        javax.servlet.ServletContext context = this.getRequest().getServletContext();
+        url = this.getRequest().getContextPath();
+        System.out.println("servlet context url : " + url);
+        url = context.getRealPath("/WEB-INF/uploads");
+        System.out.println(" url : " + url);
         System.out.println("view++++++++++++++++++++++++++++++++");
         AfterSales afterSales = afterSalesService.selectAfterSalesById(id);
         mmap.put("afterSales", afterSales);
