@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DevInfoMapper">
+    
+    <resultMap type="DevInfo" id="DevInfoResult">
+        <result property="id"    column="id"    />
+        <result property="serialid"    column="serialid"    />
+        <result property="makedate"    column="makedate"    />
+        <result property="controct"    column="controct"    />
+        <result property="buyerid"    column="buyerid"    />
+        <result property="userid"    column="userid"    />
+    </resultMap>
+
+    <sql id="selectDevInfoVo">
+        select id, serialid, makedate, controct, buyerid, userid from devInfo
+    </sql>
+
+    <select id="selectDevInfoList" parameterType="DevInfo" resultMap="DevInfoResult">
+        <include refid="selectDevInfoVo"/>
+        <where>  
+            <if test="serialid != null  and serialid != ''"> and serialid like concat('%', #{serialid}, '%')</if>
+            <if test="params.beginMakedate != null and params.beginMakedate != '' and params.endMakedate != null and params.endMakedate != ''"> and makedate between #{params.beginMakedate} and #{params.endMakedate}</if>
+            <if test="buyerid != null  and buyerid != ''"> and buyerid like concat('%', #{buyerid}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectDevInfoById" parameterType="Long" resultMap="DevInfoResult">
+        <include refid="selectDevInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDevInfo" parameterType="DevInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into devInfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serialid != null and serialid != ''">serialid,</if>
+            <if test="makedate != null">makedate,</if>
+            <if test="controct != null">controct,</if>
+            <if test="buyerid != null">buyerid,</if>
+            <if test="userid != null">userid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serialid != null and serialid != ''">#{serialid},</if>
+            <if test="makedate != null">#{makedate},</if>
+            <if test="controct != null">#{controct},</if>
+            <if test="buyerid != null">#{buyerid},</if>
+            <if test="userid != null">#{userid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDevInfo" parameterType="DevInfo">
+        update devInfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="serialid != null and serialid != ''">serialid = #{serialid},</if>
+            <if test="makedate != null">makedate = #{makedate},</if>
+            <if test="controct != null">controct = #{controct},</if>
+            <if test="buyerid != null">buyerid = #{buyerid},</if>
+            <if test="userid != null">userid = #{userid},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDevInfoById" parameterType="Long">
+        delete from devInfo where id = #{id}
+    </delete>
+
+    <delete id="deleteDevInfoByIds" parameterType="String">
+        delete from devInfo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

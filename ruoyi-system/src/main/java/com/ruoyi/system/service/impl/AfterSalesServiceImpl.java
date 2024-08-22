@@ -1,11 +1,17 @@
 package com.ruoyi.system.service.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.system.domain.AftersalesBack;
+import com.ruoyi.system.domain.Note;
+import com.ruoyi.system.domain.SysFileInfo;
 import com.ruoyi.system.mapper.AftersalesBackMapper;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +34,8 @@ public class AfterSalesServiceImpl implements IAfterSalesService {
     private AfterSalesMapper afterSalesMapper;
     @Autowired
     private AftersalesBackMapper aftersalesBackMapper;
-
+@Autowired
+private SysFileInfoServiceImpl sysFileInfoService;
     /**
      * 查询afterSales
      *
@@ -218,5 +225,26 @@ public class AfterSalesServiceImpl implements IAfterSalesService {
         Long id = afterSales.getId();
         int r = this.deleteAfterSalesById(id);
         return r;
+    }
+
+    @Override
+    public int editSales(AfterSales afterSales, com.ruoyi.system.domain.SysFileInfo fileInfo, org.springframework.web.multipart.MultipartFile attachmentFile )   {
+
+        try {
+            // 上传文件路径
+            String filePath = RuoYiConfig.getUploadPath();
+            // 上传并返回新文件名称
+            String fileName = FileUploadUtils.upload(filePath, attachmentFile);
+            fileInfo.setFileName(fileName);
+            fileInfo.setFilePath(filePath);
+            sysFileInfoService.insertSysFileInfo(fileInfo);
+            Long id = fileInfo.getFileId();
+            afterSales.setAttachment(id + "");
+            this.updateAfterSales(afterSales);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 }

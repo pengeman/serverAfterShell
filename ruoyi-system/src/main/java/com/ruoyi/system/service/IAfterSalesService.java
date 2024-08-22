@@ -1,8 +1,10 @@
 package com.ruoyi.system.service;
 
+import java.io.IOException;
 import java.util.List;
 import com.ruoyi.system.domain.AfterSales;
 import com.ruoyi.system.domain.AftersalesBack;
+import com.ruoyi.system.domain.Note;
 
 /**
  * afterSalesService接口
@@ -92,4 +94,9 @@ public interface IAfterSalesService
      */
     public int deleAfterSales(AfterSales afterSales);
 
+    /**
+     * 编辑派工单(afterSales),update afterSales,保存便签note，保存派工单影像file。
+     * @return int ,1成功，0失败
+     */
+    public int editSales(AfterSales afterSales, com.ruoyi.system.domain.SysFileInfo  fileInfo,org.springframework.web.multipart.MultipartFile attachmentFile ) ;
 }

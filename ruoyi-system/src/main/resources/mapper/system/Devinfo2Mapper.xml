@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.Devinfo2Mapper">
+    
+    <resultMap type="Devinfo2" id="Devinfo2Result">
+        <result property="id"    column="id"    />
+        <result property="serialid"    column="serialid"    />
+        <result property="devtype"    column="devtype"    />
+        <result property="calpagecode"    column="calpagecode"    />
+        <result property="area"    column="area"    />
+        <result property="plate"    column="plate"    />
+        <result property="thinkness"    column="thinkness"    />
+        <result property="texture"    column="texture"    />
+        <result property="gasket"    column="gasket"    />
+        <result property="netweight"    column="netweight"    />
+        <result property="workweight"    column="workweight"    />
+        <result property="volume"    column="volume"    />
+        <result property="diameter"    column="diameter"    />
+        <result property="diatexture"    column="diatexture"    />
+        <result property="rail"    column="rail"    />
+        <result property="bolt1"    column="bolt1"    />
+        <result property="bolt2"    column="bolt2"    />
+    </resultMap>
+
+    <sql id="selectDevinfo2Vo">
+        select id, serialid, devtype, calpagecode, area, plate, thinkness, texture, gasket, netweight, workweight, volume, diameter, diatexture, rail, bolt1, bolt2 from devinfo2
+    </sql>
+
+    <select id="selectDevinfo2List" parameterType="Devinfo2" resultMap="Devinfo2Result">
+        <include refid="selectDevinfo2Vo"/>
+        <where>  
+            <if test="serialid != null  and serialid != ''"> and serialid like concat('%', #{serialid}, '%')</if>
+            <if test="devtype != null  and devtype != ''"> and devtype like concat('%', #{devtype}, '%')</if>
+            <if test="calpagecode != null  and calpagecode != ''"> and calpagecode like concat('%', #{calpagecode}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectDevinfo2ById" parameterType="Long" resultMap="Devinfo2Result">
+        <include refid="selectDevinfo2Vo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDevinfo2" parameterType="Devinfo2" useGeneratedKeys="true" keyProperty="id">
+        insert into devinfo2
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serialid != null and serialid != ''">serialid,</if>
+            <if test="devtype != null">devtype,</if>
+            <if test="calpagecode != null">calpagecode,</if>
+            <if test="area != null">area,</if>
+            <if test="plate != null">plate,</if>
+            <if test="thinkness != null">thinkness,</if>
+            <if test="texture != null">texture,</if>
+            <if test="gasket != null">gasket,</if>
+            <if test="netweight != null">netweight,</if>
+            <if test="workweight != null">workweight,</if>
+            <if test="volume != null">volume,</if>
+            <if test="diameter != null">diameter,</if>
+            <if test="diatexture != null">diatexture,</if>
+            <if test="rail != null">rail,</if>
+            <if test="bolt1 != null">bolt1,</if>
+            <if test="bolt2 != null">bolt2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serialid != null and serialid != ''">#{serialid},</if>
+            <if test="devtype != null">#{devtype},</if>
+            <if test="calpagecode != null">#{calpagecode},</if>
+            <if test="area != null">#{area},</if>
+            <if test="plate != null">#{plate},</if>
+            <if test="thinkness != null">#{thinkness},</if>
+            <if test="texture != null">#{texture},</if>
+            <if test="gasket != null">#{gasket},</if>
+            <if test="netweight != null">#{netweight},</if>
+            <if test="workweight != null">#{workweight},</if>
+            <if test="volume != null">#{volume},</if>
+            <if test="diameter != null">#{diameter},</if>
+            <if test="diatexture != null">#{diatexture},</if>
+            <if test="rail != null">#{rail},</if>
+            <if test="bolt1 != null">#{bolt1},</if>
+            <if test="bolt2 != null">#{bolt2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDevinfo2" parameterType="Devinfo2">
+        update devinfo2
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="serialid != null and serialid != ''">serialid = #{serialid},</if>
+            <if test="devtype != null">devtype = #{devtype},</if>
+            <if test="calpagecode != null">calpagecode = #{calpagecode},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="plate != null">plate = #{plate},</if>
+            <if test="thinkness != null">thinkness = #{thinkness},</if>
+            <if test="texture != null">texture = #{texture},</if>
+            <if test="gasket != null">gasket = #{gasket},</if>
+            <if test="netweight != null">netweight = #{netweight},</if>
+            <if test="workweight != null">workweight = #{workweight},</if>
+            <if test="volume != null">volume = #{volume},</if>
+            <if test="diameter != null">diameter = #{diameter},</if>
+            <if test="diatexture != null">diatexture = #{diatexture},</if>
+            <if test="rail != null">rail = #{rail},</if>
+            <if test="bolt1 != null">bolt1 = #{bolt1},</if>
+            <if test="bolt2 != null">bolt2 = #{bolt2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDevinfo2ById" parameterType="Long">
+        delete from devinfo2 where id = #{id}
+    </delete>
+
+    <delete id="deleteDevinfo2ByIds" parameterType="String">
+        delete from devinfo2 where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

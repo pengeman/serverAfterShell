@@ -266,9 +266,10 @@ public class FileUtils
         {
             return null;
         }
-        int lastUnixPos = fileName.lastIndexOf('/');
-        int lastWindowsPos = fileName.lastIndexOf('\\');
-        int index = Math.max(lastUnixPos, lastWindowsPos);
+        int index = fileName.lastIndexOf(File.separator);  // peng 2024.8.11
+//        int lastUnixPos = fileName.lastIndexOf('/');
+//        int lastWindowsPos = fileName.lastIndexOf('\\');
+//        int index = Math.max(lastUnixPos, lastWindowsPos);
         return fileName.substring(index + 1);
     }
 

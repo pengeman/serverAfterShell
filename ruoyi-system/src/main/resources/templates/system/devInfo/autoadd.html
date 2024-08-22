@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<th:block th:include="include :: header('搜索自动补全')" />
+</head>
+<body class="gray-bg">
+      <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+
+            <div class="col-sm-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>搜索自动补全<small>https://github.com/bassjobsen/Bootstrap-3-Typeahead</small></h5>
+                    </div>  
+                    <div class="ibox-content">
+
+                        <hr>
+
+                        <p>通过javascript的基本示例。</p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input type="text" placeholder="ruoyi..." class="form-control" id="typeahead-demo-1"/>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        <p>通过javascript的复杂示例。</p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input type="text" placeholder="ruoyi..." class="form-control" id="typeahead-demo-2"/>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        <p>后台url中获取简单数据</p>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input type="text" placeholder="ruoyi..." class="form-control" id="typeahead-demo-3"/>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        <div class="form-group">
+                            <label class="font-noraml">相关参数详细信息</label>
+                            <div><a href="http://doc.ruoyi.vip/ruoyi/document/zjwd.html#bootstrap-typeahead" target="_blank">http://doc.ruoyi.vip/ruoyi/document/zjwd.html#bootstrap-typeahead</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: bootstrap-suggest-js" />
+    <th:block th:include="include :: bootstrap-typeahead-js" />
+    <script type="text/javascript">
+
+	    $('#typeahead-demo-1').typeahead({
+            source: ["ruoyi 1","ruoyi 2","ruoyi 3","peng 4"]
+        });
+	    
+	    $('#typeahead-demo-2').typeahead({
+            source: [
+                {"name": "Afghanistan", "code": "AF", "ccn0": "040"},
+                {"name": "Land Islands", "code": "AX", "ccn0": "050"},
+                {"name": "Albania", "code": "AL","ccn0": "060"},
+                {"name": "Algeria", "code": "DZ","ccn0": "070"}
+            ]
+        });
+	    
+	    $.get(ctx + "demo/form/collection", function(data){
+            console.log(data.value)
+	    	$("#typeahead-demo-3").typeahead({
+		        source: data.value
+		    });
+        },'json');
+    </script>
+</body>
+</html>

@@ -301,7 +301,7 @@
 	    });
 	    
 	    $('#typeahead-demo-1').typeahead({
-            source: ["ruoyi 1","ruoyi 2","ruoyi 3"]
+            source: ["ruoyi 1","ruoyi 2","ruoyi 3","peng 4"]
         });
 	    
 	    $('#typeahead-demo-2').typeahead({
@@ -314,6 +314,7 @@
         });
 	    
 	    $.get(ctx + "demo/form/collection", function(data){
+            //console.log(data.value);
 	    	$("#typeahead-demo-3").typeahead({
 		        source: data.value
 		    });

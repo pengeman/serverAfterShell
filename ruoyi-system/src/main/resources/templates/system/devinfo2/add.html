@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增设备信息明细')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-devinfo2-add">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">序列号：</label>
+                    <div class="col-sm-8">
+                        <input name="serialid" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">计算书编号：</label>
+                    <div class="col-sm-8">
+                        <input name="calpagecode" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">换热面积：</label>
+                    <div class="col-sm-8">
+                        <input name="area" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">板片数：</label>
+                    <div class="col-sm-8">
+                        <input name="plate" placeholder="133(H50V83)" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">板片厚度：</label>
+                    <div class="col-sm-8">
+                        <input name="thinkness" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">板片材质：</label>
+                    <div class="col-sm-8">
+                        <input name="texture" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">密封垫片：</label>
+                    <div class="col-sm-8">
+                        <input name="gasket" placeholder="EPDM" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">净重：</label>
+                    <div class="col-sm-8">
+                        <input name="netweight" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">工作重量：</label>
+                    <div class="col-sm-8">
+                        <input name="workweight" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">体积尺寸：</label>
+                    <div class="col-sm-8">
+                        <input name="volume" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">角孔孔径：</label>
+                    <div class="col-sm-8">
+                        <input name="diameter" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">角孔材质：</label>
+                    <div class="col-sm-8">
+                        <input name="diatexture" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">上下导杆尺寸：</label>
+                    <div class="col-sm-8">
+                        <input name="rail" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">左右螺栓尺寸：</label>
+                    <div class="col-sm-8">
+                        <input name="bolt1" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">上下螺栓尺寸：</label>
+                    <div class="col-sm-8">
+                        <input name="bolt2" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/devinfo2"
+        $("#form-devinfo2-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-devinfo2-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

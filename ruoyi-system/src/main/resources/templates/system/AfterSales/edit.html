@@ -6,7 +6,8 @@
 </head>
 <body class="white-bg">
 <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-AfterSales-edit" th:object="${afterSales}" method="post" enctype="multipart/form-data">
+    <form class="form-horizontal m" id="form-AfterSales-edit" th:object="${afterSales}" method="post"
+          enctype="multipart/form-data">
         <input name="id" th:field="*{id}" type="hidden">
         <div class="col-xs-6">
             <div class="form-group">
@@ -141,15 +142,14 @@
             </div>
             <div class="form-group">
                 <label class="form-label col-xs-4 col-sm-4">上传派工单:</label>
-                <input type="file" class="form-control" onchange="gome(this)" id="front" name="front">
+                <!--                <input type="file" class="form-control" onchange="gome(this)" id="file" name="filePath">-->
+                <input type="file" class="form-control" id="file" name="filePath">
                 <div class="formControls col-xs-5 col-sm-4">
                     <span class="fileinput-button">
 				    <span>+</span>
                     </span>
                 </div>
-
             </div>
-
         </div>
     </form>
 </div>
@@ -169,23 +169,19 @@
         if ($.validate.form()) {
             //$.operate.save(prefix + "/edit", $('#form-AfterSales-edit').serialize());
             var formData = new FormData($("#form-AfterSales-edit")[0]);
-
+            var file = $('#file')[0].files[0];
+            if (file == null) {
+                $.modal.alertWarning("请先选择文件路径");
+                return false;
+            }
+            formData.append("file", file);
             $.ajax({
                 url: prefix + "/edit",
                 type: 'POST',
                 data: formData,
+                dataType: "json",
                 success: function (data) {
-                    // alert(data['msg']);
-                    if (data["code"] == 0){
-                        alert("保存成功");
-                    }
-                    $.each(data, function (haha, info) {
-                        console.log( "haha" + haha);
-                        console.log("info" + info);
-                        console.log(data["msg"] + " : " + data["code"]);
-
-                    });
-
+                    alert("保存成功");
                 },
                 cache: false,
                 contentType: false,
@@ -225,6 +221,30 @@
         if (objUrl) {
             $(obj).parent().find('span').html("<img src='" + objUrl + "' width='100%'>"); //将图片路径存入src中，显示出图片
         }
+    }
+
+    function uploadFile(obj) {
+        var formData = new FormData();
+        var objUrl = getObjectURL(obj.files[0]); //获取图片的路径，该路径不是图片在本地的路径
+        console.log("uploadFile : " + objUrl);
+        if (objUrl == null) {
+            $.modal.alertWarning("请先选择文件路径");
+            return false;
+        }
+        formData.append('fileName', $("input[name='fileName']").val());
+        formData.append('file', $('#filePath')[0].files[0]);
+        $.ajax({
+            url: prefix + "/edit2",
+            type: 'post',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (result) {
+                $.operate.successCallback(result);
+            }
+        });
     }
 
     // 上传图片 获取图片的宽高 文件大小

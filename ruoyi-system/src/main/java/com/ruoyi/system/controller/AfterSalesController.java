@@ -3,11 +3,17 @@ package com.ruoyi.system.controller;
 import java.io.*;
 import java.util.List;
 
+import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.common.config.RuoYiConfig;
+import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;
 import com.ruoyi.system.domain.AftersalesBack;
 import com.ruoyi.system.domain.Fixreport;
+import com.ruoyi.system.domain.SysFileInfo;
 import com.ruoyi.system.service.IAftersalesBackService;
+import com.ruoyi.system.service.INoteService;
+import com.ruoyi.system.service.ISysFileInfoService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +55,10 @@ public class AfterSalesController extends BaseController {
     private IAfterSalesService afterSalesService;
     @Autowired
     private IAftersalesBackService aftersalesBackService;
+    @Autowired
+    private ISysFileInfoService sysFileInfoService;
+    @Autowired
+    private INoteService noteService;
 
     @RequiresPermissions("system:AfterSales:view")
     @GetMapping()
@@ -124,19 +135,19 @@ public class AfterSalesController extends BaseController {
             String afterSalesJson = request.getParameter("jsonAfterSales");
             //System.out.println(afterSalesJson);
 
-            Part file = request.getPart("dispatchfile");
-            System.out.println("file: " + file);
-            String filename = file.getSubmittedFileName();
-            System.out.println("filename : " + filename);
-            InputStream is = file.getInputStream();
-            FileOutputStream outputStream = new FileOutputStream(filename);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = is.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, length);
-            }
+            //Part file = request.getPart("dispatchfile");
+            //System.out.println("file: " + file);
+            //String filename = file.getSubmittedFileName();
+            //System.out.println("filename : " + filename);
+            //InputStream is = file.getInputStream();
+            //FileOutputStream outputStream = new FileOutputStream(filename);
+//            byte[] buffer = new byte[1024];
+//            int length;
+//            while ((length = is.read(buffer)) != -1) {
+//                outputStream.write(buffer, 0, length);
+//            }
             return toAjax(afterSalesService.importAfterSalesFromJson(afterSalesJson));
-        } catch (IOException | ServletException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return toAjax(false);
         }
@@ -158,15 +169,63 @@ public class AfterSalesController extends BaseController {
 
     /**
      * 修改保存afterSales
+     * <p>
+     * // 上传文件路径
+     * String filePath = RuoYiConfig.getUploadPath();
+     * // 上传并返回新文件名称
+     * String fileName = FileUploadUtils.upload(filePath, file);
+     * fileInfo.setFilePath(fileName);
+     * return toAjax(sysFileInfoService.insertSysFileInfo(fileInfo));
      */
+    @RequiresPermissions("system:AfterSales:edit")
+    @PostMapping("/edit")
+    @ResponseBody
     public AjaxResult editSave(
             AfterSales afterSales,
-            @RequestPart("front") MultipartFile front,
+            @RequestPart("filePath") MultipartFile front,
+            HttpServletRequest request) throws ServletException, IOException {
+
+//        String filename = request.getPart("filePath").getSubmittedFileName();
+//        System.out.println(" path : " + path);
+//        File uploadfile = new File(path);
+//        if (uploadfile.exists()) {
+//        } else {
+//            uploadfile.mkdir();
+//        }
+
+//        String fileName = front.getOriginalFilename();
+//        String filePath = RuoYiConfig.getUploadPath();
+//        System.out.println("fileName : " + fileName);
+        // 获得上传文件信息 fileInfo
+        SysFileInfo fileInfo = new SysFileInfo();
+//        fileInfo.setFileName(fileName);
+//        fileInfo.setFilePath(filePath);
+        //sysFileInfoService.insertSysFileInfo(fileInfo);
+//        System.out.println(id);
+        Long id = fileInfo.getFileId();
+        afterSales.setAttachment(id + "");
+
+//        // 获得note,并保存
+//        String snote = request.getParameter("note");
+//        com.ruoyi.system.domain.Note note = new com.ruoyi.system.domain.Note();
+//        note.setNote(snote);
+        //noteService.insertNote(note);
+        int r = afterSalesService.editSales(afterSales, fileInfo, front);
+        return toAjax(r);
+    }
+
+    @RequiresPermissions("system:AfterSales:edit")
+    @PostMapping("/edit2")
+    @ResponseBody
+    public AjaxResult editSave2(
+            AfterSales afterSales,
             HttpServletRequest request) throws ServletException, IOException {
 
         //System.out.println("editSave+++++++++++++++++++++++++++++++++++++++");
 
-        String filename = request.getPart("front").getSubmittedFileName();
+        Part part = request.getPart("filePath");
+        String filename = part.getSubmittedFileName();
+
         System.out.println(" path : " + path);
         File uploadfile = new File(path);
         if (uploadfile.exists()) {
@@ -175,11 +234,11 @@ public class AfterSalesController extends BaseController {
         }
         filename = path + filename;
         System.out.println("filename : " + filename);
-        request.getPart("front").write(filename);
+        part.write(filename);
         afterSales.setAttachment(filename);
-        return toAjax(afterSalesService.updateAfterSales(afterSales));
+        int r = afterSalesService.updateAfterSales(afterSales);
+        return toAjax(r);
     }
-
 
     /**
      * 通过afterSales，显示通过售后单页面
@@ -236,6 +295,23 @@ public class AfterSalesController extends BaseController {
 
     }
 
+    /**
+     * 本地资源通用下载
+     */
+    @GetMapping("/common/download/resource")
+    public void resourceDownload(String resource, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        // 本地资源路径
+        String localPath = RuoYiConfig.getProfile();
+        // 数据库资源地址
+        String downloadPath = localPath + StringUtils.substringAfter(resource, Constants.RESOURCE_PREFIX);
+        // 下载名称
+        String downloadName = StringUtils.substringAfterLast(downloadPath, "/");
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("multipart/form-data");
+        response.setHeader("Content-Disposition", "attachment;fileName=" + FileUtils.setFileDownloadHeader(request, downloadName));
+        FileUtils.writeBytes(downloadPath, response.getOutputStream());
+    }
 
     /**
      * 删除afterSales
@@ -249,14 +325,12 @@ public class AfterSalesController extends BaseController {
     }
 
 
-
     /**
      * 查看售后派工单备份
      */
     @RequiresPermissions("system:afterSalesBack:edit")
     @GetMapping("/view/{id}")
-    public String view(@PathVariable("id") Long id, ModelMap mmap)
-    {
+    public String view(@PathVariable("id") Long id, ModelMap mmap) {
         String url = "";
         javax.servlet.ServletContext context = this.getRequest().getServletContext();
         url = this.getRequest().getContextPath();
@@ -265,6 +339,8 @@ public class AfterSalesController extends BaseController {
         System.out.println(" url : " + url);
         System.out.println("view++++++++++++++++++++++++++++++++");
         AfterSales afterSales = afterSalesService.selectAfterSalesById(id);
+        String attachmentid = afterSales.getAttachment();
+
         mmap.put("afterSales", afterSales);
 
         return prefix + "/view";

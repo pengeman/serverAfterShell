@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改设备信息明细')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-devinfo2-edit" th:object="${devinfo2}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label is-required">序列号：</label>
+                    <div class="col-sm-8">
+                        <input name="serialid" th:field="*{serialid}" class="form-control" type="text" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">计算书编号：</label>
+                    <div class="col-sm-8">
+                        <input name="calpagecode" th:field="*{calpagecode}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">换热面积：</label>
+                    <div class="col-sm-8">
+                        <input name="area" th:field="*{area}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">板片，例如133：</label>
+                    <div class="col-sm-8">
+                        <input name="plate" th:field="*{plate}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">板片厚度：</label>
+                    <div class="col-sm-8">
+                        <input name="thinkness" th:field="*{thinkness}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">板片材质：</label>
+                    <div class="col-sm-8">
+                        <input name="texture" th:field="*{texture}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">密封垫片EPDMNBR：</label>
+                    <div class="col-sm-8">
+                        <input name="gasket" th:field="*{gasket}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">净重：</label>
+                    <div class="col-sm-8">
+                        <input name="netweight" th:field="*{netweight}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">工作重量：</label>
+                    <div class="col-sm-8">
+                        <input name="workweight" th:field="*{workweight}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">体积尺寸：</label>
+                    <div class="col-sm-8">
+                        <input name="volume" th:field="*{volume}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">角孔直径孔径：</label>
+                    <div class="col-sm-8">
+                        <input name="diameter" th:field="*{diameter}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">角孔材质：</label>
+                    <div class="col-sm-8">
+                        <input name="diatexture" th:field="*{diatexture}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">上下导杆尺寸：</label>
+                    <div class="col-sm-8">
+                        <input name="rail" th:field="*{rail}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">左右螺栓：</label>
+                    <div class="col-sm-8">
+                        <input name="bolt1" th:field="*{bolt1}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">上下螺栓：</label>
+                    <div class="col-sm-8">
+                        <input name="bolt2" th:field="*{bolt2}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/devinfo2";
+        $("#form-devinfo2-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-devinfo2-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>
