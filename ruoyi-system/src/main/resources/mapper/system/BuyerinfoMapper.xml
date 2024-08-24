@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.BuyerinfoMapper">
+    
+    <resultMap type="Buyerinfo" id="BuyerinfoResult">
+        <result property="id"    column="id"    />
+        <result property="connection"    column="connection"    />
+        <result property="telphone"    column="telphone"    />
+        <result property="address"    column="address"    />
+    </resultMap>
+
+    <sql id="selectBuyerinfoVo">
+        select id, connection, telphone, address from buyerinfo
+    </sql>
+
+    <select id="selectBuyerinfoList" parameterType="Buyerinfo" resultMap="BuyerinfoResult">
+        <include refid="selectBuyerinfoVo"/>
+        <where>  
+            <if test="connection != null  and connection != ''"> and connection = #{connection}</if>
+            <if test="telphone != null  and telphone != ''"> and telphone = #{telphone}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+        </where>
+    </select>
+    
+    <select id="selectBuyerinfoById" parameterType="Long" resultMap="BuyerinfoResult">
+        <include refid="selectBuyerinfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertBuyerinfo" parameterType="Buyerinfo" useGeneratedKeys="true" keyProperty="id">
+        insert into buyerinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="connection != null">connection,</if>
+            <if test="telphone != null">telphone,</if>
+            <if test="address != null">address,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="connection != null">#{connection},</if>
+            <if test="telphone != null">#{telphone},</if>
+            <if test="address != null">#{address},</if>
+         </trim>
+    </insert>
+
+    <update id="updateBuyerinfo" parameterType="Buyerinfo">
+        update buyerinfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="connection != null">connection = #{connection},</if>
+            <if test="telphone != null">telphone = #{telphone},</if>
+            <if test="address != null">address = #{address},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteBuyerinfoById" parameterType="Long">
+        delete from buyerinfo where id = #{id}
+    </delete>
+
+    <delete id="deleteBuyerinfoByIds" parameterType="String">
+        delete from buyerinfo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

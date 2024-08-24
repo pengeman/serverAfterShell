@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增设备档案')" />
+    <th:block th:include="include :: header('新增购买方信息')" />
     <th:block th:include="include :: datetimepicker-css" />
     <th:block th:include="include :: bootstrap-typeahead-js"/>
 </head>
@@ -39,8 +39,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">购买方名称：</label>
                     <div class="col-sm-8">
-                        <input name="buyerid" class="form-control" type="text"  readonly><button th:onclick="newBuyer()">+</button>
-                        <p id="buyername"> </p>
+                        <input name="buyerid" class="form-control" type="text"  readonly><a th:href="#" th:onclick="newbuyer()"><img src="new.png"/>+</a>
                     </div>
                 </div>
             </div>
@@ -48,7 +47,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">用户名称：</label>
                     <div class="col-sm-8">
-                        <input name="userid" class="form-control" type="text"  readonly><button th:onclick="newBuyer()">+</button>
+                        <input name="userid" class="form-control" type="text"  readonly><a th:href="#" th:onclick="newUser()"><img src="new.png"/>+</a>
                     </div>
                 </div>
             </div>
@@ -82,32 +81,14 @@
             });
         }, 'json');
 
-        function newBuyer(){
-            prefix = ctx + "system/buyerinfo"
+        function newbuyer(){
             width = 800;
             height = 600;
-            url = prefix + "/add";
+            url = prefix + "/newbuyer";
             console.log(url);
             $.modal.open("新增购买方", url, width, height);
         }
-        // 新增购买方，返回购买方信息，名称，id
-        function selectUsersToParent4(){
-            var prefix = ctx + "system/buyerinfo";
-            var options = {
-                title: '新增购买方',
-                url: prefix + "/add",
-                callBack: doSubmit4
-            };
-            $.modal.openOptions(options);
-        }
-        function doSubmit4(index, layero){
-            var body = $.modal.getChildFrame(index);
-            $("#buyername").html('我是通过方式四来的：' + body.find('#connection').val());
-            $.modal.close(index);
-        }
-
-
-        function newUser(){
+        function newuser(){
 
         }
     </script>
