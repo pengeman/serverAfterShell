@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-	<th:block th:include="include :: header('搜索自动补全')" />
+	<th:block th:include="include :: header('搜索自动补全peng')" />
 </head>
 <body class="gray-bg">
       <div class="wrapper wrapper-content animated fadeInRight">
@@ -49,6 +49,18 @@
             </div>
         </div>
     </div>
+      <div class="col-sm-12">
+          <div class="ibox">
+              <div class="ibox-title">
+                  <h5>弹层框3</h5>
+              </div>
+              <div class="ibox-content" id="test">
+                  <p>多层弹出，点击提交后得到数据并回显到父窗体。 </p>
+                  <button type="button" class="btn btn-primary" onclick="selectUsersToParent4()">弹出窗口（方式四）</button>
+                  <p id="username"> </p>
+              </div>
+          </div>
+      </div>
     <th:block th:include="include :: footer" />
     <th:block th:include="include :: bootstrap-suggest-js" />
     <th:block th:include="include :: bootstrap-typeahead-js" />
@@ -73,6 +85,21 @@
 		        source: data.value
 		    });
         },'json');
+
+        function selectUsersToParent4(){
+            var prefix = ctx + "system/devInfo";
+            var options = {
+                title: '多层窗口peng',
+                url: prefix + "/frame1",
+                callBack: doSubmit4
+            };
+            $.modal.openOptions(options);
+        }
+        function doSubmit4(index, layero){
+            var body = $.modal.getChildFrame(index);
+            $("#username").html('我是通过方式四来的：' + body.find('#name').val());
+            $.modal.close(index);
+        }
     </script>
 </body>
 </html>

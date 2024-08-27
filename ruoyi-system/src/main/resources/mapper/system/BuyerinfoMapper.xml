@@ -18,9 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectBuyerinfoList" parameterType="Buyerinfo" resultMap="BuyerinfoResult">
         <include refid="selectBuyerinfoVo"/>
         <where>  
-            <if test="connection != null  and connection != ''"> and connection = #{connection}</if>
-            <if test="telphone != null  and telphone != ''"> and telphone = #{telphone}</if>
-            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="connection != null  and connection != ''"> and `connection` = #{connection}</if>
+            <if test="telphone != null  and telphone != ''"> and `telphone` = #{telphone}</if>
+            <if test="address != null  and address != ''"> and `address` = #{address}</if>
         </where>
     </select>
     
@@ -32,9 +32,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertBuyerinfo" parameterType="Buyerinfo" useGeneratedKeys="true" keyProperty="id">
         insert into buyerinfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="connection != null">connection,</if>
-            <if test="telphone != null">telphone,</if>
-            <if test="address != null">address,</if>
+            <if test="connection != null">`connection`,</if>
+            <if test="telphone != null">`telphone`,</if>
+            <if test="address != null">`address`,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="connection != null">#{connection},</if>
@@ -46,9 +46,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateBuyerinfo" parameterType="Buyerinfo">
         update buyerinfo
         <trim prefix="SET" suffixOverrides=",">
-            <if test="connection != null">connection = #{connection},</if>
-            <if test="telphone != null">telphone = #{telphone},</if>
-            <if test="address != null">address = #{address},</if>
+            <if test="connection != null">`connection` = #{connection},</if>
+            <if test="telphone != null">`telphone` = #{telphone},</if>
+            <if test="address != null">`address` = #{address},</if>
         </trim>
         where id = #{id}
     </update>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('设备档案列表')" />
+    <th:block th:include="include :: header('用户信息列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,18 +11,12 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>出厂编号：</label>
-                                <input type="text" name="serialid"/>
-                            </li>
-                            <li class="select-time">
-                                <label>制造日期：</label>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginMakedate]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endMakedate]"/>
+                                <label>名称：</label>
+                                <input type="text" name="name"/>
                             </li>
                             <li>
-                                <label>购买方：</label>
-                                <input type="text" name="buyerid"/>
+                                <label>地址：</label>
+                                <input type="text" name="address"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -34,20 +28,17 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:devInfo:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:userinfo:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:devInfo:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:userinfo:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:devInfo:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:userinfo:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:devInfo:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:userinfo:export">
                     <i class="fa fa-download"></i> 导出
-                </a>
-                <a class="btn btn-success" onclick="autoadd()" shiro:hasPermission="system:devInfo:add">
-                    <i class="fa fa-plus"></i> auto添加
                 </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
@@ -57,9 +48,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:devInfo:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:devInfo:remove')}]];
-        var prefix = ctx + "system/devInfo";
+        var editFlag = [[${@permission.hasPermi('system:userinfo:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:userinfo:remove')}]];
+        var prefix = ctx + "system/userinfo";
 
         $(function() {
             var options = {
@@ -68,7 +59,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "设备档案",
+                modalName: "用户信息",
                 columns: [{
                     checkbox: true
                 },
@@ -78,24 +69,20 @@
                     visible: false
                 },
                 {
-                    field: 'serialid',
-                    title: '出厂编号'
+                    field: 'name',
+                    title: '名称'
                 },
                 {
-                    field: 'makedate',
-                    title: '制造日期'
+                    field: 'connection',
+                    title: '联系人'
                 },
                 {
-                    field: 'controct',
-                    title: '合同'
+                    field: 'telphone',
+                    title: '联系电话'
                 },
                 {
-                    field: 'buyerid',
-                    title: '购买方名称'
-                },
-                {
-                    field: 'userid',
-                    title: '用户名称'
+                    field: 'address',
+                    title: '地址'
                 },
                 {
                     title: '操作',
@@ -110,14 +97,6 @@
             };
             $.table.init(options);
         });
-
-        function autoadd(){
-            width = 800;
-            height = 600;
-            url = prefix + "/autoadd/";
-            console.log(url);
-            $.modal.open("auto新增", url, width, height);
-        }
     </script>
 </body>
 </html>

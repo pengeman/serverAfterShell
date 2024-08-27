@@ -48,12 +48,14 @@ public class BuyerinfoServiceImpl implements IBuyerinfoService
      * 新增购买方档案
      * 
      * @param buyerinfo 购买方档案
-     * @return 结果
+     * @return 结果  返回自增列的值
      */
     @Override
     public int insertBuyerinfo(Buyerinfo buyerinfo)
     {
-        return buyerinfoMapper.insertBuyerinfo(buyerinfo);
+        buyerinfoMapper.insertBuyerinfo(buyerinfo);
+        Long id = buyerinfo.getId();
+        return id.intValue();
     }
 
     /**

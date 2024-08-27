@@ -79,14 +79,17 @@ public class BuyerinfoController extends BaseController
 
     /**
      * 新增保存购买方档案
-     */
-    @RequiresPermissions("system:buyerinfo:add")
+
+    @RequiresPermissions("system:buyerinfo:add") */
     @Log(title = "购买方档案", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
+    @PostMapping("/addsave")
     @ResponseBody
     public AjaxResult addSave(Buyerinfo buyerinfo)
     {
-        return toAjax(buyerinfoService.insertBuyerinfo(buyerinfo));
+        int r  = buyerinfoService.insertBuyerinfo(buyerinfo);
+        Long id = buyerinfo.getId();
+        System.out.println("buyerinfo.id = " + id);
+        return toAjax(id.intValue());
     }
 
     /**

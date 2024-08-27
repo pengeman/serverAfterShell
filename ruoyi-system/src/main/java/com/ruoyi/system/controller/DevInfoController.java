@@ -135,6 +135,11 @@ public class DevInfoController extends BaseController
     {
         return prefix + "/autoadd";
     }
+    @GetMapping("/frame1")
+    public String frame1()
+    {
+        return prefix + "/demo/frame1";
+    }
 
 
     /**
