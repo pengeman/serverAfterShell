@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.system.domain.DevInfo;
@@ -19,6 +20,8 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 设备档案Controller
@@ -89,6 +92,22 @@ public class DevInfoController extends BaseController
     {
         return toAjax(devInfoService.insertDevInfo(devInfo));
     }
+
+    //devinfogroupaddsave
+    /**
+     * 新增保存设备信息，同时保存buyerinfo， userinfo
+     */
+    @RequiresPermissions("system:devInfo:add")
+    @Log(title = "设备档案", businessType = BusinessType.INSERT)
+    @PostMapping("/devinfogroupaddSave")
+    @ResponseBody
+    public AjaxResult devinfogroupaddSave(HttpServletRequest request)
+    {
+
+        //return toAjax("devInfoService.insertDevInfo(devInfo)");
+        return toAjax(0);
+    }
+
 
     /**
      * 修改设备档案
@@ -166,5 +185,29 @@ public class DevInfoController extends BaseController
         String[] array = { "ruoyi 1", "ruoyi 2", "ruoyi 3", "ruoyi 4", "ruoyi 5", "peng 6 " };
 
         return devInfoList;
+    }
+
+    /**
+     * 查询设备档案列表
+     */
+    @RequiresPermissions("system:devInfo:list")
+    @PostMapping("/listfix")
+    @ResponseBody
+    public TableDataInfo listfix(DevInfo devInfo)
+    {
+        startPage();
+        List<DevInfo> list = devInfoService.selectDevInfoList(devInfo);
+        return getDataTable(list);
+    }
+    @RequiresPermissions("system:devInfo:view")
+    @GetMapping("/fix")
+    public String devInfofix()
+    {
+        return prefix + "/devInfofix";
+    }
+    @GetMapping("/addfix")
+    public String addfix()
+    {
+        return prefix + "/addfix";
     }
 }

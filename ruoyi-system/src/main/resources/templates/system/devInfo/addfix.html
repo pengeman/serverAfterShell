@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('新增设备档案')"/>
+    <th:block th:include="include :: header('新增设备档案fix')"/>
     <th:block th:include="include :: datetimepicker-css"/>
     <th:block th:include="include :: bootstrap-typeahead-js"/>
 </head>
@@ -41,7 +41,7 @@
                 <label class="col-sm-3 control-label">购买方名称：</label>
                 <div class="col-sm-8">
                     <input id="buyername" name="buyername" class="form-control" type="text">
-                    <button th:onclick="newBuyer()">+</button>
+                    <button th:onclick="selectUsersToParent4()">+</button>
                     <p id="buyerid"></p>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                 <label class="col-sm-3 control-label">用户名称：</label>
                 <div class="col-sm-8">
                     <input name="userid" class="form-control" type="text" readonly>
-                    <button th:onclick="newUser()">+</button>
+                    <button th:onclick="javascript:newUser()">+</button>
                 </div>
             </div>
         </div>
@@ -61,24 +61,6 @@
 <th:block th:include="include :: datetimepicker-js"/>
 <th:block th:include="include :: bootstrap-suggest-js"/>
 <th:block th:include="include :: bootstrap-typeahead-js"/>
-<script type="text/javascript">
-    let buyercon;
-    let buyertel;
-    let buyeraddr;
-    let username;
-    let usercon;
-    let usertel;
-    let useraddr;
-
-
-    $.get(ctx + "system/buyerinfo/sortlist", function(data){
-        console.log(data.value)
-        $("#buyername").typeahead({
-            source: data.value
-        });
-    },'json');
-
-</script>
 <script th:inline="javascript">
     var prefix = ctx + "system/devInfo"
     $("#form-devInfo-add").validate({
@@ -95,9 +77,7 @@
         if ($.validate.form()) {
             // var buyerid = $("#buyerid").val();
             // activeWindow().$("#connection").html(buyerid);
-            //$.operate.save(prefix + "/add", $('#form-devInfo-add').serialize());
-            // 保存devinfo，buyerinfo，userinfo
-            newdevinfosave(devinfogroup); // devinfogroup设备信息组，包含devinfo,buyerinfo,userinfo 如果有
+            $.operate.save(prefix + "/add", $('#form-devInfo-add').serialize());
         }
     }
 
@@ -116,10 +96,21 @@
     }, 'json');
 
     function newBuyer() {
+        var prefix2 = ctx + "system/buyerinfo"
+        console.log("newBuyer: " + prefix2);
+        // width = 800;
+        // height = 600;
+        // url = prefix2 + "/add";
+        // console.log(url);
+        // $.modal.open("新增购买方", url, width, height);
+    }
+
+    // 新增购买方，返回购买方信息，名称，id
+    function selectUsersToParent4() {
         var prefix2 = ctx + "system/buyerinfo";
         var options = {
             title: '新增购买方',
-            url: prefix2 + "/add",
+            url: prefix2 + "/addfix",
             callBack: function(index,layero){
                 console.log("selectUsersToParent4 callback",index)
                 doSubmit4(index,layero);
@@ -130,38 +121,20 @@
 
     function doSubmit4(index, layero) {
         var prefix2 = ctx + "system/buyerinfo";
-        let body = $.modal.getChildFrame(index);
-        //var cc = body.find('#connection').val();
-        buyercon = body.find('#connection').val();
-        buyertel = body.find('#tel').val();
-        buyeraddr = body.find('#addr').val();
-        $("#buyername").val(buyercon);
+        var body = $.modal.getChildFrame(index);
+        var cc = body.find('#connection').val();
+        $("#buyername").val(cc);
 
-
-        //var r = newdevinfosave(cc);
-        // $.operate.save(prefix2 + "/addsave", cc);
+        //$.modal.close(index);
+        //console.log("goto buyerinfo/add/submitHandler..." );
+        var cc = body.find('#form-buyerinfo-add').serialize()
+        console.log(cc)
+        var r = $.operate.post(cc);
+        $("#buyerid").html(r);
 
         $.modal.close(index); //关闭buyerinfo/add窗口
 
     }
-
-    var newdevinfosave = function (devinfogroup){
-        let prefix2 = ctx + "system/devinfo";
-        $.ajax({
-            type: 'POST',
-            url: prefix2 + "/devinfogroupaddsave",
-            data: {devinfogroup},
-            success: function(data,textStatus,jqXHR){
-                console.log(data);
-                return data;
-            },
-            error: function(jqXHR,textStatus){
-                console.log("请求失败，请稍后重试!");
-                alert("请求失败，请稍后重试!")
-            }
-        })
-    }
-
 
     // 新增用户信息
     function newUser() {
@@ -171,18 +144,15 @@
             url: prefix2 + "/add",
             callBack: function (index, layero){
                 var body = $.modal.getChildFrame(index);
-                username = body.find('#name').val();
-                usercon = body.find('#connection').val();
-                usertel = body.find('#tel').val();
-                useraddr = body.find('#addr').val();
-                $("#username").val(username);
+                var cc = body.find('#name').val();
+                $("#username").val(cc);
 
                 //$.modal.close(index);
                 //console.log("goto buyerinfo/add/submitHandler..." );
                 var cc = body.find('#form-userinfo-add').serialize()
                 console.log(cc)
-                //var r = $.operate.save(prefix2 + "/addsave", cc);
-                //$("#userid").html(r);
+                var r = $.operate.save(prefix2 + "/addsave", cc);
+                $("#userid").html(r);
 
                 $.modal.close(index);
             },
@@ -191,7 +161,12 @@
         $.modal.openOptions(options);
     }
 
-
+    // $.get(ctx + "system/buyerinfo/sortlist", function(data){
+    //     console.log(data.value)
+    //     $("#buyername").typeahead({
+    //         source: data.value
+    //     });
+    // },'json');
 </script>
 </body>
 </html>

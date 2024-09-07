@@ -127,4 +127,38 @@ public class BuyerinfoController extends BaseController
     {
         return toAjax(buyerinfoService.deleteBuyerinfoByIds(ids));
     }
+
+    /**
+     * 获取数据集合,购买方信息
+     */
+    @GetMapping("/sortlist")
+    @ResponseBody
+    public AjaxResult sortlist()
+    {
+        // 获得buyer的数据，数组格式
+        String[] buyers = getBuyers();
+        //String[] array = { "ruoyi 1", "ruoyi 2", "ruoyi 3", "ruoyi 4", "ruoyi 5", "peng 6 " };
+
+        AjaxResult ajax = new AjaxResult();
+        ajax.put("value", buyers);
+        return ajax;
+    }
+    private String[] getBuyers(){
+        String[] buyerinfos = null;
+        List<Buyerinfo> buyerinfoList = buyerinfoService.selectBuyerinfoList(new Buyerinfo());
+        buyerinfos = new String[buyerinfoList.size()];
+        int i = 0;
+        for (Buyerinfo buyerinfo : buyerinfoList){
+            buyerinfos[i++] = buyerinfo.getId() + ":" + buyerinfo.getConnection();
+        }
+        return buyerinfos;
+    }
+
+
+    @GetMapping("/addfix")
+    public String addfix()
+    {
+        return prefix + "/addfix";
+    }
+
 }

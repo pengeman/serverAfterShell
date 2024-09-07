@@ -49,13 +49,15 @@ public class UserinfoServiceImpl implements IUserinfoService
      * 新增用户信息
      * 
      * @param userinfo 用户信息
-     * @return 结果
+     * @return 结果:新插入记录的id值
      */
     @Override
     public int insertUserinfo(Userinfo userinfo)
     {
         userinfo.setCreateTime(DateUtils.getNowDate());
-        return userinfoMapper.insertUserinfo(userinfo);
+        userinfoMapper.insertUserinfo(userinfo);
+        Long id = userinfo.getId();
+        return id.intValue();
     }
 
     /**

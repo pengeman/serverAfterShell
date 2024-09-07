@@ -877,6 +877,7 @@ var table = {
                     shadeClose: true,
                     yes: callback,
                     cancel: function(index) {
+                        console.log("layer open: close",index)
                         return true;
                     },
                     success: function () {

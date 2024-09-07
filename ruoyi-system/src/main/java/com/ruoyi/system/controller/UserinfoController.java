@@ -82,7 +82,7 @@ public class UserinfoController extends BaseController
      */
     @RequiresPermissions("system:userinfo:add")
     @Log(title = "用户信息", businessType = BusinessType.INSERT)
-    @PostMapping("/add")
+    @PostMapping("/addsave")
     @ResponseBody
     public AjaxResult addSave(Userinfo userinfo)
     {

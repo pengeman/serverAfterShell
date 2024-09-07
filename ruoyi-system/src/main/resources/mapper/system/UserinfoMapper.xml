@@ -37,9 +37,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into userinfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="name != null">name,</if>
-            <if test="connection != null">connection,</if>
-            <if test="telphone != null">telphone,</if>
-            <if test="address != null">address,</if>
+            <if test="connection != null">`connection`,</if>
+            <if test="telphone != null">`telphone`,</if>
+            <if test="address != null">`address`,</if>
             <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
@@ -61,7 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update userinfo
         <trim prefix="SET" suffixOverrides=",">
             <if test="name != null">name = #{name},</if>
-            <if test="connection != null">connection = #{connection},</if>
+            <if test="connection != null">`connection` = #{connection},</if>
             <if test="telphone != null">telphone = #{telphone},</if>
             <if test="address != null">address = #{address},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
