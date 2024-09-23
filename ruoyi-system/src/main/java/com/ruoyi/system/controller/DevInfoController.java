@@ -2,6 +2,10 @@ package com.ruoyi.system.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.ruoyi.system.domain.Buyerinfo;
+import com.ruoyi.system.domain.Userinfo;
+import com.ruoyi.system.service.impl.Devinfo2ServiceImpl;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +41,10 @@ public class DevInfoController extends BaseController
 
     @Autowired
     private IDevInfoService devInfoService;
+    @Autowired
+    private Devinfo2ServiceImpl devinfo2ServiceImpl;
 
+    @Autowired
     @RequiresPermissions("system:devInfo:view")
     @GetMapping()
     public String devInfo()
@@ -103,7 +110,49 @@ public class DevInfoController extends BaseController
     @ResponseBody
     public AjaxResult devinfogroupaddSave(HttpServletRequest request)
     {
+        String devserialid = request.getParameter("devserialid");
+        String devcontroct = request.getParameter("controct");
+        String devmakedate = request.getParameter("#makedate");
+        String devbuyername = request.getParameter("#buyername");
+        String devusername = request.getParameter("#username");
+        String buyerid = request.getParameter("buyerid");
+        String buyercon = request.getParameter("buyercon");
+        String buyertel = request.getParameter("buyertel");
+        String buyeraddr = request.getParameter("buyeraddr");
+        String userid = request.getParameter("userid");
+        String username = request.getParameter("username");
+        String usercon = request.getParameter("usercon");
+        String usertel = request.getParameter("usertel");
+        String useraddr = request.getParameter("useraddr");
 
+        DevInfo devInfo = new DevInfo();
+        devInfo.setSerialid(devserialid);
+        devInfo.setControct(devcontroct);
+        if (buyerid.equals("")){
+            devInfo.setBuyerid((devbuyername.split(":")[0]));
+        }else if (buyerid.equals("0")){
+            devInfo.setBuyerid("0");
+        }
+        if (userid.equals("")){
+            devInfo.setUserid((devusername.split(":")[0]));
+        }else if (userid.equals("0")){
+            devInfo.setUserid("0");
+        }
+
+        Buyerinfo buyerinfo = new Buyerinfo();
+        buyerinfo.setConnection(buyercon);
+        buyerinfo.setTelphone(buyertel);
+        buyerinfo.setAddress(buyeraddr);
+
+        Userinfo userInfo = new Userinfo();
+        userInfo.setName(username);
+        userInfo.setConnection(usercon);
+        userInfo.setTelphone(usertel);
+        userInfo.setAddress(useraddr);
+
+        devInfoService.insetDevInfoGroup(devInfo, buyerinfo, userInfo);
+        //devInfoService.newDevinfo()
+        //devinfo2ServiceImpl.insertDevinfogroup(devinfogroup); //  将设备信息，购买方信息，用户信息保存
         //return toAjax("devInfoService.insertDevInfo(devInfo)");
         return toAjax(0);
     }

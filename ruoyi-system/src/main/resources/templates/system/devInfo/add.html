@@ -41,7 +41,7 @@
                 <label class="col-sm-3 control-label">购买方名称：</label>
                 <div class="col-sm-8">
                     <input id="buyername" name="buyername" class="form-control" type="text">
-                    <button th:onclick="newBuyer()">+</button>
+                    <button type="button" th:onclick="newBuyer()">+</button>
                     <p id="buyerid"></p>
                 </div>
             </div>
@@ -50,8 +50,8 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">用户名称：</label>
                 <div class="col-sm-8">
-                    <input name="userid" class="form-control" type="text" readonly>
-                    <button th:onclick="newUser()">+</button>
+                    <input id="usename" name="usename" class="form-control" type="text" readonly>
+                    <button type="button" th:onclick="newUser()">+</button>
                 </div>
             </div>
         </div>
@@ -62,13 +62,21 @@
 <th:block th:include="include :: bootstrap-suggest-js"/>
 <th:block th:include="include :: bootstrap-typeahead-js"/>
 <script type="text/javascript">
-    let buyercon;
-    let buyertel;
-    let buyeraddr;
-    let username;
-    let usercon;
-    let usertel;
-    let useraddr;
+    let buyerid = ""; // 0:表示新增购买方
+    let controct = "";
+    let buyercon = "";
+    let buyertel = "";
+    let buyeraddr = "";
+    let userid = ""; // 0:表示新增用户
+    let username = "";
+    let usercon = "";
+    let usertel = "";
+    let useraddr = "";
+    let devserialid;
+    let devmakedate;
+    let devcontroct; // 设备销售合同
+    let devbuyername; // 设备购买方
+    let devusername; // 设备使用方
 
 
     $.get(ctx + "system/buyerinfo/sortlist", function(data){
@@ -93,11 +101,32 @@
     function submitHandler() {
         console.log("devinfo add sumithandler")
         if ($.validate.form()) {
-            // var buyerid = $("#buyerid").val();
             // activeWindow().$("#connection").html(buyerid);
             //$.operate.save(prefix + "/add", $('#form-devInfo-add').serialize());
             // 保存devinfo，buyerinfo，userinfo
-            newdevinfosave(devinfogroup); // devinfogroup设备信息组，包含devinfo,buyerinfo,userinfo 如果有
+            devserialid = $("#serialid").val();
+            devcontroct = $("#controct").val();
+            devmakedate = $("#makedate").val();
+            devbuyername = $("#buyername").val();
+            devusername = $("#username").val();
+            devinfogroup = "devserialid="+devserialid+"&"
+            devinfogroup += "devcontroct="+controct+"&"
+            devinfogroup += "devmakedate="+devmakedate+"&"
+            devinfogroup += "devbuyername="+devbuyername+"&"
+            devinfogroup += "devusername="+devusername+"&"
+
+            devinfogroup += "buyerid="+buyerid+"&"
+            devinfogroup += "buyercon="+buyercon+"&"
+            devinfogroup += "buyertel="+buyertel+"&"
+            devinfogroup += "buyeraddr="+buyeraddr+"&"
+
+            devinfogroup += "userid="+userid+"&"
+            devinfogroup += "username="+username+"&"
+            devinfogroup += "usercon="+usercon+"&"
+            devinfogroup += "usertel="+usertel+"&"
+            devinfogroup += "useraddr="+useraddr;
+            //newdevinfosave(devinfogroup); // devinfogroup设备信息组，包含devinfo,buyerinfo,userinfo 如果有
+            $.operate.save(prefix + "/devinfogroupaddsave",devinfogroup);
         }
     }
 
@@ -108,12 +137,6 @@
     });
 </script>
 <script th:inline="javascript">
-    $.get(prefix + "/devserialid", function (data) {
-        // console.log(data.value)
-        $("#typeahead-demo-3").typeahead({
-            source: data.value
-        });
-    }, 'json');
 
     function newBuyer() {
         var prefix2 = ctx + "system/buyerinfo";
@@ -132,55 +155,40 @@
         var prefix2 = ctx + "system/buyerinfo";
         let body = $.modal.getChildFrame(index);
         //var cc = body.find('#connection').val();
+        buyerid = 0;
         buyercon = body.find('#connection').val();
         buyertel = body.find('#tel').val();
         buyeraddr = body.find('#addr').val();
         $("#buyername").val(buyercon);
 
-
+console.log("doSubmit4 : " );
         //var r = newdevinfosave(cc);
         // $.operate.save(prefix2 + "/addsave", cc);
 
         $.modal.close(index); //关闭buyerinfo/add窗口
-
+alert("doSubmit4");
     }
 
-    var newdevinfosave = function (devinfogroup){
-        let prefix2 = ctx + "system/devinfo";
-        $.ajax({
-            type: 'POST',
-            url: prefix2 + "/devinfogroupaddsave",
-            data: {devinfogroup},
-            success: function(data,textStatus,jqXHR){
-                console.log(data);
-                return data;
-            },
-            error: function(jqXHR,textStatus){
-                console.log("请求失败，请稍后重试!");
-                alert("请求失败，请稍后重试!")
-            }
-        })
-    }
 
 
     // 新增用户信息
-    function newUser() {
+    var newUser = function() {
+        console.log("newUser . ....");
         var prefix2 = ctx + "system/userinfo";
         var options = {
             title: '新增使用方',
             url: prefix2 + "/add",
             callBack: function (index, layero){
                 var body = $.modal.getChildFrame(index);
-                username = body.find('#name').val();
+                userid = 0;
+                username = body.find('#username').val();
                 usercon = body.find('#connection').val();
                 usertel = body.find('#tel').val();
                 useraddr = body.find('#addr').val();
-                $("#username").val(username);
+                $("#usename").val(username);
 
-                //$.modal.close(index);
-                //console.log("goto buyerinfo/add/submitHandler..." );
-                var cc = body.find('#form-userinfo-add').serialize()
-                console.log(cc)
+                //var cc = body.find('#form-userinfo-add').serialize()
+                console.log(body)
                 //var r = $.operate.save(prefix2 + "/addsave", cc);
                 //$("#userid").html(r);
 
@@ -191,6 +199,24 @@
         $.modal.openOptions(options);
     }
 
+    var newdevinfosave = function (devinfogroup){
+        let prefix2 = ctx + "system/devinfo";
+        $.ajax({
+            type: 'POST',
+            url: prefix2 + "/devinfogroupaddsave",
+            data: {devinfogroup},
+            success: function(data,textStatus,jqXHR){
+                console.log("newdevinfosave"+data);
+                if (data == "1"){
+                    $.modal.close();
+                }
+            },
+            error: function(jqXHR,textStatus){
+                console.log("请求失败，请稍后重试!");
+                alert("请求失败，请稍后重试!")
+            }
+        })
+    }
 
 </script>
 </body>

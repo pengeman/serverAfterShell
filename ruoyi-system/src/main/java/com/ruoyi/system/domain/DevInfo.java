@@ -81,22 +81,22 @@ public class DevInfo extends BaseEntity
         return controct;
     }
 
-    public void setBuyerid(String buyerid) 
+    public void setBuyerid(String buyerid)
     {
         this.buyerid = buyerid;
     }
 
-    public String getBuyerid() 
+    public String getBuyerid()
     {
         return buyerid;
     }
 
-    public void setUserid(String userid) 
+    public void setUserid(String userid)
     {
         this.userid = userid;
     }
 
-    public String getUserid() 
+    public String getUserid()
     {
         return userid;
     }
