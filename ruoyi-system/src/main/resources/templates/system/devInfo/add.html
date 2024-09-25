@@ -50,7 +50,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">用户名称：</label>
                 <div class="col-sm-8">
-                    <input id="usename" name="usename" class="form-control" type="text" readonly>
+                    <input id="usename" name="usename" class="form-control" type="text">
                     <button type="button" th:onclick="newUser()">+</button>
                 </div>
             </div>
@@ -79,11 +79,14 @@
     let devusername; // 设备使用方
 
 
-    $.get(ctx + "system/buyerinfo/sortlist", function(data){
+    $.get(ctx + "system/buyerinfo/sortlist", function (data) {
         console.log(data.value)
         $("#buyername").typeahead({
             source: data.value
         });
+    }, 'json');
+    $.get(ctx + "system/userinfo/sortlist", function (data){
+        $("#usename").typeahead({source:data.value});
     },'json');
 
 </script>
@@ -109,24 +112,24 @@
             devmakedate = $("#makedate").val();
             devbuyername = $("#buyername").val();
             devusername = $("#username").val();
-            devinfogroup = "devserialid="+devserialid+"&"
-            devinfogroup += "devcontroct="+controct+"&"
-            devinfogroup += "devmakedate="+devmakedate+"&"
-            devinfogroup += "devbuyername="+devbuyername+"&"
-            devinfogroup += "devusername="+devusername+"&"
+            devinfogroup = "devserialid=" + devserialid + "&"
+            devinfogroup += "devcontroct=" + controct + "&"
+            devinfogroup += "devmakedate=" + devmakedate + "&"
+            devinfogroup += "devbuyername=" + devbuyername + "&"
+            devinfogroup += "devusername=" + devusername + "&"
 
-            devinfogroup += "buyerid="+buyerid+"&"
-            devinfogroup += "buyercon="+buyercon+"&"
-            devinfogroup += "buyertel="+buyertel+"&"
-            devinfogroup += "buyeraddr="+buyeraddr+"&"
+            devinfogroup += "buyerid=" + buyerid + "&"
+            devinfogroup += "buyercon=" + buyercon + "&"
+            devinfogroup += "buyertel=" + buyertel + "&"
+            devinfogroup += "buyeraddr=" + buyeraddr + "&"
 
-            devinfogroup += "userid="+userid+"&"
-            devinfogroup += "username="+username+"&"
-            devinfogroup += "usercon="+usercon+"&"
-            devinfogroup += "usertel="+usertel+"&"
-            devinfogroup += "useraddr="+useraddr;
+            devinfogroup += "userid=" + userid + "&"
+            devinfogroup += "username=" + username + "&"
+            devinfogroup += "usercon=" + usercon + "&"
+            devinfogroup += "usertel=" + usertel + "&"
+            devinfogroup += "useraddr=" + useraddr;
             //newdevinfosave(devinfogroup); // devinfogroup设备信息组，包含devinfo,buyerinfo,userinfo 如果有
-            $.operate.save(prefix + "/devinfogroupaddsave",devinfogroup);
+            $.operate.save(prefix + "/devinfogroupaddsave", devinfogroup);
         }
     }
 
@@ -143,9 +146,9 @@
         var options = {
             title: '新增购买方',
             url: prefix2 + "/add",
-            callBack: function(index,layero){
-                console.log("selectUsersToParent4 callback",index)
-                doSubmit4(index,layero);
+            callBack: function (index, layero) {
+                console.log("selectUsersToParent4 callback", index)
+                doSubmit4(index, layero);
             },
         };
         $.modal.openOptions(options);
@@ -161,24 +164,22 @@
         buyeraddr = body.find('#addr').val();
         $("#buyername").val(buyercon);
 
-console.log("doSubmit4 : " );
+        console.log("doSubmit4 : ");
         //var r = newdevinfosave(cc);
         // $.operate.save(prefix2 + "/addsave", cc);
 
         $.modal.close(index); //关闭buyerinfo/add窗口
-alert("doSubmit4");
     }
 
 
-
     // 新增用户信息
-    var newUser = function() {
+    var newUser = function () {
         console.log("newUser . ....");
         var prefix2 = ctx + "system/userinfo";
         var options = {
             title: '新增使用方',
             url: prefix2 + "/add",
-            callBack: function (index, layero){
+            callBack: function (index, layero) {
                 var body = $.modal.getChildFrame(index);
                 userid = 0;
                 username = body.find('#username').val();
@@ -186,32 +187,25 @@ alert("doSubmit4");
                 usertel = body.find('#tel').val();
                 useraddr = body.find('#addr').val();
                 $("#usename").val(username);
-
-                //var cc = body.find('#form-userinfo-add').serialize()
-                console.log(body)
-                //var r = $.operate.save(prefix2 + "/addsave", cc);
-                //$("#userid").html(r);
-
                 $.modal.close(index);
             },
-
         };
         $.modal.openOptions(options);
     }
 
-    var newdevinfosave = function (devinfogroup){
+    var newdevinfosave = function (devinfogroup) {
         let prefix2 = ctx + "system/devinfo";
         $.ajax({
             type: 'POST',
             url: prefix2 + "/devinfogroupaddsave",
             data: {devinfogroup},
-            success: function(data,textStatus,jqXHR){
-                console.log("newdevinfosave"+data);
-                if (data == "1"){
+            success: function (data, textStatus, jqXHR) {
+                console.log("newdevinfosave" + data);
+                if (data == "1") {
                     $.modal.close();
                 }
             },
-            error: function(jqXHR,textStatus){
+            error: function (jqXHR, textStatus) {
                 console.log("请求失败，请稍后重试!");
                 alert("请求失败，请稍后重试!")
             }

@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.Buyerinfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +56,32 @@ public class UserinfoController extends BaseController
         return getDataTable(list);
     }
 
+    /**
+     * 查询用户信息列表,sortlist
+     */
+    @RequiresPermissions("system:userinfo:list")
+    @PostMapping("/sortlist")
+    @ResponseBody
+    public AjaxResult sortlist(Userinfo userinfo)
+    {
+        // 获得buyer的数据，数组格式
+        String[] buyers = getUsers();
+        //String[] array = { "ruoyi 1", "ruoyi 2", "ruoyi 3", "ruoyi 4", "ruoyi 5", "peng 6 " };
+
+        AjaxResult ajax = new AjaxResult();
+        ajax.put("value", buyers);
+        return ajax;
+    }
+    private String[] getUsers(){
+        String[] userinfos = null;
+        List<Userinfo> userinfoList = userinfoService.selectUserinfoList(new Userinfo());
+        userinfos = new String[userinfoList.size()];
+        int i = 0;
+        for (Userinfo userinfo : userinfoList){
+            userinfos[i++] = userinfo.getId() + ":" + userinfo.getConnection();
+        }
+        return userinfos;
+    }
     /**
      * 导出用户信息列表
      */
