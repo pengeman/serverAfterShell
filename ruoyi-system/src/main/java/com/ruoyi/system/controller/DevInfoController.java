@@ -1,6 +1,10 @@
 package com.ruoyi.system.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.ruoyi.system.domain.Buyerinfo;
@@ -66,6 +70,20 @@ public class DevInfoController extends BaseController
     }
 
     /**
+     * 查询设备档案列表
+     */
+    @RequiresPermissions("system:devInfo:list")
+    @PostMapping("/list2")
+    @ResponseBody
+    public TableDataInfo list2(DevInfo devInfo)
+    {
+        startPage();
+        List<LinkedHashMap<String, Object>> list = devInfoService.selectDevInfoList2(devInfo);
+        System.out.println(list);
+        return getDataTable(list);
+    }
+
+    /**
      * 导出设备档案列表
      */
     @RequiresPermissions("system:devInfo:export")
@@ -111,11 +129,11 @@ public class DevInfoController extends BaseController
     public AjaxResult devinfogroupaddSave(HttpServletRequest request)
     {
         String devserialid = request.getParameter("devserialid");
-        String devcontroct = request.getParameter("controct");
-        String devmakedate = request.getParameter("#makedate");
-        String devbuyername = request.getParameter("#buyername");
-        String devusername = request.getParameter("#username");
-        String buyerid = request.getParameter("buyerid");
+        String devcontroct = request.getParameter("devcontroct");
+        String devmakedate = request.getParameter("devmakedate");
+        String devbuyername = request.getParameter("devbuyername");
+        String devusername = request.getParameter("devusername");
+         String buyerid = request.getParameter("buyerid");
         String buyercon = request.getParameter("buyercon");
         String buyertel = request.getParameter("buyertel");
         String buyeraddr = request.getParameter("buyeraddr");
@@ -125,10 +143,17 @@ public class DevInfoController extends BaseController
         String usertel = request.getParameter("usertel");
         String useraddr = request.getParameter("useraddr");
 
+        Date Ddevmakedate = null;
+        try {
+            Ddevmakedate = new SimpleDateFormat("yyyy-MM-dd").parse(devmakedate);
+        } catch (ParseException e) {
+            Ddevmakedate = new Date(0L);
+        }
         DevInfo devInfo = new DevInfo();
         devInfo.setSerialid(devserialid);
         devInfo.setControct(devcontroct);
-        if (buyerid.equals("")){
+        devInfo.setMakedate(Ddevmakedate);
+        if (buyerid.isEmpty()){
             devInfo.setBuyerid((devbuyername.split(":")[0]));
         }else if (buyerid.equals("0")){
             devInfo.setBuyerid("0");
@@ -154,7 +179,7 @@ public class DevInfoController extends BaseController
         //devInfoService.newDevinfo()
         //devinfo2ServiceImpl.insertDevinfogroup(devinfogroup); //  将设备信息，购买方信息，用户信息保存
         //return toAjax("devInfoService.insertDevInfo(devInfo)");
-        return toAjax(0);
+        return toAjax(1);
     }
 
 

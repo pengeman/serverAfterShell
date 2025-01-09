@@ -1,7 +1,10 @@
 package com.ruoyi.system.mapper;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import com.ruoyi.system.domain.DevInfo;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * 设备档案Mapper接口
@@ -58,4 +61,8 @@ public interface DevInfoMapper
      * @return 结果
      */
     public int deleteDevInfoByIds(String[] ids);
+
+    @Select("${sqlStr}")
+    List<LinkedHashMap<String,Object>> selectDev2(@Param(value = "sqlStr") String sqlStr);
+
 }

@@ -1,6 +1,6 @@
 package com.ruoyi.system.service.impl;
 
-import java.util.List;
+import java.util.*;
 
 import com.ruoyi.system.domain.Buyerinfo;
 import com.ruoyi.system.domain.Userinfo;
@@ -107,4 +107,15 @@ public class DevInfoServiceImpl implements IDevInfoService {
 
         return r;
     }
+
+    @Override
+    public List<LinkedHashMap<String, Object>> selectDevInfoList2(DevInfo devInfo) {
+//        String sql = "select dev.id, dev.serialid, dev.makedate, dev.controct, userinfo.name as username, buyer.connection as buyernamefrom devInfo dev " +
+//                "join  userinfo on dev.userid = userinfo.id join  buyerinfo buyer on dev.buyerid = buyer.id ";
+        String sql = "select a.id , a.serialid , a.makedate , a.controct , a.buyerid, b.connection as buyername, a.userid , c.connection as username" +
+                " from devInfo a , userinfo b , buyerinfo c where a.userid = b.id and a.buyerid = c.id";
+        return devInfoMapper.selectDev2(sql);
+    }
+
+
 }

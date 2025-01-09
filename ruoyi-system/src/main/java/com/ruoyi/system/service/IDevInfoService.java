@@ -1,5 +1,6 @@
 package com.ruoyi.system.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import com.ruoyi.system.domain.DevInfo;
 import com.ruoyi.system.domain.Buyerinfo;
@@ -70,4 +71,6 @@ public interface IDevInfoService
      * @return
      */
     public int insetDevInfoGroup(DevInfo devInfo, Buyerinfo buyerinfo, Userinfo userInfo);
+
+    public List<LinkedHashMap<String, Object>> selectDevInfoList2(DevInfo devInfo);
 }
