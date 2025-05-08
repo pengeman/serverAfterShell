@@ -1,6 +1,8 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.Userinfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,10 +22,10 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 用户访问记录，展现末尾记录Controller
+ * 客户分配Controller
  * 
  * @author pengweitao
- * @date 2025-01-09
+ * @date 2025-01-12
  */
 @Controller
 @RequestMapping("/system/uservisit")
@@ -42,7 +44,7 @@ public class UservisitController extends BaseController
     }
 
     /**
-     * 查询用户访问记录，展现末尾记录列表
+     * 查询客户分配列表
      */
     @RequiresPermissions("system:uservisit:list")
     @PostMapping("/list")
@@ -55,21 +57,35 @@ public class UservisitController extends BaseController
     }
 
     /**
-     * 导出用户访问记录，展现末尾记录列表
+     * 导出客户分配列表
      */
     @RequiresPermissions("system:uservisit:export")
-    @Log(title = "用户访问记录，展现末尾记录", businessType = BusinessType.EXPORT)
+    @Log(title = "客户分配", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
     public AjaxResult export(Uservisit uservisit)
     {
         List<Uservisit> list = uservisitService.selectUservisitList(uservisit);
         ExcelUtil<Uservisit> util = new ExcelUtil<Uservisit>(Uservisit.class);
-        return util.exportExcel(list, "用户访问记录，展现末尾记录数据");
+        return util.exportExcel(list, "客户分配数据");
     }
 
     /**
-     * 新增用户访问记录，展现末尾记录
+     * 开始分配客户数据
+     */
+    @RequiresPermissions("system:uservisit:allocation")
+    @Log(title = "客户分配", businessType = BusinessType.INSERT)
+    @GetMapping("/allocation")
+    public String allocation()
+    {
+        startPage();
+        Userinfo userinfo = new Userinfo();
+        List<Userinfo> userinfos = uservisitService.selectUserinfo(userinfo);
+        return prefix + "/allocation";
+    }
+
+    /**
+     * 新增客户分配
      */
     @GetMapping("/add")
     public String add()
@@ -78,10 +94,10 @@ public class UservisitController extends BaseController
     }
 
     /**
-     * 新增保存用户访问记录，展现末尾记录
+     * 新增保存客户分配
      */
     @RequiresPermissions("system:uservisit:add")
-    @Log(title = "用户访问记录，展现末尾记录", businessType = BusinessType.INSERT)
+    @Log(title = "客户分配", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(Uservisit uservisit)
@@ -90,7 +106,7 @@ public class UservisitController extends BaseController
     }
 
     /**
-     * 修改用户访问记录，展现末尾记录
+     * 修改客户分配
      */
     @RequiresPermissions("system:uservisit:edit")
     @GetMapping("/edit/{id}")
@@ -102,10 +118,10 @@ public class UservisitController extends BaseController
     }
 
     /**
-     * 修改保存用户访问记录，展现末尾记录
+     * 修改保存客户分配
      */
     @RequiresPermissions("system:uservisit:edit")
-    @Log(title = "用户访问记录，展现末尾记录", businessType = BusinessType.UPDATE)
+    @Log(title = "客户分配", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
     public AjaxResult editSave(Uservisit uservisit)
@@ -114,10 +130,10 @@ public class UservisitController extends BaseController
     }
 
     /**
-     * 删除用户访问记录，展现末尾记录
+     * 删除客户分配
      */
     @RequiresPermissions("system:uservisit:remove")
-    @Log(title = "用户访问记录，展现末尾记录", businessType = BusinessType.DELETE)
+    @Log(title = "客户分配", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
     public AjaxResult remove(String ids)

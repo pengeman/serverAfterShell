@@ -1,6 +1,12 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.Collections;
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.system.domain.Userinfo;
+import com.ruoyi.system.service.ISysUserService;
+import com.ruoyi.system.service.IUserinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.UservisitMapper;
@@ -9,22 +15,26 @@ import com.ruoyi.system.service.IUservisitService;
 import com.ruoyi.common.core.text.Convert;
 
 /**
- * 用户访问记录，展现末尾记录Service业务层处理
+ * 客户分配Service业务层处理
  * 
  * @author pengweitao
- * @date 2025-01-09
+ * @date 2025-01-12
  */
 @Service
 public class UservisitServiceImpl implements IUservisitService 
 {
     @Autowired
     private UservisitMapper uservisitMapper;
+    @Autowired
+    private IUserinfoService userinfoService;
+    @Autowired
+    private ISysUserService sysUserService;
 
     /**
-     * 查询用户访问记录，展现末尾记录
+     * 查询客户分配
      * 
-     * @param id 用户访问记录，展现末尾记录主键
-     * @return 用户访问记录，展现末尾记录
+     * @param id 客户分配主键
+     * @return 客户分配
      */
     @Override
     public Uservisit selectUservisitById(Long id)
@@ -33,10 +43,10 @@ public class UservisitServiceImpl implements IUservisitService
     }
 
     /**
-     * 查询用户访问记录，展现末尾记录列表
+     * 查询客户分配列表
      * 
-     * @param uservisit 用户访问记录，展现末尾记录
-     * @return 用户访问记录，展现末尾记录
+     * @param uservisit 客户分配
+     * @return 客户分配
      */
     @Override
     public List<Uservisit> selectUservisitList(Uservisit uservisit)
@@ -45,9 +55,9 @@ public class UservisitServiceImpl implements IUservisitService
     }
 
     /**
-     * 新增用户访问记录，展现末尾记录
+     * 新增客户分配
      * 
-     * @param uservisit 用户访问记录，展现末尾记录
+     * @param uservisit 客户分配
      * @return 结果
      */
     @Override
@@ -57,9 +67,9 @@ public class UservisitServiceImpl implements IUservisitService
     }
 
     /**
-     * 修改用户访问记录，展现末尾记录
+     * 修改客户分配
      * 
-     * @param uservisit 用户访问记录，展现末尾记录
+     * @param uservisit 客户分配
      * @return 结果
      */
     @Override
@@ -69,9 +79,9 @@ public class UservisitServiceImpl implements IUservisitService
     }
 
     /**
-     * 批量删除用户访问记录，展现末尾记录
+     * 批量删除客户分配
      * 
-     * @param ids 需要删除的用户访问记录，展现末尾记录主键
+     * @param ids 需要删除的客户分配主键
      * @return 结果
      */
     @Override
@@ -81,14 +91,26 @@ public class UservisitServiceImpl implements IUservisitService
     }
 
     /**
-     * 删除用户访问记录，展现末尾记录信息
+     * 删除客户分配信息
      * 
-     * @param id 用户访问记录，展现末尾记录主键
+     * @param id 客户分配主键
      * @return 结果
      */
     @Override
     public int deleteUservisitById(Long id)
     {
         return uservisitMapper.deleteUservisitById(id);
+    }
+
+    @Override
+    public List<Userinfo> selectUserinfo(Userinfo userinfo) {
+        List<Userinfo> userinfoList = userinfoService.selectUserinfoList(userinfo);
+        return userinfoList;
+    }
+
+    @Override
+    public List<SysUser> selectSysUser(SysUser sysUser) {
+        List<SysUser> sysUserList = sysUserService.selectUserList(sysUser);
+        return sysUserList;
     }
 }

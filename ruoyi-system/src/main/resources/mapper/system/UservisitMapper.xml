@@ -11,19 +11,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="tel"    column="tel"    />
         <result property="record"    column="record"    />
         <result property="recordtime"    column="recordtime"    />
+        <result property="salesman"    column="salesman"    />
     </resultMap>
 
     <sql id="selectUservisitVo">
-        select id, usename, person, tel, record, recordtime from uservisit
+        select id, usename, person, tel, record, recordtime, salesman from uservisit
     </sql>
 
     <select id="selectUservisitList" parameterType="Uservisit" resultMap="UservisitResult">
         <include refid="selectUservisitVo"/>
         <where>  
             <if test="usename != null  and usename != ''"> and usename like concat('%', #{usename}, '%')</if>
-            <if test="person != null  and person != ''"> and person = #{person}</if>
-            <if test="tel != null  and tel != ''"> and tel = #{tel}</if>
-            <if test="record != null  and record != ''"> and record = #{record}</if>
+            <if test="person != null  and person != ''"> and person like concat('%', #{person}, '%')</if>
+            <if test="tel != null  and tel != ''"> and tel like concat('%', #{tel}, '%')</if>
+            <if test="salesman != null "> and salesman like concat('%', #{salesman}, '%')</if>
         </where>
     </select>
     
@@ -40,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="tel != null">tel,</if>
             <if test="record != null">record,</if>
             <if test="recordtime != null">recordtime,</if>
+            <if test="salesman != null">salesman,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="usename != null">#{usename},</if>
@@ -47,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="tel != null">#{tel},</if>
             <if test="record != null">#{record},</if>
             <if test="recordtime != null">#{recordtime},</if>
+            <if test="salesman != null">#{salesman},</if>
          </trim>
     </insert>
 
@@ -58,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="tel != null">tel = #{tel},</if>
             <if test="record != null">record = #{record},</if>
             <if test="recordtime != null">recordtime = #{recordtime},</if>
+            <if test="salesman != null">salesman = #{salesman},</if>
         </trim>
         where id = #{id}
     </update>

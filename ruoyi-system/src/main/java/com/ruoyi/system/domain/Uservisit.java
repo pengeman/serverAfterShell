@@ -8,10 +8,10 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
- * 用户访问记录，展现末尾记录对象 uservisit
+ * 客户分配对象 uservisit
  * 
  * @author pengweitao
- * @date 2025-01-09
+ * @date 2025-01-12
  */
 public class Uservisit extends BaseEntity
 {
@@ -20,8 +20,8 @@ public class Uservisit extends BaseEntity
     /**  */
     private Long id;
 
-    /**  */
-    @Excel(name = "")
+    /** 用户名称 */
+    @Excel(name = "用户名称")
     private String usename;
 
     /** 联系人 */
@@ -40,6 +40,10 @@ public class Uservisit extends BaseEntity
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Excel(name = "访问时间", width = 30, dateFormat = "yyyy-MM-dd")
     private Date recordtime;
+
+    /** 销售人员 */
+    @Excel(name = "销售人员")
+    private Long salesman;
 
     public void setId(Long id) 
     {
@@ -101,6 +105,16 @@ public class Uservisit extends BaseEntity
         return recordtime;
     }
 
+    public void setSalesman(Long salesman) 
+    {
+        this.salesman = salesman;
+    }
+
+    public Long getSalesman() 
+    {
+        return salesman;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -110,6 +124,7 @@ public class Uservisit extends BaseEntity
             .append("tel", getTel())
             .append("record", getRecord())
             .append("recordtime", getRecordtime())
+            .append("salesman", getSalesman())
             .toString();
     }
 }

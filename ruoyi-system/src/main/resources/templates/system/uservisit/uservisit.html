@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('用户访问记录，展现末尾记录列表')" />
+    <th:block th:include="include :: header('客户分配列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,7 +11,7 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>：</label>
+                                <label>用户名称：</label>
                                 <input type="text" name="usename"/>
                             </li>
                             <li>
@@ -23,8 +23,8 @@
                                 <input type="text" name="tel"/>
                             </li>
                             <li>
-                                <label>访问记录：</label>
-                                <input type="text" name="record"/>
+                                <label>销售人员：</label>
+                                <input type="text" name="salesman"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -36,8 +36,8 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:uservisit:add">
-                    <i class="fa fa-plus"></i> 添加
+                <a class="btn btn-success" onclick="allocation()" shiro:hasPermission="system:uservisit:allocation">
+                    <i class="fa fa-plus"></i> 分配客户
                 </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:uservisit:edit">
                     <i class="fa fa-edit"></i> 修改
@@ -67,7 +67,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "用户访问记录，展现末尾记录",
+                modalName: "客户分配",
                 columns: [{
                     checkbox: true
                 },
@@ -78,7 +78,7 @@
                 },
                 {
                     field: 'usename',
-                    title: ''
+                    title: '用户名称'
                 },
                 {
                     field: 'person',
@@ -97,6 +97,10 @@
                     title: '访问时间'
                 },
                 {
+                    field: 'salesman',
+                    title: '销售人员'
+                },
+                {
                     title: '操作',
                     align: 'center',
                     formatter: function(value, row, index) {
@@ -110,5 +114,16 @@
             $.table.init(options);
         });
     </script>
+     <script th:inline="javascript">
+        var allocation = function (){
+            // 分配客户给某销售
+            //prefix = ctx + "system/uservisit";
+            width = 800;
+            height = 600;
+            url = prefix + "/allocation";
+            console.log(url);
+            $.modal.open("分配客户", url, width, height);
+        }
+     </script>
 </body>
 </html>
