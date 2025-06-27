@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.UColletMapper">
+    
+    <resultMap type="UCollet" id="UColletResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="price"    column="price"    />
+        <result property="pic"    column="pic"    />
+    </resultMap>
+
+    <sql id="selectUColletVo">
+        select id, type, price, pic from u_collet
+    </sql>
+
+    <select id="selectUColletList" parameterType="UCollet" resultMap="UColletResult">
+        <include refid="selectUColletVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type like concat('%', #{type}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectUColletById" parameterType="Long" resultMap="UColletResult">
+        <include refid="selectUColletVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUCollet" parameterType="UCollet" useGeneratedKeys="true" keyProperty="id">
+        insert into u_collet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="price != null">price,</if>
+            <if test="pic != null">pic,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="price != null">#{price},</if>
+            <if test="pic != null">#{pic},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUCollet" parameterType="UCollet">
+        update u_collet
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="pic != null">pic = #{pic},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUColletById" parameterType="Long">
+        delete from u_collet where id = #{id}
+    </delete>
+
+    <delete id="deleteUColletByIds" parameterType="String">
+        delete from u_collet where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -42,7 +42,14 @@ public class UserinfoServiceImpl implements IUserinfoService
     @Override
     public List<Userinfo> selectUserinfoList(Userinfo userinfo)
     {
-        return userinfoMapper.selectUserinfoList(userinfo);
+        List<Userinfo> userinfoList = userinfoMapper.selectUserinfoList(userinfo);
+         //为userinfoList中的user增加<a>标签
+        for (Userinfo userinfo2 : userinfoList){
+            long userid = userinfo2.getId();
+            String username = userinfo2.getName();
+            userinfo2.setName("<a href='" + userid + "'>" + username + "</a>");
+        }
+        return userinfoList;
     }
 
     /**
