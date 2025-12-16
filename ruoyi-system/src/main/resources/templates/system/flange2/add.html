@@ -2,6 +2,8 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <th:block th:include="include :: header('新增法兰-JB/T81-94国标')" />
+    <th:block th:include="include :: select2-css" />
+    <th:block th:include="include :: select2-js" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -10,10 +12,27 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">型号：</label>
                     <div class="col-sm-8">
-                        <input name="type" class="form-control" type="text">
+<!--                        <input name="type" class="form-control" type="text"  autocomplete="off">-->
+                        <select class="form-control" id="select_type">
+                            <option value="">--请选择开发语言--</option>
+                            <option value="Java">Java</option>
+                            <option value="PHP">PHP</option>
+                            <option value=".NET">.NET</option>
+                            <option value=".NET">下拉框</option>
+                        </select>
                     </div>
                 </div>
             </div>
+<!--            <div class="form-group">-->
+<!--                <label class="font-noraml">型号：</label>-->
+<!--                <select class="form-control">-->
+<!--                    <option value="">&#45;&#45;请选择开发语言&#45;&#45;</option>-->
+<!--                    <option value="Java">Java</option>-->
+<!--                    <option value="PHP">PHP</option>-->
+<!--                    <option value=".NET">.NET</option>-->
+<!--                    <option value=".NET">下拉框</option>-->
+<!--                </select>-->
+<!--            </div>-->
             <div class="col-xs-12">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">材质：</label>
@@ -26,7 +45,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">规格：</label>
                     <div class="col-sm-8">
-                        <input name="class" class="form-control" type="text">
+                        <input name="class_" class="form-control" type="text">
                     </div>
                 </div>
             </div>
@@ -61,5 +80,53 @@
             }
         }
     </script>
+<!--<script th:inline="javascript">-->
+<!--    // 清空现有选项-->
+<!--    $("#select_type").empty();-->
+
+<!--    // 添加默认选项-->
+<!--    $("#select_type").append('<option value="">请选择板片型号</option>');-->
+
+<!--    // 添加数据选项-->
+<!--    var data = [-->
+<!--        {id: 1, text: '选项1'},-->
+<!--        {id: 2, text: '选项2'},-->
+<!--        {id: 3, text: '选项3'}-->
+<!--    ];-->
+
+<!--    $.each(data, function(index, item) {-->
+<!--        $("#select_type").append('<option value="' + item.id + '">' + item.text + '</option>');-->
+<!--    });-->
+
+<!--    // 刷新Select2-->
+<!--    $("#select_type").select2();-->
+<!--</script>-->
+<script th:inline="javascript">
+    // 清空现有选项-->
+    $("#select_type").empty();
+
+        // 添加默认选项
+     $("#select_type").append('<option value="">请选择板片型号</option>');
+
+    $("#select_type").select2({
+        ajax: {
+            url: prefix + '/getSheetType', // 后端API地址
+            dataType: 'json',
+            delay: 250,
+            // data: function (params) {
+            //     return {
+            //         keyword: params.term, // 搜索关键字
+            //         page: params.page || 1
+            //     };
+            // },
+            processResults: function (data) {
+                // 解析返回的数据
+                $("#select_type").append('<option value="' + data.id + '">'+ data.type + '</option>');
+            },
+            cache: true
+        },
+        placeholder: '请选择'
+    });
+</script>
 </body>
 </html>

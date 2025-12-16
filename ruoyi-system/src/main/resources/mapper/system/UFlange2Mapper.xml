@@ -8,20 +8,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="id"    column="id"    />
         <result property="type"    column="type"    />
         <result property="texture"    column="texture"    />
-        <result property="class"    column="class"    />
+        <result property="class_"    column="class"    />
         <result property="price"    column="price"    />
         <result property="pic"    column="pic"    />
     </resultMap>
 
     <sql id="selectUFlange2Vo">
-        select id, type, texture, class, price, pic from u_flange2
+        select id, type, texture, `class`, price, pic from u_flange2
     </sql>
 
     <select id="selectUFlange2List" parameterType="UFlange2" resultMap="UFlange2Result">
         <include refid="selectUFlange2Vo"/>
         <where>  
             <if test="type != null  and type != ''"> and type like concat('%', #{type}, '%')</if>
-            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
         </where>
     </select>
     
@@ -35,14 +34,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="type != null">type,</if>
             <if test="texture != null">texture,</if>
-            <if test="class != null">class,</if>
+            <if test="class_ != null">`class`,</if>
             <if test="price != null">price,</if>
             <if test="pic != null">pic,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="type != null">#{type},</if>
             <if test="texture != null">#{texture},</if>
-            <if test="class != null">#{class},</if>
+            <if test="class_ != null">#{class_},</if>
             <if test="price != null">#{price},</if>
             <if test="pic != null">#{pic},</if>
          </trim>
@@ -53,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="type != null">type = #{type},</if>
             <if test="texture != null">texture = #{texture},</if>
-            <if test="class != null">class = #{class},</if>
+            <if test="class_ != null">`class` = #{class_},</if>
             <if test="price != null">price = #{price},</if>
             <if test="pic != null">pic = #{pic},</if>
         </trim>

@@ -1,5 +1,7 @@
 package com.ruoyi.system.controller;
 
+import com.ruoyi.common.exception.UtilException;
+import com.ruoyi.common.utils.StringUtils;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -31,7 +33,33 @@ public class Sa {
         System.out.println(list);
     }
 
+    public static void filterKeyword(String value)
+    { String SQL_REGEX = "and |extractvalue|updatexml|exec |drop |count |chr |mid |master |truncate |char |declare |or |+|user()";
+         String SQL_REGEX2 = "insert |select |delete |update |drop";
+
+        if (StringUtils.isEmpty(value))
+        {
+            return;
+        }
+        String[] sqlKeywords = StringUtils.split(SQL_REGEX, "\\|");
+        for (String sqlKeyword : sqlKeywords)
+        {
+            if (StringUtils.indexOfIgnoreCase(value, sqlKeyword) > -1)
+            {
+                throw new UtilException("参数存在SQL注入风险, or 参数存在关键字冲突:" + sqlKeyword);
+            }
+        }
+        sqlKeywords = StringUtils.split(SQL_REGEX2, "\\|");
+        int value1 = StringUtils.ordinalIndexOf(value,"|",1);
+        value = StringUtils.substring(value,0,value1);
+        for (String sqlKeyword : sqlKeywords){
+            if (StringUtils.indexOfIgnoreCase(value, sqlKeyword) > -1)
+            {
+                throw new UtilException("参数存在SQL注入风险, or 参数存在关键字冲突:" + sqlKeyword);
+            }
+        }
+    }
     public static void main(String[] args) {
-        m2();
+        filterKeyword("insert into xxx");
     }
 }

@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.UFlange2;
  * 法兰-JB/T81-94国标Service接口
  * 
  * @author pengweitao
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public interface IUFlange2Service 
 {

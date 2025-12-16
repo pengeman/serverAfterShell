@@ -12,7 +12,7 @@ import com.ruoyi.common.core.text.Convert;
  * 法兰-JB/T81-94国标Service业务层处理
  * 
  * @author pengweitao
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 @Service
 public class UFlange2ServiceImpl implements IUFlange2Service 

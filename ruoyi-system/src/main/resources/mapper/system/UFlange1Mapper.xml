@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectUFlange1Vo">
-        select id, type, texture, class, price, pic from u_flange1
+        select id, type, texture, `class`, price, pic from u_flange1
     </sql>
 
     <select id="selectUFlange1List" parameterType="UFlange1" resultMap="UFlange1Result">
@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="type != null">type,</if>
             <if test="texture != null">texture,</if>
-            <if test="class_ != null">class,</if>
+            <if test="class_ != null">`class`,</if>
             <if test="price != null">price,</if>
             <if test="pic != null">pic,</if>
          </trim>

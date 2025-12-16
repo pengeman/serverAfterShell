@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.UPackageMapper">
+    
+    <resultMap type="UPackage" id="UPackageResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="area"    column="area"    />
+        <result property="price"    column="price"    />
+        <result property="pic"    column="pic"    />
+    </resultMap>
+
+    <sql id="selectUPackageVo">
+        select id, type, area, price, pic from u_package
+    </sql>
+
+    <select id="selectUPackageList" parameterType="UPackage" resultMap="UPackageResult">
+        <include refid="selectUPackageVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectUPackageById" parameterType="Long" resultMap="UPackageResult">
+        <include refid="selectUPackageVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUPackage" parameterType="UPackage" useGeneratedKeys="true" keyProperty="id">
+        insert into u_package
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="area != null">area,</if>
+            <if test="price != null">price,</if>
+            <if test="pic != null">pic,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="area != null">#{area},</if>
+            <if test="price != null">#{price},</if>
+            <if test="pic != null">#{pic},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUPackage" parameterType="UPackage">
+        update u_package
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="pic != null">pic = #{pic},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUPackageById" parameterType="Long">
+        delete from u_package where id = #{id}
+    </delete>
+
+    <delete id="deleteUPackageByIds" parameterType="String">
+        delete from u_package where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

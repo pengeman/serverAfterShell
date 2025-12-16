@@ -1,6 +1,9 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.USheet;
+import com.ruoyi.system.service.IUSheetService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,7 +26,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 法兰-JB/T81-94国标Controller
  * 
  * @author pengweitao
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 @Controller
 @RequestMapping("/system/flange2")
@@ -33,6 +36,8 @@ public class UFlange2Controller extends BaseController
 
     @Autowired
     private IUFlange2Service uFlange2Service;
+    @Autowired
+    private IUSheetService uSheetService;
 
     @RequiresPermissions("system:flange2:view")
     @GetMapping()
@@ -124,4 +129,26 @@ public class UFlange2Controller extends BaseController
     {
         return toAjax(uFlange2Service.deleteUFlange2ByIds(ids));
     }
+
+    /**
+     * 获得板型型号
+     */
+    @RequiresPermissions("system:flange2:remove")
+    @Log(title = "法兰-JB/T81-94国标,获得板型型号")
+    @PostMapping( "/getSheetType")
+    @ResponseBody
+    public AjaxResult getSheetType(String ids)
+    {
+        AjaxResult ajax = new AjaxResult();
+        USheet uSheet = new USheet();
+        List<USheet> uSheets = this.uSheetService.selectUSheetList(uSheet);
+        for (int i = 0 ; i < uSheets.size() ; i ++){
+            long id = uSheets.get(i).getId();
+            String type = uSheets.get(i).getType();
+            ajax.put("id",id);
+            ajax.put("type",type);
+        }
+        return ajax;
+    }
+
 }

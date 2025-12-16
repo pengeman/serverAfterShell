@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.UTextureMapper">
+    
+    <resultMap type="UTexture" id="UTextureResult">
+        <result property="id"    column="id"    />
+        <result property="texture"    column="texture"    />
+        <result property="about"    column="about"    />
+    </resultMap>
+
+    <sql id="selectUTextureVo">
+        select id, texture, about from u_texture
+    </sql>
+
+    <select id="selectUTextureList" parameterType="UTexture" resultMap="UTextureResult">
+        <include refid="selectUTextureVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectUTextureById" parameterType="Long" resultMap="UTextureResult">
+        <include refid="selectUTextureVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUTexture" parameterType="UTexture" useGeneratedKeys="true" keyProperty="id">
+        insert into u_texture
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="texture != null">texture,</if>
+            <if test="about != null">about,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="texture != null">#{texture},</if>
+            <if test="about != null">#{about},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUTexture" parameterType="UTexture">
+        update u_texture
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="texture != null">texture = #{texture},</if>
+            <if test="about != null">about = #{about},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUTextureById" parameterType="Long">
+        delete from u_texture where id = #{id}
+    </delete>
+
+    <delete id="deleteUTextureByIds" parameterType="String">
+        delete from u_texture where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

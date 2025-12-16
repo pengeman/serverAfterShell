@@ -10,7 +10,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 法兰-JB/T81-94国标对象 u_flange2
  * 
  * @author pengweitao
- * @date 2025-06-27
+ * @date 2025-06-28
  */
 public class UFlange2 extends BaseEntity
 {
@@ -68,12 +68,12 @@ public class UFlange2 extends BaseEntity
         return texture;
     }
 
-    public void setClass(String class_)
+    public void setClass_(String class_) 
     {
         this.class_ = class_;
     }
 
-    public String getClass_()
+    public String getClass_() 
     {
         return class_;
     }
@@ -104,7 +104,7 @@ public class UFlange2 extends BaseEntity
             .append("id", getId())
             .append("type", getType())
             .append("texture", getTexture())
-            .append("class", getClass())
+            .append("class_", getClass_())
             .append("price", getPrice())
             .append("pic", getPic())
             .toString();
