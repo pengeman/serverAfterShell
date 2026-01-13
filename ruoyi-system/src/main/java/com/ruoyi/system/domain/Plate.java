@@ -28,15 +28,15 @@ public class Plate extends BaseEntity
 
     /** 板片厚度 */
     @Excel(name = "板片厚度")
-    private Long thinkness;
+    private double thinkness;
 
     /** 板片重量 */
     @Excel(name = "板片重量")
-    private Long weight;
+    private double weight;
 
     /** 板片单价 */
     @Excel(name = "板片单价")
-    private Long price;
+    private double price;
 
     public void setId(Long id) 
     {
@@ -68,32 +68,32 @@ public class Plate extends BaseEntity
         return material;
     }
 
-    public void setThinkness(Long thinkness) 
+    public void setThinkness(double thinkness)
     {
         this.thinkness = thinkness;
     }
 
-    public Long getThinkness() 
+    public double getThinkness()
     {
         return thinkness;
     }
 
-    public void setWeight(Long weight) 
+    public void setWeight(double weight)
     {
         this.weight = weight;
     }
 
-    public Long getWeight() 
+    public double getWeight()
     {
         return weight;
     }
 
-    public void setPrice(Long price) 
+    public void setPrice(double price)
     {
         this.price = price;
     }
 
-    public Long getPrice() 
+    public double getPrice()
     {
         return price;
     }

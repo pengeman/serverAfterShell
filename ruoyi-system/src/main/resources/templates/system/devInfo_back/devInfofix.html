@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('设备信息档案列表')" />
+    <th:block th:include="include :: header('设备档案列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -14,13 +14,15 @@
                                 <label>出厂编号：</label>
                                 <input type="text" name="serialid"/>
                             </li>
-                            <li>
-                                <label>设备型号：</label>
-                                <input type="text" name="devType"/>
+                            <li class="select-time">
+                                <label>制造日期：</label>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginMakedate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endMakedate]"/>
                             </li>
                             <li>
-                                <label>质保：</label>
-                                <input type="text" name="guaranteePeriod"/>
+                                <label>购买方：</label>
+                                <input type="text" name="buyerid"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -32,7 +34,7 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:devInfo:add">
+                <a class="btn btn-success" onclick="addfix()" shiro:hasPermission="system:devInfo:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
                 <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:devInfo:edit">
@@ -43,6 +45,9 @@
                 </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:devInfo:export">
                     <i class="fa fa-download"></i> 导出
+                </a>
+                <a class="btn btn-success" onclick="autoadd()" shiro:hasPermission="system:devInfo:add">
+                    <i class="fa fa-plus"></i> auto添加
                 </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
@@ -63,7 +68,7 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "设备信息档案",
+                modalName: "设备档案",
                 columns: [{
                     checkbox: true
                 },
@@ -77,28 +82,20 @@
                     title: '出厂编号'
                 },
                 {
-                    field: 'devType',
-                    title: '设备型号'
+                    field: 'makedate',
+                    title: '制造日期'
+                },
+                {
+                    field: 'controct',
+                    title: '合同'
                 },
                 {
                     field: 'buyerid',
-                    title: '购买方'
+                    title: '购买方名称'
                 },
                 {
                     field: 'userid',
-                    title: '用户'
-                },
-                {
-                    field: 'theclass',
-                    title: '设备类别'
-                },
-                {
-                    field: 'menufactDate',
-                    title: '出厂日期'
-                },
-                {
-                    field: 'guaranteePeriod',
-                    title: '质保'
+                    title: '用户名称'
                 },
                 {
                     title: '操作',
@@ -113,6 +110,14 @@
             };
             $.table.init(options);
         });
+
+        function addfix(){
+            width = 800;
+            height = 600;
+            url = prefix + "/addfix/";
+            console.log(url);
+            $.modal.open(" 新增fix", url, width, height);
+        }
     </script>
 </body>
 </html>

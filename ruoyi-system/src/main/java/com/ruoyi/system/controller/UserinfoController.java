@@ -60,7 +60,7 @@ public class UserinfoController extends BaseController
      * 查询用户信息列表,sortlist
      */
     @RequiresPermissions("system:userinfo:list")
-    @PostMapping("/sortlist")
+    @GetMapping("/sortlist")
     @ResponseBody
     public AjaxResult sortlist(Userinfo userinfo)
     {

@@ -5,6 +5,7 @@ import com.ruoyi.common.utils.StringUtils;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Sa {
@@ -31,6 +32,12 @@ public class Sa {
         System.out.println(list);
         name = "456456";
         System.out.println(list);
+    }
+    public static void m2split(){
+        String a1 = "a:b:c:";
+        String as[] = a1.split(";");
+        System.out.println("it length : " + as.length);
+        System.out.println(Arrays.asList(as));
     }
 
     public static void filterKeyword(String value)
@@ -60,6 +67,7 @@ public class Sa {
         }
     }
     public static void main(String[] args) {
-        filterKeyword("insert into xxx");
+        //filterKeyword("insert into xxx");
+        m2split();
     }
 }
