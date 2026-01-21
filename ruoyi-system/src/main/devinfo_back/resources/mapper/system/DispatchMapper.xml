@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DispatchMapper">
+    
+    <resultMap type="Dispatch" id="DispatchResult">
+        <result property="id"    column="id"    />
+        <result property="clientid"    column="clientid"    />
+        <result property="clientname"    column="clientname"    />
+        <result property="address"    column="address"    />
+        <result property="connection"    column="connection"    />
+        <result property="telphone"    column="telphone"    />
+        <result property="devType"    column="devType"    />
+        <result property="devTexture"    column="devTexture"    />
+        <result property="thetype"    column="thetype"    />
+        <result property="sn"    column="sn"    />
+        <result property="area"    column="area"    />
+        <result property="guaranteePeriod"    column="guaranteePeriod"    />
+        <result property="servicetype"    column="servicetype"    />
+        <result property="makedate"    column="makedate"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="workingCondition1"    column="workingCondition1"    />
+        <result property="workingCondition2"    column="workingCondition2"    />
+        <result property="materialsPlan"    column="materialsPlan"    />
+        <result property="question"    column="question"    />
+        <result property="fixPlan"    column="fixPlan"    />
+        <result property="fixPrice"    column="fixPrice"    />
+        <result property="diagnose"    column="diagnose"    />
+        <result property="handling"    column="handling"    />
+        <result property="cause"    column="cause"    />
+        <result property="materials"    column="materials"    />
+        <result property="serviceRelult"    column="serviceRelult"    />
+        <result property="clientComment"    column="clientComment"    />
+        <result property="clientSign"    column="clientSign"    />
+        <result property="requestsign"    column="requestsign"    />
+        <result property="serviceSign"    column="serviceSign"    />
+        <result property="serviceContent"    column="serviceContent"    />
+        <result property="beginDate"    column="beginDate"    />
+        <result property="endDate"    column="endDate"    />
+        <result property="serviceTime"    column="serviceTime"    />
+        <result property="status"    column="status"    />
+        <result property="CreatorId"    column="CreatorId"    />
+        <result property="CreateTime"    column="CreateTime"    />
+    </resultMap>
+
+    <sql id="selectDispatchVo">
+        select id, clientid, clientname, address, connection, telphone, devType, devTexture, thetype, sn, area, guaranteePeriod, servicetype, makedate, quantity, workingCondition1, workingCondition2, materialsPlan, question, fixPlan, fixPrice, diagnose, handling, cause, materials, serviceRelult, clientComment, clientSign, requestsign, serviceSign, serviceContent, beginDate, endDate, serviceTime, status, CreatorId, CreateTime from dispatch
+    </sql>
+
+    <select id="selectDispatchList" parameterType="Dispatch" resultMap="DispatchResult">
+        <include refid="selectDispatchVo"/>
+        <where>  
+            <if test="clientname != null  and clientname != ''"> and clientname like concat('%', #{clientname}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectDispatchById" parameterType="Long" resultMap="DispatchResult">
+        <include refid="selectDispatchVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDispatch" parameterType="Dispatch" useGeneratedKeys="true" keyProperty="id">
+        insert into dispatch
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="clientid != null">clientid,</if>
+            <if test="clientname != null">clientname,</if>
+            <if test="address != null">address,</if>
+            <if test="connection != null">connection,</if>
+            <if test="telphone != null">telphone,</if>
+            <if test="devType != null">devType,</if>
+            <if test="devTexture != null">devTexture,</if>
+            <if test="thetype != null">thetype,</if>
+            <if test="sn != null">sn,</if>
+            <if test="area != null">area,</if>
+            <if test="guaranteePeriod != null">guaranteePeriod,</if>
+            <if test="servicetype != null">servicetype,</if>
+            <if test="makedate != null">makedate,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="workingCondition1 != null">workingCondition1,</if>
+            <if test="workingCondition2 != null">workingCondition2,</if>
+            <if test="materialsPlan != null">materialsPlan,</if>
+            <if test="question != null">question,</if>
+            <if test="fixPlan != null">fixPlan,</if>
+            <if test="fixPrice != null">fixPrice,</if>
+            <if test="diagnose != null">diagnose,</if>
+            <if test="handling != null">handling,</if>
+            <if test="cause != null">cause,</if>
+            <if test="materials != null">materials,</if>
+            <if test="serviceRelult != null">serviceRelult,</if>
+            <if test="clientComment != null">clientComment,</if>
+            <if test="clientSign != null">clientSign,</if>
+            <if test="requestsign != null">requestsign,</if>
+            <if test="serviceSign != null">serviceSign,</if>
+            <if test="serviceContent != null">serviceContent,</if>
+            <if test="beginDate != null">beginDate,</if>
+            <if test="endDate != null">endDate,</if>
+            <if test="serviceTime != null">serviceTime,</if>
+            <if test="status != null">status,</if>
+            <if test="CreatorId != null">CreatorId,</if>
+            <if test="CreateTime != null">CreateTime,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="clientid != null">#{clientid},</if>
+            <if test="clientname != null">#{clientname},</if>
+            <if test="address != null">#{address},</if>
+            <if test="connection != null">#{connection},</if>
+            <if test="telphone != null">#{telphone},</if>
+            <if test="devType != null">#{devType},</if>
+            <if test="devTexture != null">#{devTexture},</if>
+            <if test="thetype != null">#{thetype},</if>
+            <if test="sn != null">#{sn},</if>
+            <if test="area != null">#{area},</if>
+            <if test="guaranteePeriod != null">#{guaranteePeriod},</if>
+            <if test="servicetype != null">#{servicetype},</if>
+            <if test="makedate != null">#{makedate},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="workingCondition1 != null">#{workingCondition1},</if>
+            <if test="workingCondition2 != null">#{workingCondition2},</if>
+            <if test="materialsPlan != null">#{materialsPlan},</if>
+            <if test="question != null">#{question},</if>
+            <if test="fixPlan != null">#{fixPlan},</if>
+            <if test="fixPrice != null">#{fixPrice},</if>
+            <if test="diagnose != null">#{diagnose},</if>
+            <if test="handling != null">#{handling},</if>
+            <if test="cause != null">#{cause},</if>
+            <if test="materials != null">#{materials},</if>
+            <if test="serviceRelult != null">#{serviceRelult},</if>
+            <if test="clientComment != null">#{clientComment},</if>
+            <if test="clientSign != null">#{clientSign},</if>
+            <if test="requestsign != null">#{requestsign},</if>
+            <if test="serviceSign != null">#{serviceSign},</if>
+            <if test="serviceContent != null">#{serviceContent},</if>
+            <if test="beginDate != null">#{beginDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="serviceTime != null">#{serviceTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="CreatorId != null">#{CreatorId},</if>
+            <if test="CreateTime != null">#{CreateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDispatch" parameterType="Dispatch">
+        update dispatch
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="clientid != null">clientid = #{clientid},</if>
+            <if test="clientname != null">clientname = #{clientname},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="connection != null">connection = #{connection},</if>
+            <if test="telphone != null">telphone = #{telphone},</if>
+            <if test="devType != null">devType = #{devType},</if>
+            <if test="devTexture != null">devTexture = #{devTexture},</if>
+            <if test="thetype != null">thetype = #{thetype},</if>
+            <if test="sn != null">sn = #{sn},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="guaranteePeriod != null">guaranteePeriod = #{guaranteePeriod},</if>
+            <if test="servicetype != null">servicetype = #{servicetype},</if>
+            <if test="makedate != null">makedate = #{makedate},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="workingCondition1 != null">workingCondition1 = #{workingCondition1},</if>
+            <if test="workingCondition2 != null">workingCondition2 = #{workingCondition2},</if>
+            <if test="materialsPlan != null">materialsPlan = #{materialsPlan},</if>
+            <if test="question != null">question = #{question},</if>
+            <if test="fixPlan != null">fixPlan = #{fixPlan},</if>
+            <if test="fixPrice != null">fixPrice = #{fixPrice},</if>
+            <if test="diagnose != null">diagnose = #{diagnose},</if>
+            <if test="handling != null">handling = #{handling},</if>
+            <if test="cause != null">cause = #{cause},</if>
+            <if test="materials != null">materials = #{materials},</if>
+            <if test="serviceRelult != null">serviceRelult = #{serviceRelult},</if>
+            <if test="clientComment != null">clientComment = #{clientComment},</if>
+            <if test="clientSign != null">clientSign = #{clientSign},</if>
+            <if test="requestsign != null">requestsign = #{requestsign},</if>
+            <if test="serviceSign != null">serviceSign = #{serviceSign},</if>
+            <if test="serviceContent != null">serviceContent = #{serviceContent},</if>
+            <if test="beginDate != null">beginDate = #{beginDate},</if>
+            <if test="endDate != null">endDate = #{endDate},</if>
+            <if test="serviceTime != null">serviceTime = #{serviceTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="CreatorId != null">CreatorId = #{CreatorId},</if>
+            <if test="CreateTime != null">CreateTime = #{CreateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDispatchById" parameterType="Long">
+        delete from dispatch where id = #{id}
+    </delete>
+
+    <delete id="deleteDispatchByIds" parameterType="String">
+        delete from dispatch where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

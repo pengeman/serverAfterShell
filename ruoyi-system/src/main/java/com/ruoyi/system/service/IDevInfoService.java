@@ -1,16 +1,13 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
-
-import com.ruoyi.system.domain.Buyerinfo;
 import com.ruoyi.system.domain.DevInfo;
-import com.ruoyi.system.domain.Userinfo;
 
 /**
  * 设备信息档案Service接口
  * 
  * @author pengweitao
- * @date 2026-01-12
+ * @date 2026-01-21
  */
 public interface IDevInfoService 
 {
@@ -61,15 +58,4 @@ public interface IDevInfoService
      * @return 结果
      */
     public int deleteDevInfoById(Long id);
-
-    /**
-     * 新增设备档案   事务
-     * 同时新增购买方档案和用户信息
-     * @param devInfo
-     * @param buyerinfo
-     * @param userInfo
-     * @return
-     */
-    public int insetDevInfoGroup(DevInfo devInfo, Buyerinfo buyerinfo, Userinfo userInfo);
-
 }

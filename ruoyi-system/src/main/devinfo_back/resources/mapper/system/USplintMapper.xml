@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.USplintMapper">
+    
+    <resultMap type="USplint" id="USplintResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="pressure"    column="pressure"    />
+        <result property="classmin"    column="classmin"    />
+        <result property="classmax"    column="classmax"    />
+        <result property="lining"    column="lining"    />
+        <result property="price"    column="price"    />
+        <result property="pic"    column="pic"    />
+    </resultMap>
+
+    <sql id="selectUSplintVo">
+        select id, type, pressure, classmin, classmax, lining, price, pic from u_splint
+    </sql>
+
+    <select id="selectUSplintList" parameterType="USplint" resultMap="USplintResult">
+        <include refid="selectUSplintVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectUSplintById" parameterType="Long" resultMap="USplintResult">
+        <include refid="selectUSplintVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUSplint" parameterType="USplint" useGeneratedKeys="true" keyProperty="id">
+        insert into u_splint
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="pressure != null">pressure,</if>
+            <if test="classmin != null">classmin,</if>
+            <if test="classmax != null">classmax,</if>
+            <if test="lining != null">lining,</if>
+            <if test="price != null">price,</if>
+            <if test="pic != null">pic,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="pressure != null">#{pressure},</if>
+            <if test="classmin != null">#{classmin},</if>
+            <if test="classmax != null">#{classmax},</if>
+            <if test="lining != null">#{lining},</if>
+            <if test="price != null">#{price},</if>
+            <if test="pic != null">#{pic},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUSplint" parameterType="USplint">
+        update u_splint
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="pressure != null">pressure = #{pressure},</if>
+            <if test="classmin != null">classmin = #{classmin},</if>
+            <if test="classmax != null">classmax = #{classmax},</if>
+            <if test="lining != null">lining = #{lining},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="pic != null">pic = #{pic},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUSplintById" parameterType="Long">
+        delete from u_splint where id = #{id}
+    </delete>
+
+    <delete id="deleteUSplintByIds" parameterType="String">
+        delete from u_splint where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

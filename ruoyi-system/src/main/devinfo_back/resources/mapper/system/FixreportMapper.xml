@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.FixreportMapper">
+    
+    <resultMap type="Fixreport" id="FixreportResult">
+        <result property="id"    column="id"    />
+        <result property="deviceid"    column="deviceid"    />
+        <result property="worktime"    column="worktime"    />
+        <result property="workcase"    column="workcase"    />
+        <result property="breakdowntype"    column="breakdowntype"    />
+        <result property="fixdescription"    column="fixdescription"    />
+        <result property="mountings"    column="mountings"    />
+        <result property="person"    column="person"    />
+        <result property="fixdays"    column="fixdays"    />
+        <result property="begindate"    column="begindate"    />
+        <result property="enddate"    column="enddate"    />
+        <result property="cost"    column="cost"    />
+        <result property="reportfile"    column="reportfile"    />
+        <result property="dispatchfile"    column="dispatchfile"    />
+        <result property="afterSalesID"    column="afterSalesID"    />
+        <result property="salesman"    column="salesman"    />
+        <result property="customer"    column="customer"    />
+        <result property="customerAddr"    column="customerAddr"    />
+        <result property="quetion"    column="quetion"    />
+        <result property="deviceType"    column="deviceType"    />
+        <result property="productionID"    column="productionID"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="modifyTime"    column="modify_time"    />
+    </resultMap>
+
+    <sql id="selectFixreportVo">
+        select id, deviceid, worktime, workcase, breakdowntype, fixdescription, mountings, person, fixdays, begindate, enddate, cost, reportfile, dispatchfile, afterSalesID, salesman, customer, customerAddr, quetion, deviceType, productionID, create_time, modify_time from fixreport
+    </sql>
+
+    <select id="selectFixreportList" parameterType="Fixreport" resultMap="FixreportResult">
+        <include refid="selectFixreportVo"/>
+        <where>  
+            <if test="person != null  and person != ''"> and person = #{person}</if>
+            <if test="begindate != null  and begindate != ''"> and begindate = #{begindate}</if>
+            <if test="salesman != null  and salesman != ''"> and salesman like concat('%', #{salesman}, '%')</if>
+            <if test="customer != null  and customer != ''"> and customer like concat('%', #{customer}, '%')</if>
+            <if test="customerAddr != null  and customerAddr != ''"> and customerAddr like concat('%', #{customerAddr}, '%')</if>
+            <if test="productionID != null  and productionID != ''"> and productionID = #{productionID}</if>
+        </where>
+    </select>
+    
+    <select id="selectFixreportById" parameterType="Long" resultMap="FixreportResult">
+        <include refid="selectFixreportVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFixreport" parameterType="Fixreport" useGeneratedKeys="true" keyProperty="id">
+        insert into fixreport
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceid != null">deviceid,</if>
+            <if test="worktime != null">worktime,</if>
+            <if test="workcase != null">workcase,</if>
+            <if test="breakdowntype != null">breakdowntype,</if>
+            <if test="fixdescription != null">fixdescription,</if>
+            <if test="mountings != null">mountings,</if>
+            <if test="person != null">person,</if>
+            <if test="fixdays != null">fixdays,</if>
+            <if test="begindate != null">begindate,</if>
+            <if test="enddate != null">enddate,</if>
+            <if test="cost != null">cost,</if>
+            <if test="reportfile != null">reportfile,</if>
+            <if test="dispatchfile != null">dispatchfile,</if>
+            <if test="afterSalesID != null">afterSalesID,</if>
+            <if test="salesman != null">salesman,</if>
+            <if test="customer != null">customer,</if>
+            <if test="customerAddr != null">customerAddr,</if>
+            <if test="quetion != null">quetion,</if>
+            <if test="deviceType != null">deviceType,</if>
+            <if test="productionID != null">productionID,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceid != null">#{deviceid},</if>
+            <if test="worktime != null">#{worktime},</if>
+            <if test="workcase != null">#{workcase},</if>
+            <if test="breakdowntype != null">#{breakdowntype},</if>
+            <if test="fixdescription != null">#{fixdescription},</if>
+            <if test="mountings != null">#{mountings},</if>
+            <if test="person != null">#{person},</if>
+            <if test="fixdays != null">#{fixdays},</if>
+            <if test="begindate != null">#{begindate},</if>
+            <if test="enddate != null">#{enddate},</if>
+            <if test="cost != null">#{cost},</if>
+            <if test="reportfile != null">#{reportfile},</if>
+            <if test="dispatchfile != null">#{dispatchfile},</if>
+            <if test="afterSalesID != null">#{afterSalesID},</if>
+            <if test="salesman != null">#{salesman},</if>
+            <if test="customer != null">#{customer},</if>
+            <if test="customerAddr != null">#{customerAddr},</if>
+            <if test="quetion != null">#{quetion},</if>
+            <if test="deviceType != null">#{deviceType},</if>
+            <if test="productionID != null">#{productionID},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFixreport" parameterType="Fixreport">
+        update fixreport
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceid != null">deviceid = #{deviceid},</if>
+            <if test="worktime != null">worktime = #{worktime},</if>
+            <if test="workcase != null">workcase = #{workcase},</if>
+            <if test="breakdowntype != null">breakdowntype = #{breakdowntype},</if>
+            <if test="fixdescription != null">fixdescription = #{fixdescription},</if>
+            <if test="mountings != null">mountings = #{mountings},</if>
+            <if test="person != null">person = #{person},</if>
+            <if test="fixdays != null">fixdays = #{fixdays},</if>
+            <if test="begindate != null">begindate = #{begindate},</if>
+            <if test="enddate != null">enddate = #{enddate},</if>
+            <if test="cost != null">cost = #{cost},</if>
+            <if test="reportfile != null">reportfile = #{reportfile},</if>
+            <if test="dispatchfile != null">dispatchfile = #{dispatchfile},</if>
+            <if test="afterSalesID != null">afterSalesID = #{afterSalesID},</if>
+            <if test="salesman != null">salesman = #{salesman},</if>
+            <if test="customer != null">customer = #{customer},</if>
+            <if test="customerAddr != null">customerAddr = #{customerAddr},</if>
+            <if test="quetion != null">quetion = #{quetion},</if>
+            <if test="deviceType != null">deviceType = #{deviceType},</if>
+            <if test="productionID != null">productionID = #{productionID},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFixreportById" parameterType="Long">
+        delete from fixreport where id = #{id}
+    </delete>
+
+    <delete id="deleteFixreportByIds" parameterType="String">
+        delete from fixreport where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

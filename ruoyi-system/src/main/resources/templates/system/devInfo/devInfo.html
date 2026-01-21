@@ -11,16 +11,8 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>出厂编号：</label>
-                                <input type="text" name="serialid"/>
-                            </li>
-                            <li>
-                                <label>设备型号：</label>
-                                <input type="text" name="devType"/>
-                            </li>
-                            <li>
-                                <label>质保：</label>
-                                <input type="text" name="guaranteePeriod"/>
+                                <label>用户id：</label>
+                                <input type="text" name="userid"/>
                             </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
@@ -54,6 +46,7 @@
     <script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('system:devInfo:edit')}]];
         var removeFlag = [[${@permission.hasPermi('system:devInfo:remove')}]];
+        var theclassDatas = [[${@dict.getType('hetype')}]];
         var prefix = ctx + "system/devInfo";
 
         $(function() {
@@ -74,11 +67,15 @@
                 },
                 {
                     field: 'serialid',
-                    title: '出厂编号'
+                    title: 'serial number序列号'
                 },
                 {
                     field: 'devType',
                     title: '设备型号'
+                },
+                {
+                    field: 'makedate',
+                    title: '制造日期'
                 },
                 {
                     field: 'buyerid',
@@ -86,19 +83,15 @@
                 },
                 {
                     field: 'userid',
-                    title: '用户'
+                    title: '用户id'
                 },
                 {
-                    field: 'theclass',
-                    title: '设备类别'
+                    field: 'factoryDate',
+                    title: '制造日期'
                 },
                 {
-                    field: 'menufactDate',
-                    title: '出厂日期'
-                },
-                {
-                    field: 'guaranteePeriod',
-                    title: '质保'
+                    field: 'warrantyPeriod',
+                    title: '质保期限'
                 },
                 {
                     title: '操作',

@@ -1,228 +1,150 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增设备档案')"/>
-    <th:block th:include="include :: datetimepicker-css"/>
-    <th:block th:include="include :: bootstrap-typeahead-js"/>
+    <th:block th:include="include :: header('新增设备信息档案')" />
+    <th:block th:include="include :: datetimepicker-css" />
 </head>
 <body class="white-bg">
-<div class="wrapper wrapper-content animated fadeInRight ibox-content">
-    <form class="form-horizontal m" id="form-devInfo-add">
-        <div class="col-xs-12">
-            <div class="form-group">
-                <label class="col-sm-3 control-label is-required">设备编号：</label>
-                <div class="col-sm-8">
-                    <input name="serialid" class="form-control" type="text" required>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">市场日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <input name="makedate" class="form-control" placeholder="yyyy-MM-dd" type="text"
-                               autocomplete="off">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-devInfo-add">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">serial number序列号：</label>
+                    <div class="col-sm-8">
+                        <input name="serialid" class="form-control" type="text">
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xs-12">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">设备型号：</label>
-                <div class="col-sm-8">
-                    <input name="devType" class="form-control" type="text" placeholder="输入合设备型号">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">制造日期：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date">
+                            <input name="makedate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xs-12">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">购买方名称：</label>
-                <div class="col-sm-8">
-                    <input id="buyername" name="buyername" class="form-control" type="text">
-                    <button type="button" th:onclick="newBuyer()">+</button>
-                    <p id="buyerid"></p>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">合同：</label>
+                    <div class="col-sm-8">
+                        <input name="controct" class="form-control" type="text">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xs-12">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">用户名称：</label>
-                <div class="col-sm-8">
-                    <input id="usename" name="username" class="form-control" type="text">
-                    <button type="button" th:onclick="newUser()">+</button>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">购买方：</label>
+                    <div class="col-sm-8">
+                        <input name="buyerid" class="form-control" type="text">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xs-12">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">质保：</label>
-                <div class="col-sm-8">
-                    <input name="guaranteePeriod" class="form-control" type="text">
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">用户id：</label>
+                    <div class="col-sm-8">
+                        <input name="userid" class="form-control" type="text">
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
-<th:block th:include="include :: footer"/>
-<th:block th:include="include :: datetimepicker-js"/>
-<th:block th:include="include :: bootstrap-suggest-js"/>
-<th:block th:include="include :: bootstrap-typeahead-js"/>
-<script type="text/javascript">
-    let buyerid = ""; // 0:表示新增购买方
-    let controct = "";
-    let buyercon = "";
-    let buyertel = "";
-    let buyeraddr = "";
-    let userid = ""; // 0:表示新增用户
-    let username = "";
-    let usercon = "";
-    let usertel = "";
-    let useraddr = "";
-    let devserialid;
-    let devmakedate;
-    let devcontroct; // 设备销售合同
-    let devbuyername; // 设备购买方
-    let devusername; // 设备使用方
-
-
-    $.get(ctx + "system/buyerinfo/sortlist", function (data) {
-        console.log(data.value)
-        $("#buyername").typeahead({
-            source: data.value
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">设备类别：</label>
+                    <div class="col-sm-8">
+                        <input name="theclass" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">制造日期：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date">
+                            <input name="factoryDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">质保期限：</label>
+                    <div class="col-sm-8">
+                        <input name="warrantyPeriod" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">质保：</label>
+                    <div class="col-sm-8">
+                        <input name="guaranteePeriod" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">销售日期：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date">
+                            <input name="salesDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">服务历史：</label>
+                    <div class="col-sm-8">
+                        <input name="serverStory" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">创建人编号 当前用户ID：</label>
+                    <div class="col-sm-8">
+                        <input name="CreatorId" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/devInfo"
+        $("#form-devInfo-add").validate({
+            focusCleanup: true
         });
-    }, 'json');
-    $.get(ctx + "system/userinfo/sortlist", function (data){
-        $("#usename").typeahead({source:data.value});
-    },'json');
 
-</script>
-<script th:inline="javascript">
-    var prefix = ctx + "system/devInfo"
-    $("#form-devInfo-add").validate({
-        focusCleanup: true
-    });
-    // /* 提交 */
-    // function submitHandler() {
-    //     var name = $("#name").val();
-    //     activeWindow().$('#connection').html(name);  // 回填到autoadd.html 的 username
-    //     $.modal.close();
-    // }
-    function submitHandler() {
-        console.log("1 devinfo add sumithandler")
-        if ($.validate.form()) {
-            console.log("2 submitHandler ...")
-            // activeWindow().$("#connection").html(buyerid);
-            //$.operate.save(prefix + "/add", $('#form-devInfo-add').serialize());
-            // 保存devinfo，buyerinfo，userinfo
-            devserialid = $("#form-devInfo-add input[name='serialid']").val();
-            devcontroct = $("#form-devInfo-add input[name='controct']").val();
-            devmakedate = $("#form-devInfo-add input[name='makedate']").val();
-            devbuyername = $("#form-devInfo-add input[name='buyername']").val();
-            devusername = $("#form-devInfo-add input[name='username']").val();
-            devinfogroup = "devserialid=" + devserialid + "&"
-            devinfogroup += "devcontroct=" + devcontroct + "&"
-            devinfogroup += "devmakedate=" + devmakedate + "&"
-            devinfogroup += "devbuyername=" + devbuyername + "&"
-            devinfogroup += "devusername=" + devusername + "&"
-
-            devinfogroup += "buyerid=" + buyerid + "&"
-            devinfogroup += "buyercon=" + buyercon + "&"
-            devinfogroup += "buyertel=" + buyertel + "&"
-            devinfogroup += "buyeraddr=" + buyeraddr + "&"
-
-            devinfogroup += "userid=" + userid + "&"
-            devinfogroup += "username=" + username + "&"
-            devinfogroup += "usercon=" + usercon + "&"
-            devinfogroup += "usertel=" + usertel + "&"
-            devinfogroup += "useraddr=" + useraddr;
-            console.log("3 submitHandler ...line 132")
-            //newdevinfosave(devinfogroup); // devinfogroup设备信息组，包含devinfo,buyerinfo,userinfo 如果有
-            $.operate.save(prefix + "/devinfogroupaddSave?" + devinfogroup);
-        }
-    }
-
-    $("input[name='makedate']").datetimepicker({
-        format: "yyyy-mm-dd",
-        minView: "month",
-        autoclose: true
-    });
-</script>
-<script th:inline="javascript">
-
-    function newBuyer() {
-        var prefix2 = ctx + "system/buyerinfo";
-        var options = {
-            title: '新增购买方',
-            url: prefix2 + "/add",
-            callBack: function (index, layero) {
-                console.log("selectUsersToParent4 callback", index)
-                doSubmit4(index, layero);
-            },
-        };
-        $.modal.openOptions(options);
-    }
-
-    function doSubmit4(index, layero) {
-        var prefix2 = ctx + "system/buyerinfo";
-        let body = $.modal.getChildFrame(index);
-        //var cc = body.find('#connection').val();
-        buyerid = 0;
-        buyercon = body.find('#connection').val();
-        buyertel = body.find('#tel').val();
-        buyeraddr = body.find('#addr').val();
-        $("#buyername").val(buyercon);
-
-        console.log("doSubmit4 : ");
-        //var r = newdevinfosave(cc);
-        // $.operate.save(prefix2 + "/addsave", cc);
-
-        $.modal.close(index); //关闭buyerinfo/add窗口
-    }
-
-
-    // 新增用户信息
-    var newUser = function () {
-        console.log("newUser . ....");
-        var prefix2 = ctx + "system/userinfo";
-        var options = {
-            title: '新增使用方',
-            url: prefix2 + "/add",
-            callBack: function (index, layero) {
-                var body = $.modal.getChildFrame(index);
-                userid = 0;
-                username = body.find('#username').val();
-                usercon = body.find('#connection').val();
-                usertel = body.find('#tel').val();
-                useraddr = body.find('#addr').val();
-                $("#usename").val(username);
-                $.modal.close(index);
-            },
-        };
-        $.modal.openOptions(options);
-    }
-
-    var newdevinfosave = function (devinfogroup) {
-        let prefix2 = ctx + "system/devinfo";
-        $.ajax({
-            type: 'POST',
-            url: prefix2 + "/devinfogroupaddsave",
-            data: {devinfogroup},
-            success: function (data, textStatus, jqXHR) {
-                console.log("newdevinfosave" + data);
-                console.log("devinfo.add.html 这个页面里，newdevinfosave函数还在使用吗？");
-                if (data == "1") {
-                    $.modal.close();
-                }
-            },
-            error: function (jqXHR, textStatus) {
-                console.log("请求失败，请稍后重试!");
-                alert("请求失败，请稍后重试!")
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-devInfo-add').serialize());
             }
-        })
-    }
+        }
 
-</script>
+        $("input[name='makedate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='factoryDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+
+        $("input[name='salesDate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
 </body>
 </html>

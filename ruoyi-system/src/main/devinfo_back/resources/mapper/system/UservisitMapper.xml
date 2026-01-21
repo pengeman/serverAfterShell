@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.UservisitMapper">
+    
+    <resultMap type="Uservisit" id="UservisitResult">
+        <result property="id"    column="id"    />
+        <result property="usename"    column="usename"    />
+        <result property="person"    column="person"    />
+        <result property="tel"    column="tel"    />
+        <result property="record"    column="record"    />
+        <result property="recordtime"    column="recordtime"    />
+        <result property="salesman"    column="salesman"    />
+    </resultMap>
+
+    <sql id="selectUservisitVo">
+        select id, usename, person, tel, record, recordtime, salesman from uservisit
+    </sql>
+
+    <select id="selectUservisitList" parameterType="Uservisit" resultMap="UservisitResult">
+        <include refid="selectUservisitVo"/>
+        <where>  
+            <if test="usename != null  and usename != ''"> and usename like concat('%', #{usename}, '%')</if>
+            <if test="person != null  and person != ''"> and person like concat('%', #{person}, '%')</if>
+            <if test="tel != null  and tel != ''"> and tel like concat('%', #{tel}, '%')</if>
+            <if test="salesman != null "> and salesman like concat('%', #{salesman}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectUservisitById" parameterType="Long" resultMap="UservisitResult">
+        <include refid="selectUservisitVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUservisit" parameterType="Uservisit" useGeneratedKeys="true" keyProperty="id">
+        insert into uservisit
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="usename != null">usename,</if>
+            <if test="person != null">person,</if>
+            <if test="tel != null">tel,</if>
+            <if test="record != null">record,</if>
+            <if test="recordtime != null">recordtime,</if>
+            <if test="salesman != null">salesman,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="usename != null">#{usename},</if>
+            <if test="person != null">#{person},</if>
+            <if test="tel != null">#{tel},</if>
+            <if test="record != null">#{record},</if>
+            <if test="recordtime != null">#{recordtime},</if>
+            <if test="salesman != null">#{salesman},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUservisit" parameterType="Uservisit">
+        update uservisit
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="usename != null">usename = #{usename},</if>
+            <if test="person != null">person = #{person},</if>
+            <if test="tel != null">tel = #{tel},</if>
+            <if test="record != null">record = #{record},</if>
+            <if test="recordtime != null">recordtime = #{recordtime},</if>
+            <if test="salesman != null">salesman = #{salesman},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUservisitById" parameterType="Long">
+        delete from uservisit where id = #{id}
+    </delete>
+
+    <delete id="deleteUservisitByIds" parameterType="String">
+        delete from uservisit where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

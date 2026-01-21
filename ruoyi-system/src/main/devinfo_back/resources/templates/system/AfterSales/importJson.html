@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('导入售后单数据')" />
+    <th:block th:include="include :: datetimepicker-css" />
+    <description dict="/home/peng/IdeaProjects/serverAfterShell/ruoyi-system/src/main/resources/templates/system/AfterSales/importJson.html">
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-AfterSales-add">
+
+            <input name="deviceid" id="deviceid" class="form-control" type="hidden">
+            <input name="formDate" id="formDate" class="form-control" type="hidden">
+            <input name="salesman" id="salesman" class="form-control" type="hidden">
+            <input name="customer" id="customer" class="form-control" type="hidden">
+            <input name="customerAddr" class="form-control" type="hidden">
+            <input name="quality" class="form-control" type="hidden">
+            <input name="connection" class="form-control" type="hidden">
+            <input name="tel" class="form-control" type="hidden">
+            <input name="quetion" class="form-control" type="hidden">
+            <input name="productionDate" class="form-control" type="hidden">
+            <input name="productionID" class="form-control" type="hidden">
+            <input name="condition" class="form-control" type="hidden">
+            <input name="texture" class="form-control" type="hidden">
+            <input name="area" class="form-control" type="hidden">
+            <input name="amount" class="form-control" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">数据json数据</label>
+                <div class="col-sm-8">
+                    <textarea name="jsonAfterSales" rows="10" cols="50"></textarea>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/AfterSales"
+        $("#form-AfterSales-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+           // console.log("submitHandler : " + $('#form-AfterSales-add').serialize());
+            //alert("submithandle");
+            if ($.validate.form()) {
+                //console.log($.form.valueOf('#form-AfterSales-add'));
+                //console.log($("#jsonAfterSales").serialize())
+                //data = $("#idht").serialize();
+
+                //let jsonAfterSales = data[0].value;
+                //console.log("---------------------------------------")
+                //console.log(jsonAfterSales);
+                //$("dispatchFile")[0].value()
+
+                //console.log($('#dispatchFile').serialize());
+                $.operate.save(prefix + "/importJson", $('#form-AfterSales-add').serialize());
+
+            }
+        }
+
+        $("input[name='modifyTime']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

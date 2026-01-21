@@ -7,7 +7,7 @@ import com.ruoyi.system.domain.DevInfo;
  * 设备信息档案Mapper接口
  * 
  * @author pengweitao
- * @date 2026-01-12
+ * @date 2026-01-21
  */
 public interface DevInfoMapper 
 {

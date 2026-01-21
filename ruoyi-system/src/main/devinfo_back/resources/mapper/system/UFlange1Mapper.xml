@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.UFlange1Mapper">
+    
+    <resultMap type="UFlange1" id="UFlange1Result">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="texture"    column="texture"    />
+        <result property="class_"    column="class"    />
+        <result property="price"    column="price"    />
+        <result property="pic"    column="pic"    />
+    </resultMap>
+
+    <sql id="selectUFlange1Vo">
+        select id, type, texture, `class`, price, pic from u_flange1
+    </sql>
+
+    <select id="selectUFlange1List" parameterType="UFlange1" resultMap="UFlange1Result">
+        <include refid="selectUFlange1Vo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type like concat('%', #{type}, '%')</if>
+            <if test="texture != null  and texture != ''"> and texture like concat('%', #{texture}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectUFlange1ById" parameterType="Long" resultMap="UFlange1Result">
+        <include refid="selectUFlange1Vo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUFlange1" parameterType="UFlange1" useGeneratedKeys="true" keyProperty="id">
+        insert into u_flange1
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="texture != null">texture,</if>
+            <if test="class_ != null">`class`,</if>
+            <if test="price != null">price,</if>
+            <if test="pic != null">pic,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="texture != null">#{texture},</if>
+            <if test="class_ != null">#{class_},</if>
+            <if test="price != null">#{price},</if>
+            <if test="pic != null">#{pic},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUFlange1" parameterType="UFlange1">
+        update u_flange1
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="texture != null">texture = #{texture},</if>
+            <if test="class_ != null">class = #{class_},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="pic != null">pic = #{pic},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUFlange1ById" parameterType="Long">
+        delete from u_flange1 where id = #{id}
+    </delete>
+
+    <delete id="deleteUFlange1ByIds" parameterType="String">
+        delete from u_flange1 where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

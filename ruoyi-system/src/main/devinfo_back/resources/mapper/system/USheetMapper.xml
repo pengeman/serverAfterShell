@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.USheetMapper">
+    
+    <resultMap type="USheet" id="USheetResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="pic"    column="pic"    />
+    </resultMap>
+
+    <sql id="selectUSheetVo">
+        select id, type, pic from u_sheet
+    </sql>
+
+    <select id="selectUSheetList" parameterType="USheet" resultMap="USheetResult">
+        <include refid="selectUSheetVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectUSheetById" parameterType="Long" resultMap="USheetResult">
+        <include refid="selectUSheetVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUSheet" parameterType="USheet" useGeneratedKeys="true" keyProperty="id">
+        insert into u_sheet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="pic != null">pic,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="pic != null">#{pic},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUSheet" parameterType="USheet">
+        update u_sheet
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="pic != null">pic = #{pic},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUSheetById" parameterType="Long">
+        delete from u_sheet where id = #{id}
+    </delete>
+
+    <delete id="deleteUSheetByIds" parameterType="String">
+        delete from u_sheet where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改派工单')" />
+    <th:block th:include="include :: datetimepicker-css" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-dispatch-edit" th:object="${dispatch}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">客户id：</label>
+                    <div class="col-sm-8">
+                        <input name="clientid" th:field="*{clientid}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">客户名称：</label>
+                    <div class="col-sm-8">
+                        <input name="clientname" th:field="*{clientname}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">地址：</label>
+                    <div class="col-sm-8">
+                        <input name="address" th:field="*{address}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">联系人：</label>
+                    <div class="col-sm-8">
+                        <input name="connection" th:field="*{connection}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">联系电话：</label>
+                    <div class="col-sm-8">
+                        <input name="telphone" th:field="*{telphone}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">设备类型：</label>
+                    <div class="col-sm-8">
+                        <select name="devType" class="form-control" th:with="type=${@dict.getType('hetype')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{devType}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">设备材质：</label>
+                    <div class="col-sm-8">
+                        <input name="devTexture" th:field="*{devTexture}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">设备编号：</label>
+                    <div class="col-sm-8">
+                        <input name="sn" th:field="*{sn}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">换热面积：</label>
+                    <div class="col-sm-8">
+                        <input name="area" th:field="*{area}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">保质期[保内外]：</label>
+                    <div class="col-sm-8">
+                        <input name="guaranteePeriod" th:field="*{guaranteePeriod}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">维修类型：</label>
+                    <div class="col-sm-8">
+                        <select name="servicetype" class="form-control" th:with="type=${@dict.getType('fixtype')}">
+                            <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}" th:field="*{servicetype}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">出厂日期：</label>
+                    <div class="col-sm-8">
+                        <div class="input-group date">
+                            <input name="makedate" th:value="${#dates.format(dispatch.makedate, 'yyyy-MM-dd')}" class="form-control" placeholder="yyyy-MM-dd" type="text">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">数量：</label>
+                    <div class="col-sm-8">
+                        <input name="quantity" th:field="*{quantity}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">工况热 热测工况,介质温度压力：</label>
+                    <div class="col-sm-8">
+                        <input name="workingCondition1" th:field="*{workingCondition1}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">工况冷 冷测工况，介质温度压力：</label>
+                    <div class="col-sm-8">
+                        <input name="workingCondition2" th:field="*{workingCondition2}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">所需材料：</label>
+                    <div class="col-sm-8">
+                        <input name="materialsPlan" th:field="*{materialsPlan}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">问题内容：</label>
+                    <div class="col-sm-8">
+                        <input name="question" th:field="*{question}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">维修方案：</label>
+                    <div class="col-sm-8">
+                        <input name="fixPlan" th:field="*{fixPlan}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">服务结果：</label>
+                    <div class="col-sm-8">
+                        <input name="serviceRelult" th:field="*{serviceRelult}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">申请人签字：</label>
+                    <div class="col-sm-8">
+                        <input name="requestsign" th:field="*{requestsign}" class="form-control" type="text">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <th:block th:include="include :: datetimepicker-js" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/dispatch";
+        $("#form-dispatch-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-dispatch-edit').serialize());
+            }
+        }
+
+        $("input[name='makedate']").datetimepicker({
+            format: "yyyy-mm-dd",
+            minView: "month",
+            autoclose: true
+        });
+    </script>
+</body>
+</html>

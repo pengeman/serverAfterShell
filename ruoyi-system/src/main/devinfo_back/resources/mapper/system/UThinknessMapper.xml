@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.UThinknessMapper">
+    
+    <resultMap type="UThinkness" id="UThinknessResult">
+        <result property="id"    column="id"    />
+        <result property="thinkness"    column="thinkness"    />
+        <result property="about"    column="about"    />
+    </resultMap>
+
+    <sql id="selectUThinknessVo">
+        select id, thinkness, about from u_thinkness
+    </sql>
+
+    <select id="selectUThinknessList" parameterType="UThinkness" resultMap="UThinknessResult">
+        <include refid="selectUThinknessVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectUThinknessById" parameterType="Long" resultMap="UThinknessResult">
+        <include refid="selectUThinknessVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertUThinkness" parameterType="UThinkness" useGeneratedKeys="true" keyProperty="id">
+        insert into u_thinkness
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="thinkness != null">thinkness,</if>
+            <if test="about != null">about,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="thinkness != null">#{thinkness},</if>
+            <if test="about != null">#{about},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUThinkness" parameterType="UThinkness">
+        update u_thinkness
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="thinkness != null">thinkness = #{thinkness},</if>
+            <if test="about != null">about = #{about},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUThinknessById" parameterType="Long">
+        delete from u_thinkness where id = #{id}
+    </delete>
+
+    <delete id="deleteUThinknessByIds" parameterType="String">
+        delete from u_thinkness where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

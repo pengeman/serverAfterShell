@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.DevInfoMapper">
+    
+    <resultMap type="DevInfo" id="DevInfoResult">
+        <result property="id"    column="id"    />
+        <result property="serialid"    column="serialid"    />
+        <result property="devType"    column="devType"    />
+        <result property="makedate"    column="makedate"    />
+        <result property="controct"    column="controct"    />
+        <result property="buyerid"    column="buyerid"    />
+        <result property="userid"    column="userid"    />
+        <result property="theclass"    column="theclass"    />
+        <result property="menufactDate"    column="menufactDate"    />
+        <result property="guaranteePeriod"    column="guaranteePeriod"    />
+        <result property="salesDate"    column="salesDate"    />
+        <result property="serverStory"    column="serverStory"    />
+    </resultMap>
+
+    <sql id="selectDevInfoVo">
+        select id, serialid, devType, makedate, controct, buyerid, userid, theclass, menufactDate, guaranteePeriod, salesDate, serverStory from devInfo
+    </sql>
+
+    <select id="selectDevInfoList" parameterType="DevInfo" resultMap="DevInfoResult">
+        <include refid="selectDevInfoVo"/>
+        <where>  
+            <if test="serialid != null  and serialid != ''"> and serialid like concat('%', #{serialid}, '%')</if>
+            <if test="devType != null  and devType != ''"> and devType like concat('%', #{devType}, '%')</if>
+            <if test="theclass != null "> and theclass = #{theclass}</if>
+            <if test="guaranteePeriod != null "> and guaranteePeriod = #{guaranteePeriod}</if>
+        </where>
+    </select>
+    
+    <select id="selectDevInfoById" parameterType="Long" resultMap="DevInfoResult">
+        <include refid="selectDevInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDevInfo" parameterType="DevInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into devInfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="serialid != null and serialid != ''">serialid,</if>
+            <if test="devType != null and devType != ''">devType,</if>
+            <if test="makedate != null">makedate,</if>
+            <if test="controct != null">controct,</if>
+            <if test="buyerid != null">buyerid,</if>
+            <if test="userid != null">userid,</if>
+            <if test="theclass != null">theclass,</if>
+            <if test="menufactDate != null">menufactDate,</if>
+            <if test="guaranteePeriod != null">guaranteePeriod,</if>
+            <if test="salesDate != null">salesDate,</if>
+            <if test="serverStory != null">serverStory,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="serialid != null and serialid != ''">#{serialid},</if>
+            <if test="devType != null and devType != ''">#{devType},</if>
+            <if test="makedate != null">#{makedate},</if>
+            <if test="controct != null">#{controct},</if>
+            <if test="buyerid != null">#{buyerid},</if>
+            <if test="userid != null">#{userid},</if>
+            <if test="theclass != null">#{theclass},</if>
+            <if test="menufactDate != null">#{menufactDate},</if>
+            <if test="guaranteePeriod != null">#{guaranteePeriod},</if>
+            <if test="salesDate != null">#{salesDate},</if>
+            <if test="serverStory != null">#{serverStory},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDevInfo" parameterType="DevInfo">
+        update devInfo
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="serialid != null and serialid != ''">serialid = #{serialid},</if>
+            <if test="devType != null and devType != ''">devType = #{devType},</if>
+            <if test="makedate != null">makedate = #{makedate},</if>
+            <if test="controct != null">controct = #{controct},</if>
+            <if test="buyerid != null">buyerid = #{buyerid},</if>
+            <if test="userid != null">userid = #{userid},</if>
+            <if test="theclass != null">theclass = #{theclass},</if>
+            <if test="menufactDate != null">menufactDate = #{menufactDate},</if>
+            <if test="guaranteePeriod != null">guaranteePeriod = #{guaranteePeriod},</if>
+            <if test="salesDate != null">salesDate = #{salesDate},</if>
+            <if test="serverStory != null">serverStory = #{serverStory},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDevInfoById" parameterType="Long">
+        delete from devInfo where id = #{id}
+    </delete>
+
+    <delete id="deleteDevInfoByIds" parameterType="String">
+        delete from devInfo where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

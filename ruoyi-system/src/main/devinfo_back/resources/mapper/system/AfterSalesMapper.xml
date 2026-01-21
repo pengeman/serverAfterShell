@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.AfterSalesMapper">
+    
+    <resultMap type="AfterSales" id="AfterSalesResult">
+        <result property="id"    column="id"    />
+        <result property="deviceid"    column="deviceid"    />
+        <result property="formDate"    column="formDate"    />
+        <result property="salesman"    column="salesman"    />
+        <result property="customer"    column="customer"    />
+        <result property="customerAddr"    column="customerAddr"    />
+        <result property="quality"    column="quality"    />
+        <result property="connection"    column="connection"    />
+        <result property="tel"    column="tel"    />
+        <result property="quetion"    column="quetion"    />
+        <result property="productionDate"    column="productionDate"    />
+        <result property="productionID"    column="productionID"    />
+        <result property="condition"    column="condition"    />
+        <result property="deviceType"    column="deviceType"    />
+        <result property="texture"    column="texture"    />
+        <result property="area"    column="area"    />
+        <result property="amount"    column="amount"    />
+        <result property="formType"    column="formType"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="modifyTime"    column="modify_time"    />
+        <result property="attachment" column="attachment"/>
+    </resultMap>
+
+    <sql id="selectAfterSalesVo">
+        select id, deviceid, formDate, salesman, customer, customerAddr, quality, `connection`, tel, quetion, productionDate, productionID, `condition`, deviceType, texture, area, amount, formType, create_time, modify_time,attachment from AfterSales
+    </sql>
+
+    <select id="selectAfterSalesList" parameterType="AfterSales" resultMap="AfterSalesResult">
+        <include refid="selectAfterSalesVo"/>
+        <where>  
+            <if test="salesman != null  and salesman != ''"> and salesman like concat('%', #{salesman}, '%')</if>
+            <if test="customer != null  and customer != ''"> and customer like concat('%', #{customer}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAfterSalesById" parameterType="Long" resultMap="AfterSalesResult">
+        <include refid="selectAfterSalesVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAfterSales" parameterType="AfterSales" useGeneratedKeys="true" keyProperty="id">
+        insert into AfterSales
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceid != null">deviceid,</if>
+            <if test="formDate != null">formDate,</if>
+            <if test="salesman != null">salesman,</if>
+            <if test="customer != null">customer,</if>
+            <if test="customerAddr != null">customerAddr,</if>
+            <if test="quality != null">quality,</if>
+            <if test="connection != null">`connection`,</if>
+            <if test="tel != null">tel,</if>
+            <if test="quetion != null">quetion,</if>
+            <if test="productionDate != null">productionDate,</if>
+            <if test="productionID != null">productionID,</if>
+            <if test="condition != null">`condition`,</if>
+            <if test="deviceType != null">deviceType,</if>
+            <if test="texture != null">texture,</if>
+            <if test="area != null">area,</if>
+            <if test="amount != null">amount,</if>
+            <if test="formType != null">formType,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="modifyTime != null">modify_time,</if>
+            <if test="attachment != null">attachment,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceid != null">#{deviceid},</if>
+            <if test="formDate != null">#{formDate},</if>
+            <if test="salesman != null">#{salesman},</if>
+            <if test="customer != null">#{customer},</if>
+            <if test="customerAddr != null">#{customerAddr},</if>
+            <if test="quality != null">#{quality},</if>
+            <if test="connection != null">#{connection},</if>
+            <if test="tel != null">#{tel},</if>
+            <if test="quetion != null">#{quetion},</if>
+            <if test="productionDate != null">#{productionDate},</if>
+            <if test="productionID != null">#{productionID},</if>
+            <if test="condition != null">#{condition},</if>
+            <if test="deviceType != null">#{deviceType},</if>
+            <if test="texture != null">#{texture},</if>
+            <if test="area != null">#{area},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="formType != null">#{formType},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="modifyTime != null">#{modifyTime},</if>
+            <if test="attachment != null">#{attachment},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAfterSales" parameterType="AfterSales">
+        update AfterSales
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceid != null">deviceid = #{deviceid},</if>
+            <if test="formDate != null">formDate = #{formDate},</if>
+            <if test="salesman != null">salesman = #{salesman},</if>
+            <if test="customer != null">customer = #{customer},</if>
+            <if test="customerAddr != null">customerAddr = #{customerAddr},</if>
+            <if test="quality != null">quality = #{quality},</if>
+            <if test="connection != null">`connection` = #{connection},</if>
+            <if test="tel != null">tel = #{tel},</if>
+            <if test="quetion != null">quetion = #{quetion},</if>
+            <if test="productionDate != null">productionDate = #{productionDate},</if>
+            <if test="productionID != null">productionID = #{productionID},</if>
+            <if test="condition != null">`condition` = #{condition},</if>
+            <if test="deviceType != null">deviceType = #{deviceType},</if>
+            <if test="texture != null">texture = #{texture},</if>
+            <if test="area != null">area = #{area},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="formType != null">formType = #{formType},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="modifyTime != null">modify_time = #{modifyTime},</if>
+            <if test="attachment != null">attachment = #{attachment},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAfterSalesById" parameterType="Long">
+        delete from AfterSales where id = #{id}
+    </delete>
+
+    <delete id="deleteAfterSalesByIds" parameterType="String">
+        delete from AfterSales where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

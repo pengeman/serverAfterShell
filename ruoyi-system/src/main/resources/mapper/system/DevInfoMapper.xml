@@ -13,23 +13,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="buyerid"    column="buyerid"    />
         <result property="userid"    column="userid"    />
         <result property="theclass"    column="theclass"    />
-        <result property="menufactDate"    column="menufactDate"    />
+        <result property="factoryDate"    column="factoryDate"    />
+        <result property="warrantyPeriod"    column="warrantyPeriod"    />
         <result property="guaranteePeriod"    column="guaranteePeriod"    />
         <result property="salesDate"    column="salesDate"    />
         <result property="serverStory"    column="serverStory"    />
+        <result property="CreatorId"    column="CreatorId"    />
+        <result property="CreateTime"    column="CreateTime"    />
     </resultMap>
 
     <sql id="selectDevInfoVo">
-        select id, serialid, devType, makedate, controct, buyerid, userid, theclass, menufactDate, guaranteePeriod, salesDate, serverStory from devInfo
+        select id, serialid, devType, makedate, controct, buyerid, userid, theclass, factoryDate, warrantyPeriod, guaranteePeriod, salesDate, serverStory, CreatorId, CreateTime from devInfo
     </sql>
 
     <select id="selectDevInfoList" parameterType="DevInfo" resultMap="DevInfoResult">
         <include refid="selectDevInfoVo"/>
         <where>  
-            <if test="serialid != null  and serialid != ''"> and serialid like concat('%', #{serialid}, '%')</if>
             <if test="devType != null  and devType != ''"> and devType like concat('%', #{devType}, '%')</if>
-            <if test="theclass != null "> and theclass = #{theclass}</if>
-            <if test="guaranteePeriod != null "> and guaranteePeriod = #{guaranteePeriod}</if>
+            <if test="userid != null "> and userid = #{userid}</if>
         </where>
     </select>
     
@@ -41,47 +42,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertDevInfo" parameterType="DevInfo" useGeneratedKeys="true" keyProperty="id">
         insert into devInfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="serialid != null and serialid != ''">serialid,</if>
-            <if test="devType != null and devType != ''">devType,</if>
+            <if test="serialid != null">serialid,</if>
+            <if test="devType != null">devType,</if>
             <if test="makedate != null">makedate,</if>
             <if test="controct != null">controct,</if>
             <if test="buyerid != null">buyerid,</if>
             <if test="userid != null">userid,</if>
             <if test="theclass != null">theclass,</if>
-            <if test="menufactDate != null">menufactDate,</if>
+            <if test="factoryDate != null">factoryDate,</if>
+            <if test="warrantyPeriod != null">warrantyPeriod,</if>
             <if test="guaranteePeriod != null">guaranteePeriod,</if>
             <if test="salesDate != null">salesDate,</if>
             <if test="serverStory != null">serverStory,</if>
+            <if test="CreatorId != null">CreatorId,</if>
+            <if test="CreateTime != null">CreateTime,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="serialid != null and serialid != ''">#{serialid},</if>
-            <if test="devType != null and devType != ''">#{devType},</if>
+            <if test="serialid != null">#{serialid},</if>
+            <if test="devType != null">#{devType},</if>
             <if test="makedate != null">#{makedate},</if>
             <if test="controct != null">#{controct},</if>
             <if test="buyerid != null">#{buyerid},</if>
             <if test="userid != null">#{userid},</if>
             <if test="theclass != null">#{theclass},</if>
-            <if test="menufactDate != null">#{menufactDate},</if>
+            <if test="factoryDate != null">#{factoryDate},</if>
+            <if test="warrantyPeriod != null">#{warrantyPeriod},</if>
             <if test="guaranteePeriod != null">#{guaranteePeriod},</if>
             <if test="salesDate != null">#{salesDate},</if>
             <if test="serverStory != null">#{serverStory},</if>
+            <if test="CreatorId != null">#{CreatorId},</if>
+            <if test="CreateTime != null">#{CreateTime},</if>
          </trim>
     </insert>
 
     <update id="updateDevInfo" parameterType="DevInfo">
         update devInfo
         <trim prefix="SET" suffixOverrides=",">
-            <if test="serialid != null and serialid != ''">serialid = #{serialid},</if>
-            <if test="devType != null and devType != ''">devType = #{devType},</if>
+            <if test="serialid != null">serialid = #{serialid},</if>
+            <if test="devType != null">devType = #{devType},</if>
             <if test="makedate != null">makedate = #{makedate},</if>
             <if test="controct != null">controct = #{controct},</if>
             <if test="buyerid != null">buyerid = #{buyerid},</if>
             <if test="userid != null">userid = #{userid},</if>
             <if test="theclass != null">theclass = #{theclass},</if>
-            <if test="menufactDate != null">menufactDate = #{menufactDate},</if>
+            <if test="factoryDate != null">factoryDate = #{factoryDate},</if>
+            <if test="warrantyPeriod != null">warrantyPeriod = #{warrantyPeriod},</if>
             <if test="guaranteePeriod != null">guaranteePeriod = #{guaranteePeriod},</if>
             <if test="salesDate != null">salesDate = #{salesDate},</if>
             <if test="serverStory != null">serverStory = #{serverStory},</if>
+            <if test="CreatorId != null">CreatorId = #{CreatorId},</if>
+            <if test="CreateTime != null">CreateTime = #{CreateTime},</if>
         </trim>
         where id = #{id}
     </update>

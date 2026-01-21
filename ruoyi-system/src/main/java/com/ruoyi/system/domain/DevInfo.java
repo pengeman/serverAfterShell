@@ -11,7 +11,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * 设备信息档案对象 devInfo
  * 
  * @author pengweitao
- * @date 2026-01-12
+ * @date 2026-01-21
  */
 public class DevInfo extends BaseEntity
 {
@@ -20,8 +20,8 @@ public class DevInfo extends BaseEntity
     /**  */
     private Long id;
 
-    /** 出厂编号 */
-    @Excel(name = "出厂编号")
+    /** serial number序列号 */
+    @Excel(name = "serial number序列号")
     private String serialid;
 
     /** 设备型号 */
@@ -29,6 +29,8 @@ public class DevInfo extends BaseEntity
     private String devType;
 
     /** 制造日期 */
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Excel(name = "制造日期", width = 30, dateFormat = "yyyy-MM-dd")
     private Date makedate;
 
     /** 合同 */
@@ -38,28 +40,33 @@ public class DevInfo extends BaseEntity
     @Excel(name = "购买方")
     private Long buyerid;
 
-    /** 用户 */
-    @Excel(name = "用户")
+    /** 用户id */
+    @Excel(name = "用户id")
     private Long userid;
 
     /** 设备类别 */
-    @Excel(name = "设备类别")
     private Long theclass;
 
-    /** 出厂日期 */
+    /** 制造日期 */
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "出厂日期", width = 30, dateFormat = "yyyy-MM-dd")
-    private Date menufactDate;
+    @Excel(name = "制造日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date factoryDate;
+
+    /** 质保期限 */
+    @Excel(name = "质保期限")
+    private Long warrantyPeriod;
 
     /** 质保 */
-    @Excel(name = "质保")
     private Long guaranteePeriod;
 
     /** 销售日期 */
     private Date salesDate;
 
-    /** 服务历史记录-&gt;serverStory.id */
+    /** 服务历史 */
     private Long serverStory;
+
+    /** 创建人编号 当前用户ID */
+    private Long CreatorId;
 
     public void setId(Long id) 
     {
@@ -141,14 +148,24 @@ public class DevInfo extends BaseEntity
         return theclass;
     }
 
-    public void setMenufactDate(Date menufactDate) 
+    public void setFactoryDate(Date factoryDate) 
     {
-        this.menufactDate = menufactDate;
+        this.factoryDate = factoryDate;
     }
 
-    public Date getMenufactDate() 
+    public Date getFactoryDate() 
     {
-        return menufactDate;
+        return factoryDate;
+    }
+
+    public void setWarrantyPeriod(Long warrantyPeriod) 
+    {
+        this.warrantyPeriod = warrantyPeriod;
+    }
+
+    public Long getWarrantyPeriod() 
+    {
+        return warrantyPeriod;
     }
 
     public void setGuaranteePeriod(Long guaranteePeriod) 
@@ -181,6 +198,16 @@ public class DevInfo extends BaseEntity
         return serverStory;
     }
 
+    public void setCreatorId(Long CreatorId) 
+    {
+        this.CreatorId = CreatorId;
+    }
+
+    public Long getCreatorId() 
+    {
+        return CreatorId;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -192,10 +219,13 @@ public class DevInfo extends BaseEntity
             .append("buyerid", getBuyerid())
             .append("userid", getUserid())
             .append("theclass", getTheclass())
-            .append("menufactDate", getMenufactDate())
+            .append("factoryDate", getFactoryDate())
+            .append("warrantyPeriod", getWarrantyPeriod())
             .append("guaranteePeriod", getGuaranteePeriod())
             .append("salesDate", getSalesDate())
             .append("serverStory", getServerStory())
+            .append("CreatorId", getCreatorId())
+            .append("CreateTime", getCreateTime())
             .toString();
     }
 }

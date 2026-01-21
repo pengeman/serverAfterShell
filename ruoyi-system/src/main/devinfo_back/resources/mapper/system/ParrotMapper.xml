@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ParrotMapper">
+    
+    <resultMap type="Parrot" id="ParrotResult">
+        <result property="id"    column="id"    />
+        <result property="goods"    column="goods"    />
+        <result property="money"    column="money"    />
+        <result property="amount"    column="amount"    />
+        <result property="thedate"    column="thedate"    />
+        <result property="class1"    column="class1"    />
+        <result property="class2"    column="class2"    />
+        <result property="comment"    column="comment"    />
+        <result property="person"    column="person"    />
+        <result property="account"    column="account"    />
+        <result property="business"    column="business"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectParrotVo">
+        select id, goods, money, amount, thedate, class1, class2, comment, person, account, business, create_time from parrot
+    </sql>
+
+    <select id="selectParrotList" parameterType="Parrot" resultMap="ParrotResult">
+        <include refid="selectParrotVo"/>
+        <where>  
+            <if test="goods != null  and goods != ''"> and goods like concat('%', #{goods}, '%')</if>
+            <if test="params.beginThedate != null and params.beginThedate != '' and params.endThedate != null and params.endThedate != ''"> and thedate between #{params.beginThedate} and #{params.endThedate}</if>
+            <if test="class1 != null  and class1 != ''"> and class1 = #{class1}</if>
+            <if test="class2 != null  and class2 != ''"> and class2 = #{class2}</if>
+            <if test="comment != null  and comment != ''"> and comment = #{comment}</if>
+            <if test="person != null  and person != ''"> and person = #{person}</if>
+        </where>
+    </select>
+    
+    <select id="selectParrotById" parameterType="Long" resultMap="ParrotResult">
+        <include refid="selectParrotVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertParrot" parameterType="Parrot" useGeneratedKeys="true" keyProperty="id">
+        insert into parrot
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goods != null">goods,</if>
+            <if test="money != null">money,</if>
+            <if test="amount != null">amount,</if>
+            <if test="thedate != null">thedate,</if>
+            <if test="class1 != null">class1,</if>
+            <if test="class2 != null">class2,</if>
+            <if test="comment != null">comment,</if>
+            <if test="person != null">person,</if>
+            <if test="account != null">account,</if>
+            <if test="business != null">business,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goods != null">#{goods},</if>
+            <if test="money != null">#{money},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="thedate != null">#{thedate},</if>
+            <if test="class1 != null">#{class1},</if>
+            <if test="class2 != null">#{class2},</if>
+            <if test="comment != null">#{comment},</if>
+            <if test="person != null">#{person},</if>
+            <if test="account != null">#{account},</if>
+            <if test="business != null">#{business},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateParrot" parameterType="Parrot">
+        update parrot
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goods != null">goods = #{goods},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="thedate != null">thedate = #{thedate},</if>
+            <if test="class1 != null">class1 = #{class1},</if>
+            <if test="class2 != null">class2 = #{class2},</if>
+            <if test="comment != null">comment = #{comment},</if>
+            <if test="person != null">person = #{person},</if>
+            <if test="account != null">account = #{account},</if>
+            <if test="business != null">business = #{business},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteParrotById" parameterType="Long">
+        delete from parrot where id = #{id}
+    </delete>
+
+    <delete id="deleteParrotByIds" parameterType="String">
+        delete from parrot where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

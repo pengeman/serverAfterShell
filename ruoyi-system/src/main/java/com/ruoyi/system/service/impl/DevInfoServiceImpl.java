@@ -1,34 +1,22 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
-
-import com.ruoyi.system.domain.Buyerinfo;
-import com.ruoyi.system.domain.Userinfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.DevInfoMapper;
-import com.ruoyi.system.mapper.BuyerinfoMapper;
-import com.ruoyi.system.mapper.UserinfoMapper;
 import com.ruoyi.system.domain.DevInfo;
 import com.ruoyi.system.service.IDevInfoService;
 import com.ruoyi.common.core.text.Convert;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 设备信息档案Service业务层处理
  * 
  * @author pengweitao
- * @date 2026-01-12
+ * @date 2026-01-21
  */
 @Service
 public class DevInfoServiceImpl implements IDevInfoService 
 {
-    @Autowired
-    private UserinfoMapper userinfoMapper;
-    @Autowired
-    private BuyerinfoMapper buyerinfoMapper;
-
-
     @Autowired
     private DevInfoMapper devInfoMapper;
 
@@ -103,20 +91,4 @@ public class DevInfoServiceImpl implements IDevInfoService
     {
         return devInfoMapper.deleteDevInfoById(id);
     }
-
-
-
-    @Transactional
-    @Override
-    public int insetDevInfoGroup(DevInfo devInfo, Buyerinfo buyerinfo, Userinfo userInfo) {
-        int userid = userinfoMapper.insertUserinfo(userInfo);
-        int buyerid = buyerinfoMapper.insertBuyerinfo(buyerinfo);
-        devInfo.setUserid(Long.parseLong(String.valueOf((userid))));
-        devInfo.setBuyerid(Long.parseLong(String.valueOf((buyerid))));
-        int r = devInfoMapper.insertDevInfo(devInfo);
-
-
-        return r;
-    }
-
 }
